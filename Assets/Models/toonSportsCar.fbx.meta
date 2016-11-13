@@ -33,7 +33,7 @@ ModelImporter:
     4300006: RRWheel
     4300008: RLWheel
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

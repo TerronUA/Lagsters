@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\GravityBody.cs" />
     <Compile Include="Assets\Scripts\GravityManager.cs" />
     <Compile Include="Assets\Scripts\GravityPoint.cs" />
+    <Compile Include="Assets\Scripts\GravityRange.cs" />
     <Compile Include="Assets\Scripts\ImageEffects.cs" />
     <Compile Include="Assets\Scripts\LevelBlock.cs" />
     <Compile Include="Assets\Scripts\SceneViewCameraFollower.cs" />

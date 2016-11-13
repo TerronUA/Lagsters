@@ -43,7 +43,11 @@ public class GravityManager : MonoBehaviour
 
     public int AddPoint()
     {
+        if  (points == null)
+          points = new List<GravityPoint>();
+
         GravityPoint newPoint = new GravityPoint();
+
         switch (points.Count)
         {
             case 0:
@@ -159,7 +163,8 @@ public class GravityManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        points = new List<GravityPoint>();
+        if (points == null)
+          points = new List<GravityPoint>();
     }
 
     void Update()
