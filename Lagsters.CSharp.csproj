@@ -74,6 +74,8 @@
     <Compile Include="Assets\Scripts\EasySuspension.cs" />
     <Compile Include="Assets\Scripts\FirstPersonController.cs" />
     <Compile Include="Assets\Scripts\FreezeObject.cs" />
+    <Compile Include="Assets\Scripts\Gravity\PathPoint.cs" />
+    <Compile Include="Assets\Scripts\Gravity\PathPoints.cs" />
     <Compile Include="Assets\Scripts\GravityAttractor.cs" />
     <Compile Include="Assets\Scripts\GravityBody.cs" />
     <Compile Include="Assets\Scripts\GravityManager.cs" />
