@@ -112,9 +112,9 @@
     <Compile Include="Assets\Editor\GravityManagerEditor.cs" />
     <Compile Include="Assets\Editor\GravityPointDrawer.cs" />
     <Compile Include="Assets\Editor\LevelBlockEditor.cs" />
-    <Compile Include="Assets\Editor\PathPointDrawer.cs" />
-    <Compile Include="Assets\Editor\PathPointsCreator.cs" />
-    <Compile Include="Assets\Editor\PathPointsEditor.cs" />
+    <Compile Include="Assets\Editor\PathPoints\PathPointDrawer.cs" />
+    <Compile Include="Assets\Editor\PathPoints\PathPointsCreator.cs" />
+    <Compile Include="Assets\Editor\PathPoints\PathPointsEditor.cs" />
     <Compile Include="Assets\Editor\SceneViewCameraFollowerEditor.cs" />
   </ItemGroup>
   <ItemGroup>
