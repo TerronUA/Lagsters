@@ -8,7 +8,7 @@ public class PathPointsEditor : EditorWindow
     public PathPoints pathPoints;
     private int viewIndex = 1;
 
-    [MenuItem("Window/Path Points Editor %#e")]
+    [MenuItem("Window/Lagsters/Path Points Editor %#e")]
     static void Init()
     {
         EditorWindow.GetWindow(typeof(PathPointsEditor));
