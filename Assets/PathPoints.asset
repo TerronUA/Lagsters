@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Name: PathPoints
   m_EditorClassIdentifier: 
   layer: 8
+  drawPointsCount: 3
   pointsList:
-  - position: {x: 1, y: 1, z: 1}
-    rotation: {x: 0.0096904375, y: 0.00950613, z: 0.00950614, w: 0.9998627}
+  - position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
     gravity: 10
-  - position: {x: 2, y: 2, z: 2}
-    rotation: {x: 0.019559143, y: 0.018822031, z: 0.018822014, w: 0.9994543}
+  - position: {x: 0.00003027916, y: 0.000030517578, z: 5.7040954}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
     gravity: 10
+  - position: {x: 0, y: 0, z: 15.704116}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: 9.8

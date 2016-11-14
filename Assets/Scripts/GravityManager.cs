@@ -12,13 +12,24 @@ public class GravityManager : MonoBehaviour
 
     public float gravity = 9.8f;
 
-    public List<GravityPoint> points;
+    public List<PathPoint> points
+    {
+        get
+        {
+            if (pathPoints != null)
+                return pathPoints.pointsList;
+            else
+                return null;
+        }
+    }
 
     public int activeIndex = -1;
 
-    public GravityPoint activePoint = null;
+    public PathPoints pathPoints;
 
-    public GravityPoint ActivePoint
+    public PathPoint activePoint = null;
+
+    public PathPoint ActivePoint
     {
         get
         {
@@ -43,10 +54,10 @@ public class GravityManager : MonoBehaviour
 
     public int AddPoint()
     {
-        if  (points == null)
-          points = new List<GravityPoint>();
+        if  (pathPoints == null)
+          return -1;
 
-        GravityPoint newPoint = new GravityPoint();
+        PathPoint newPoint = new PathPoint();
 
         switch (points.Count)
         {
@@ -67,7 +78,7 @@ public class GravityManager : MonoBehaviour
         else
             newPoint.gravity = gravity;
 
-        points.Add(newPoint);
+        pathPoints.pointsList.Add(newPoint);
 
         UpdateActivePoint();
 
@@ -78,7 +89,7 @@ public class GravityManager : MonoBehaviour
     {
         if ((points.Count > 0) && (-1 < activeIndex) && (activeIndex < points.Count))
         {
-            points.RemoveAt(activeIndex);
+            pathPoints.pointsList.RemoveAt(activeIndex);
             if (activeIndex >= points.Count)
                 activeIndex = points.Count - 1;
         }
@@ -88,7 +99,7 @@ public class GravityManager : MonoBehaviour
 
     public void DeleteAllPoints()
     {
-        points.Clear();
+        pathPoints.pointsList.Clear();
 
         activeIndex = -1;
         UpdateActivePoint();
@@ -163,8 +174,8 @@ public class GravityManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (points == null)
-          points = new List<GravityPoint>();
+        //if (points == null)
+        //  points = new List<GravityPoint>();
     }
 
     void Update()

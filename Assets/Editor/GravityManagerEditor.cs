@@ -11,6 +11,7 @@ public class GravityManagerEditor : Editor
     SerializedProperty offset;
     SerializedProperty useLastPointGravity;
     SerializedProperty gravity;
+    SerializedProperty pathPoints;
     SerializedProperty layerMask;
     static GravityManagerEditor editor;
 
@@ -28,6 +29,7 @@ public class GravityManagerEditor : Editor
         offset = serializedObject.FindProperty("offset");
         useLastPointGravity = serializedObject.FindProperty("useLastPointGravity");
         gravity = serializedObject.FindProperty("gravity");
+        pathPoints = serializedObject.FindProperty("pathPoints");
         layerMask = serializedObject.FindProperty("layerMask");
     }
 

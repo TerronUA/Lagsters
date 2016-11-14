@@ -168,4 +168,59 @@ public class PathPointsEditor : EditorWindow
             EditorUtility.SetDirty(pathPoints);
         }
     }
+
+    private void OnSceneGUI()
+    {
+        if (pathPoints.pointsList.Count <= 0)
+            return;
+
+        if (viewIndex < 0)
+            return;
+
+        int startDraw = viewIndex - pathPoints.drawPointsCount;
+        int endDraw = viewIndex + pathPoints.drawPointsCount;
+        if (startDraw < 0)
+        {
+            endDraw = endDraw + Mathf.Abs(startDraw);
+            startDraw = 0;
+        }
+        if (endDraw > pathPoints.pointsList.Count - 1)
+            endDraw = pathPoints.pointsList.Count - 1;
+
+        //Transform handleTransform = _target.transform;
+        //Quaternion handleRotation = Tools.pivotRotation == PivotRotation.Local ? handleTransform.rotation : Quaternion.identity;
+
+        Handles.color = Color.blue;
+        for (int i = startDraw; i <= endDraw; i++)
+        {
+            if (pathPoints.pointsList[i] != null)
+            {
+                Vector3 pointInWorldSpace = /*handleTransform.TransformPoint(*/pathPoints.pointsList[i].position;//);
+                Quaternion rotation = pathPoints.pointsList[i].rotation;
+
+                // Connect points with line
+                if (i > startDraw)
+                {
+                    Vector3 prevPointInWorldSpace = /*handleTransform.TransformPoint(*/pathPoints.pointsList[i - 1].position;//);
+                    Handles.DrawLine(pointInWorldSpace, prevPointInWorldSpace);
+                }
+
+                /*Handles.SphereCap(i, pointInWorldSpace, handleRotation, 0.5f);
+
+                if (i == _target.activeIndex)
+                {
+                    EditorGUI.BeginChangeCheck();
+                    pointInWorldSpace = Handles.DoPositionHandle(pointInWorldSpace, rotation);
+                    if (EditorGUI.EndChangeCheck())
+                        ChangePointCoordinates(handleTransform.InverseTransformPoint(pointInWorldSpace));
+
+                    EditorGUI.BeginChangeCheck();
+                    rotation = Handles.RotationHandle(rotation, pointInWorldSpace);
+                    if (EditorGUI.EndChangeCheck())
+                        ChangePointRotation(rotation);
+                }*/
+            }
+        }
+    }
+
 }
