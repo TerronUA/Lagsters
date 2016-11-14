@@ -144,6 +144,8 @@ public class GravityManagerEditor : Editor
     /// </summary>
     private void DrawDefaultParms()
     {
+        EditorGUILayout.PropertyField(pathPoints, new GUIContent("Path Points"));
+
         GUILayout.Label("Default params", EditorStyles.boldLabel);
 
         EditorGUILayout.Slider(offset, 0, 100, new GUIContent("Offset"));
