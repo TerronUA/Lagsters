@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelCreator : MonoBehaviour {
+public class LevelCreator : MonoBehaviour
+{
+    public GravityManager gravityManager;
 
-	// Use this for initialization
-	void Start () {
+    public PathPoints pathPoints;
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
