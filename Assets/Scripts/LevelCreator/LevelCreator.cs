@@ -7,6 +7,9 @@ public class LevelCreator : MonoBehaviour
 
     public PathPoints pathPoints;
 
+    public float radius = 10f;
+    public int pointsAmount = 30;
+
     // Use this for initialization
     void Start () {
 	
