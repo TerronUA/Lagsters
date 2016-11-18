@@ -501,9 +501,9 @@ MonoBehaviour:
   activeIndex: 2
   pathPoints: {fileID: 11400000, guid: a8951fb6e10415948998f4f76410a1a5, type: 2}
   activePoint:
-    position: {x: 0, y: 0, z: 15.704116}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-    gravity: 9.8
+    position: {x: -0.00000047683716, y: 0.00000011920929, z: 16.538673}
+    rotation: {x: 0.0000000033984715, y: -0.000000013593886, z: 4.6198434e-17, w: 1}
+    gravity: 10
 --- !u!1001 &939143001
 Prefab:
   m_ObjectHideFlags: 0
@@ -1154,56 +1154,60 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 14694296, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionSpring.spring
-      value: 56249.992
+      value: 24999.998
       objectReference: {fileID: 0}
     - target: {fileID: 14694296, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionSpring.damper
-      value: 5999.9995
+      value: 3999.9998
       objectReference: {fileID: 0}
     - target: {fileID: 14694296, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionDistance
-      value: 0.08720001
+      value: 0.1962
       objectReference: {fileID: 0}
     - target: {fileID: 14665140, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionSpring.spring
-      value: 56249.992
+      value: 24999.998
       objectReference: {fileID: 0}
     - target: {fileID: 14665140, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionSpring.damper
-      value: 5999.9995
+      value: 3999.9998
       objectReference: {fileID: 0}
     - target: {fileID: 14665140, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionDistance
-      value: 0.08720001
+      value: 0.1962
       objectReference: {fileID: 0}
     - target: {fileID: 14660180, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionSpring.spring
-      value: 56249.992
+      value: 24999.998
       objectReference: {fileID: 0}
     - target: {fileID: 14660180, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionSpring.damper
-      value: 5999.9995
+      value: 3999.9998
       objectReference: {fileID: 0}
     - target: {fileID: 14660180, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionDistance
-      value: 0.08720001
+      value: 0.1962
       objectReference: {fileID: 0}
     - target: {fileID: 14652258, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionSpring.spring
-      value: 56249.992
+      value: 24999.998
       objectReference: {fileID: 0}
     - target: {fileID: 14652258, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionSpring.damper
-      value: 5999.9995
+      value: 3999.9998
       objectReference: {fileID: 0}
     - target: {fileID: 14652258, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: m_SuspensionDistance
-      value: 0.08720001
+      value: 0.1962
       objectReference: {fileID: 0}
     - target: {fileID: 11428874, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
       propertyPath: gm
       value: 
       objectReference: {fileID: 925931708}
+    - target: {fileID: 133938, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4d277de2543cfe044a7464e51b04ea23, type: 2}
   m_IsPrefabParent: 0
@@ -1276,7 +1280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1937247295
 Transform:
   m_ObjectHideFlags: 0
@@ -1329,7 +1333,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1951008318}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 17.59, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1347,4 +1351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityManager: {fileID: 925931708}
+  levelSpline: {fileID: 0}
   pathPoints: {fileID: 11400000, guid: a8951fb6e10415948998f4f76410a1a5, type: 2}
+  radius: 10
+  pointsAmount: 30

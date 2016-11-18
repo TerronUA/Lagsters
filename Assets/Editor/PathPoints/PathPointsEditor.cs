@@ -6,12 +6,12 @@ using System.Collections.Generic;
 public class PathPointsEditor : EditorWindow
 {
     public PathPoints pathPoints;
-    private int viewIndex = 1;
+    private int viewIndex = 0;
 
     [MenuItem("Window/Lagsters/Path Points Editor %#e")]
     static void Init()
     {
-        EditorWindow.GetWindow(typeof(PathPointsEditor));
+        EditorWindow.GetWindow<PathPointsEditor>("Path Editor");
     }
 
     void OnEnable()
@@ -21,6 +21,12 @@ public class PathPointsEditor : EditorWindow
             string objectPath = EditorPrefs.GetString("ObjectPath");
             pathPoints = AssetDatabase.LoadAssetAtPath(objectPath, typeof(PathPoints)) as PathPoints;
         }
+        SceneView.onSceneGUIDelegate += OnSceneGUI;
+    }
+
+    void OnDisable()
+    {
+        SceneView.onSceneGUIDelegate -= OnSceneGUI;
     }
 
     void CreateNewItemList()
@@ -28,7 +34,7 @@ public class PathPointsEditor : EditorWindow
         // There is no overwrite protection here!
         // There is No "Are you sure you want to overwrite your existing object?" if it exists.
         // This should probably get a string from the user to create a new name and pass it ...
-        viewIndex = 1;
+        viewIndex = 0;
         pathPoints = PathPointsCreator.Create();
         if (pathPoints)
         {
@@ -61,7 +67,7 @@ public class PathPointsEditor : EditorWindow
         newItem.rotation = Quaternion.identity;
 
         pathPoints.pointsList.Add(newItem);
-        viewIndex = pathPoints.pointsList.Count;
+        viewIndex = pathPoints.pointsList.Count - 1;
     }
 
     void DeleteItem(int index)
@@ -119,13 +125,13 @@ public class PathPointsEditor : EditorWindow
 
             if (GUILayout.Button("Prev", GUILayout.ExpandWidth(false)))
             {
-                if (viewIndex > 1)
+                if (viewIndex > 0)
                     viewIndex--;
             }
             GUILayout.Space(5);
             if (GUILayout.Button("Next", GUILayout.ExpandWidth(false)))
             {
-                if (viewIndex < pathPoints.pointsList.Count)
+                if (viewIndex < pathPoints.pointsList.Count - 1)
                 {
                     viewIndex++;
                 }
@@ -133,14 +139,17 @@ public class PathPointsEditor : EditorWindow
 
             GUILayout.Space(60);
 
+            GUI.enabled = (pathPoints.pointsList != null); ;
             if (GUILayout.Button("Add Point", GUILayout.ExpandWidth(false)))
             {
                 AddItem();
             }
+            GUI.enabled = (pathPoints.pointsList != null) && (pathPoints.pointsList.Count > 0);
             if (GUILayout.Button("Delete Point", GUILayout.ExpandWidth(false)))
             {
-                DeleteItem(viewIndex - 1);
+                DeleteItem(viewIndex);
             }
+            GUI.enabled = true;
 
             GUILayout.EndHorizontal();
             if (pathPoints.pointsList == null)
@@ -148,13 +157,13 @@ public class PathPointsEditor : EditorWindow
             if (pathPoints.pointsList.Count > 0)
             {
                 GUILayout.BeginHorizontal();
-                viewIndex = Mathf.Clamp(EditorGUILayout.IntField("Current Item", viewIndex, GUILayout.ExpandWidth(false)), 1, pathPoints.pointsList.Count);
+                viewIndex = Mathf.Clamp(EditorGUILayout.IntField("Current Item", viewIndex, GUILayout.ExpandWidth(false)), 0, pathPoints.pointsList.Count - 1);
                 //Mathf.Clamp (viewIndex, 1, pathPoints.itemList.Count);
                 EditorGUILayout.LabelField("of   " + pathPoints.pointsList.Count.ToString() + "  items", "", GUILayout.ExpandWidth(false));
                 GUILayout.EndHorizontal();
 
-                pathPoints.pointsList[viewIndex - 1].position = EditorGUILayout.Vector3Field("Position", pathPoints.pointsList[viewIndex - 1].position);
-                pathPoints.pointsList[viewIndex - 1].rotation.eulerAngles = EditorGUILayout.Vector3Field("Rotation", pathPoints.pointsList[viewIndex - 1].rotation.eulerAngles);
+                pathPoints.pointsList[viewIndex].position = EditorGUILayout.Vector3Field("Position", pathPoints.pointsList[viewIndex].position);
+                pathPoints.pointsList[viewIndex].rotation.eulerAngles = EditorGUILayout.Vector3Field("Rotation", pathPoints.pointsList[viewIndex].rotation.eulerAngles);
                 
                 GUILayout.Space(10);
             }
@@ -169,7 +178,7 @@ public class PathPointsEditor : EditorWindow
         }
     }
 
-    private void OnSceneGUI()
+    private void OnSceneGUI(SceneView sceneView)
     {
         if (pathPoints.pointsList.Count <= 0)
             return;
@@ -188,7 +197,7 @@ public class PathPointsEditor : EditorWindow
             endDraw = pathPoints.pointsList.Count - 1;
 
         //Transform handleTransform = _target.transform;
-        //Quaternion handleRotation = Tools.pivotRotation == PivotRotation.Local ? handleTransform.rotation : Quaternion.identity;
+        Quaternion handleRotation = /*Tools.pivotRotation == PivotRotation.Local ? handleTransform.rotation : */Quaternion.identity;
 
         Handles.color = Color.blue;
         for (int i = startDraw; i <= endDraw; i++)
@@ -205,20 +214,26 @@ public class PathPointsEditor : EditorWindow
                     Handles.DrawLine(pointInWorldSpace, prevPointInWorldSpace);
                 }
 
-                /*Handles.SphereCap(i, pointInWorldSpace, handleRotation, 0.5f);
+                Handles.SphereCap(i, pointInWorldSpace, handleRotation, 0.5f);
 
-                if (i == _target.activeIndex)
+                if (i == viewIndex)
                 {
                     EditorGUI.BeginChangeCheck();
                     pointInWorldSpace = Handles.DoPositionHandle(pointInWorldSpace, rotation);
                     if (EditorGUI.EndChangeCheck())
-                        ChangePointCoordinates(handleTransform.InverseTransformPoint(pointInWorldSpace));
+                    {
+                        pathPoints.pointsList[i].position = pointInWorldSpace;
+                    }
+                        //ChangePointCoordinates(handleTransform.InverseTransformPoint(pointInWorldSpace));
 
                     EditorGUI.BeginChangeCheck();
                     rotation = Handles.RotationHandle(rotation, pointInWorldSpace);
                     if (EditorGUI.EndChangeCheck())
-                        ChangePointRotation(rotation);
-                }*/
+                    {
+                        pathPoints.pointsList[i].rotation = rotation;
+                    }
+                     //   ChangePointRotation(rotation);
+                }
             }
         }
     }

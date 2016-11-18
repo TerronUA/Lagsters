@@ -113,6 +113,7 @@
     <Compile Include="Assets\Editor\GravityPointDrawer.cs" />
     <Compile Include="Assets\Editor\LevelBlockEditor.cs" />
     <Compile Include="Assets\Editor\LevelCreator\LevelCreatorEditor.cs" />
+    <Compile Include="Assets\Editor\LevelCreator\LevelSplineCreator.cs" />
     <Compile Include="Assets\Editor\PathPoints\PathPointDrawer.cs" />
     <Compile Include="Assets\Editor\PathPoints\PathPointsCreator.cs" />
     <Compile Include="Assets\Editor\PathPoints\PathPointsEditor.cs" />

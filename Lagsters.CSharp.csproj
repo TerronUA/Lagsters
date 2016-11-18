@@ -84,6 +84,9 @@
     <Compile Include="Assets\Scripts\ImageEffects.cs" />
     <Compile Include="Assets\Scripts\LevelBlock.cs" />
     <Compile Include="Assets\Scripts\LevelCreator\LevelCreator.cs" />
+    <Compile Include="Assets\Scripts\LevelCreator\LevelSpline.cs" />
+    <Compile Include="Assets\Scripts\LevelCreator\LevelSplinePoint.cs" />
+    <Compile Include="Assets\Scripts\LevelCreator\LevelSplineSubPoint.cs" />
     <Compile Include="Assets\Scripts\SceneViewCameraFollower.cs" />
     <Compile Include="Assets\Scripts\ToonCarController.cs" />
     <Compile Include="Assets\Scripts\ToonCarUserControl.cs" />
