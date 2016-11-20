@@ -69,6 +69,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Bezier\Bezier.cs" />
+    <Compile Include="Assets\Scripts\Bezier\BezierControlPointMode.cs" />
+    <Compile Include="Assets\Scripts\Bezier\BezierSpline.cs" />
     <Compile Include="Assets\Scripts\CarCamera.cs" />
     <Compile Include="Assets\Scripts\DebugDraw.cs" />
     <Compile Include="Assets\Scripts\EasySuspension.cs" />
