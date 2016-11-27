@@ -11,6 +11,8 @@ public class MeshEditorInspector : Editor
     SerializedProperty pointsOnCircle;
     SerializedProperty splineSteps;
     SerializedProperty radius;
+    SerializedProperty extrudeMesh;
+    SerializedProperty generatedSplineStep;
 
     /// <summary>
     /// Update all serialized properties
@@ -22,6 +24,8 @@ public class MeshEditorInspector : Editor
         pointsOnCircle    = serializedObject.FindProperty("pointsOnCircle");
         splineSteps       = serializedObject.FindProperty("splineSteps");
         radius            = serializedObject.FindProperty("radius");
+        extrudeMesh       = serializedObject.FindProperty("extrudeMesh");
+        generatedSplineStep = serializedObject.FindProperty("generatedSplineStep");
     }
     
     void Awake()
@@ -40,16 +44,73 @@ public class MeshEditorInspector : Editor
         EditorGUILayout.PropertyField(pointsOnCircle, new GUIContent("Points On Circle"));
         EditorGUILayout.PropertyField(splineSteps, new GUIContent("Spline Steps"));
         EditorGUILayout.PropertyField(radius, new GUIContent("Radius"));
+        EditorGUILayout.PropertyField(extrudeMesh, new GUIContent("Extrude Mesh"));
+
+        GUI.enabled = false;
+        EditorGUILayout.PropertyField(generatedSplineStep, new GUIContent("Generated Step"));
+        GUI.enabled = true;
 
         EditorGUILayout.LabelField("Position", EditorStyles.boldLabel);
         EditorGUILayout.Slider(positionOnSpline, 0f, 1f, GUIContent.none);
 
         EditorGUILayout.LabelField("Step", EditorStyles.boldLabel);
+        EditorGUILayout.BeginHorizontal();
         EditorGUILayout.IntSlider(currentSplineStep, 0, _target.splineSteps - 1, GUIContent.none);
+        if (GUILayout.Button("<<"))
+        {
+            if(_target.currentSplineStep > 0)
+                _target.currentSplineStep--;
+            else
+                _target.currentSplineStep = _target.splineSteps - 1;
+            SceneView.RepaintAll();
+        }
+        if (GUILayout.Button(">>"))
+        {
+            if (_target.currentSplineStep < _target.splineSteps - 1)
+                _target.currentSplineStep++;
+            else
+                _target.currentSplineStep = 0;
+            SceneView.RepaintAll();
+        }
+        EditorGUILayout.EndHorizontal();
 
+        //GUI.enabled = ! _target.isMeshEmpty;
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Create First Step"))
+        {
+            _target.CreateFirstStepMesh();
+            SceneView.RepaintAll();
+        }
+        if (GUILayout.Button("Create Next Step"))
+        {
+            for (int i = 0; i < _target.splineSteps; i++)
+            {
+                if (i == 0)
+                    _target.CreateFirstStepMesh();
+                else if (i == _target.splineSteps - 1)
+                    _target.CreateLastStepMesh();
+                else
+                    _target.CreateNextStepMesh();
+
+                SceneView.RepaintAll();
+            }
+        }
+        if (GUILayout.Button("Create Closed"))
+        {
+            _target.CreateMesh();
+            SceneView.RepaintAll();
+        }
+        EditorGUILayout.EndHorizontal();
+
+        GUI.enabled = true;
         if (GUILayout.Button("Generate Edge"))
         {
-            _target.CreateNewEdge( 1f / _target.splineSteps * _target.currentSplineStep );
+            _target.CreateNewEdge( _target.currentSplineStep );
+            SceneView.RepaintAll();
+        }
+        if (GUILayout.Button("Extrude edge"))
+        {
+            _target.ExtrudeMesh();
             SceneView.RepaintAll();
         }
 
