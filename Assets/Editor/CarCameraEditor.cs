@@ -15,7 +15,7 @@ public class CarCameraEditor : Editor
         if (GUILayout.Button("Use current viev"))
         {
             CarCamera _target = target as CarCamera;
-            sceneViews = SceneView.sceneViews;
+            //sceneViews = SceneView.sceneViews;
 
             if (_target.follow)
             {

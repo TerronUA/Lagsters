@@ -6,7 +6,6 @@ using System.Collections;
 public class MeshEditorInspector : Editor
 {
     MeshEditor _target;
-    SerializedProperty positionOnSpline;
     SerializedProperty currentSplineStep;
     SerializedProperty pointsOnCircle;
     SerializedProperty splineSteps;
@@ -19,12 +18,10 @@ public class MeshEditorInspector : Editor
     /// </summary>
     void ReloadSerializedProperties()
     {
-        positionOnSpline  = serializedObject.FindProperty("positionOnSpline");
         currentSplineStep = serializedObject.FindProperty("currentSplineStep");
         pointsOnCircle    = serializedObject.FindProperty("pointsOnCircle");
         splineSteps       = serializedObject.FindProperty("splineSteps");
         radius            = serializedObject.FindProperty("radius");
-        extrudeMesh       = serializedObject.FindProperty("extrudeMesh");
         generatedSplineStep = serializedObject.FindProperty("generatedSplineStep");
     }
     
@@ -41,28 +38,35 @@ public class MeshEditorInspector : Editor
         ReloadSerializedProperties();
 
         //base.OnInspectorGUI();
+
+        MeshEditorGUI();
+
+        PathEditorGUI();
+
+        // Save changed properties
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    private void MeshEditorGUI()
+    {
+        EditorGUILayout.LabelField("Mesh Editor", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(pointsOnCircle, new GUIContent("Points On Circle"));
         EditorGUILayout.PropertyField(splineSteps, new GUIContent("Spline Steps"));
         EditorGUILayout.PropertyField(radius, new GUIContent("Radius"));
-        EditorGUILayout.PropertyField(extrudeMesh, new GUIContent("Extrude Mesh"));
 
         GUI.enabled = false;
         EditorGUILayout.PropertyField(generatedSplineStep, new GUIContent("Generated Step"));
         GUI.enabled = true;
-
-        EditorGUILayout.LabelField("Position", EditorStyles.boldLabel);
-        EditorGUILayout.Slider(positionOnSpline, 0f, 1f, GUIContent.none);
 
         EditorGUILayout.LabelField("Step", EditorStyles.boldLabel);
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.IntSlider(currentSplineStep, 0, _target.splineSteps - 1, GUIContent.none);
         if (GUILayout.Button("<<"))
         {
-            if(_target.currentSplineStep > 0)
+            if (_target.currentSplineStep > 0)
                 _target.currentSplineStep--;
             else
                 _target.currentSplineStep = _target.splineSteps - 1;
-            SceneView.RepaintAll();
         }
         if (GUILayout.Button(">>"))
         {
@@ -70,16 +74,13 @@ public class MeshEditorInspector : Editor
                 _target.currentSplineStep++;
             else
                 _target.currentSplineStep = 0;
-            SceneView.RepaintAll();
         }
         EditorGUILayout.EndHorizontal();
 
-        //GUI.enabled = ! _target.isMeshEmpty;
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Create First Step"))
         {
             _target.CreateFirstStepMesh();
-            SceneView.RepaintAll();
         }
         if (GUILayout.Button("Create Next Step"))
         {
@@ -91,34 +92,26 @@ public class MeshEditorInspector : Editor
                     _target.CreateLastStepMesh();
                 else
                     _target.CreateNextStepMesh();
-
-                SceneView.RepaintAll();
             }
         }
         if (GUILayout.Button("Create Closed"))
         {
-            _target.CreateMesh();
-            SceneView.RepaintAll();
+            _target.CreateMeshWithClosedStart();
         }
         EditorGUILayout.EndHorizontal();
 
         GUI.enabled = true;
         if (GUILayout.Button("Generate Edge"))
         {
-            _target.CreateNewEdge( _target.currentSplineStep );
-            SceneView.RepaintAll();
+            _target.CreateNewEdge(_target.currentSplineStep);
         }
-        if (GUILayout.Button("Extrude edge"))
-        {
-            _target.ExtrudeMesh();
-            SceneView.RepaintAll();
-        }
-
-        // Save changed properties
-        serializedObject.ApplyModifiedProperties();
     }
 
+    private void PathEditorGUI()
+    {
+        EditorGUILayout.LabelField("Path Editor", EditorStyles.boldLabel);
 
+    }
 
     private void OnSceneGUI()
     {

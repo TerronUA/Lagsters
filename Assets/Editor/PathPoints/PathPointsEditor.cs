@@ -149,6 +149,7 @@ public class PathPointsEditor : EditorWindow
             {
                 DeleteItem(viewIndex);
             }
+            
             GUI.enabled = true;
 
             GUILayout.EndHorizontal();

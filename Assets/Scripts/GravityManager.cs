@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GravityManager : MonoBehaviour
 {
@@ -23,11 +24,16 @@ public class GravityManager : MonoBehaviour
         }
     }
 
+    public BezierSpline spline;
+    public int splinePoinsAmount = 50;
+
     public int activeIndex = -1;
 
     public PathPoints pathPoints;
 
     public PathPoint activePoint = null;
+
+    private List<Vector3> hitPoints;
 
     public PathPoint ActivePoint
     {
@@ -101,6 +107,16 @@ public class GravityManager : MonoBehaviour
     {
         pathPoints.pointsList.Clear();
 
+        // Delete all child objects with colliders
+        int j = 0;
+        int childs = transform.childCount;
+        for (int i = childs - 1; i >= 0; i--)
+        {
+            GameObject.DestroyImmediate(transform.GetChild(i).gameObject);
+            j++;
+        }
+
+        Debug.Log("Destroyed " + j + " child objects");
         activeIndex = -1;
         UpdateActivePoint();
 
@@ -125,39 +141,92 @@ public class GravityManager : MonoBehaviour
         else
             otherPoint = points[activeIndex + 1].position;
 
-        activePoint.position = CalculateNewPointPosition(activePoint.position, otherPoint);
-
+        activePoint.position = CalculateNewPointPosition(activePoint.position, activePoint.raycastDistance);
+/*
         // Calculate new forward direction
         otherPoint = activePoint.position + (activePoint.position - otherPoint).normalized;
         Debug.DrawLine(activePoint.position, otherPoint * 3);
-        otherPoint = CalculateNewPointPosition(otherPoint, activePoint.position);
+        otherPoint = CalculateNewPointPosition(otherPoint, activePoint.position, activePoint.raycastDistance);
         Debug.DrawLine(activePoint.position, otherPoint * 3, Color.cyan);
         activePoint.rotation = Quaternion.LookRotation(otherPoint);
+*/
     }
 
-    Vector3 CalculateNewPointPosition(Vector3 point, Vector3 previousPoint)
+    public void GeneratePointsOnBezier()
     {
-        const int countRealignPoint = 15;
-        Vector3 newPos;
         
-        for (int i = 0; i < countRealignPoint; i++)
+        if (pathPoints == null)
+            return;
+
+        if (spline == null)
+            return;
+
+        DeleteAllPoints();
+
+        float progress = 0;
+
+        for (int i = 0; i < splinePoinsAmount; i++)
         {
-            Vector3 p1 = Vector3.Cross(point - previousPoint, Vector3.one).normalized;
-            Vector3 p2 = Vector3.Cross(point - previousPoint, point - p1).normalized;
+            if (i > 0)
+                progress = 1f / splinePoinsAmount * (i);
 
-            RaycastHit hit;
+            PathPoint newPoint = new PathPoint();
 
-            List<Vector3> hitPoints = new List<Vector3>();
+            newPoint.position = spline.GetPoint(progress);
+            newPoint.rotation = Quaternion.LookRotation(spline.GetDirection(progress));
+            newPoint.gravity = gravity;
 
-            // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(point, p1, out hit, Mathf.Infinity, layerMask))
-                hitPoints.Add(hit.point);
-            if (Physics.Raycast(point, -p1, out hit, Mathf.Infinity, layerMask))
-                hitPoints.Add(hit.point);
-            if (Physics.Raycast(point, p2, out hit, Mathf.Infinity, layerMask))
-                hitPoints.Add(hit.point);
-            if (Physics.Raycast(point, -p2, out hit, Mathf.Infinity, layerMask))
-                hitPoints.Add(hit.point);
+            GameObject go = new GameObject("Path collider " + i);
+
+            go.transform.parent = gameObject.transform;
+            go.transform.position = newPoint.position;
+            go.transform.rotation = newPoint.rotation;
+            BoxCollider collider = go.AddComponent<BoxCollider>();
+            collider.size = new Vector3(10f, 10f, 0.05f);
+            collider.isTrigger = true;
+
+            PathNodeCollider pn = go.AddComponent<PathNodeCollider>();
+            pn.indexGravityNode = i;
+
+            newPoint.collider = collider;
+
+            pathPoints.pointsList.Add(newPoint);
+        }
+
+        if (pathPoints.pointsList.Count > 0)
+            activeIndex = 0;
+
+        UpdateActivePoint();
+    }
+
+
+    Vector3 CalculateNewPointPosition(Vector3 point, float rayCastDistance = Mathf.Infinity)
+    {
+        Vector3 newPos = point;
+        RaycastHit hit;
+
+        Vector3[] directions = GetSphereDirections(16);
+
+        for (int i = 0; i < 15; i++)
+        {
+            if (hitPoints == null)
+                hitPoints = new List<Vector3>();
+            else
+                hitPoints.Clear();
+
+            foreach (var direction in directions)
+            {
+                if (Physics.Raycast(point, direction, out hit, rayCastDistance, layerMask))
+                {
+                    hitPoints.Add(hit.point);
+                    //Debug.DrawLine(point, hit.point, Color.blue);
+                }
+            }
+
+            Debug.Log("hitPoints.Count = " + hitPoints.Count);
+
+            if (hitPoints.Count == 0)
+                return point;
 
             newPos = Vector3.zero;
             foreach (var pt in hitPoints)
@@ -168,17 +237,58 @@ public class GravityManager : MonoBehaviour
             point = newPos;
         }
 
-        return point;
+        return newPos;
     }
 
-    // Use this for initialization
-    void Start()
+    /// <summary>
+    /// Create random vectors to raycast in 360 deg around point;
+    /// </summary>
+    /// <param name="numDirections">Number of required directions</param>
+    /// <returns></returns>
+    private Vector3[] GetSphereDirections(int numDirections)
     {
-        //if (points == null)
-        //  points = new List<GravityPoint>();
-    }
+        var pts = new Vector3[numDirections];
+        var inc = Mathf.PI * (3 - Mathf.Sqrt(5));
+        var off = 2f / numDirections;
 
-    void Update()
+        foreach (var k in Enumerable.Range(0, numDirections))
+        {
+            var y = k * off - 1 + (off / 2);
+            var r = Mathf.Sqrt(1 - y * y);
+            var phi = k * inc;
+            var x = (float)(Mathf.Cos(phi) * r);
+            var z = (float)(Mathf.Sin(phi) * r);
+            pts[k] = new Vector3(x, y, z);
+        }
+
+        return pts;
+    }
+    
+    private void OnDrawGizmos()
     {
+        if (points.Count <= 0)
+            return;
+
+        PathPoint nextPoint;
+        Gizmos.color = Color.blue;
+        for (int i = 0; i < points.Count; i++)
+        {
+            if (i < points.Count - 1)
+                nextPoint = points[i + 1];
+            else
+                nextPoint = points[0];
+
+            Gizmos.DrawLine(points[i].position, nextPoint.position);
+        }
+
+        if ((hitPoints == null) || (hitPoints.Count <= 0))
+            return;
+
+        Gizmos.color = Color.red;
+        for (int i = 0; i < hitPoints.Count; i++)
+        {
+            Gizmos.DrawSphere(hitPoints[i], 0.1f);
+        }
     }
 }
+

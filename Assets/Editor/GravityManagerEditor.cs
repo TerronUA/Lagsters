@@ -13,6 +13,9 @@ public class GravityManagerEditor : Editor
     SerializedProperty gravity;
     SerializedProperty pathPoints;
     SerializedProperty layerMask;
+    SerializedProperty spline;
+    SerializedProperty splinePoinsAmount;
+
     static GravityManagerEditor editor;
 
     const int drawPointsCount = 3;
@@ -31,6 +34,8 @@ public class GravityManagerEditor : Editor
         gravity = serializedObject.FindProperty("gravity");
         pathPoints = serializedObject.FindProperty("pathPoints");
         layerMask = serializedObject.FindProperty("layerMask");
+        spline = serializedObject.FindProperty("spline");
+        splinePoinsAmount = serializedObject.FindProperty("splinePoinsAmount");
     }
 
     /// <summary>
@@ -77,12 +82,20 @@ public class GravityManagerEditor : Editor
 
         //base.OnInspectorGUI();
 
-        DrawDefaultParms();
+        InspectorDefaultGUI();
 
-        DrawSelectedPoint();
+        InspectorSelectedPointGUI();
+
+        InspectorSplineGenerationGUI();
 
         // Save changed properties
         serializedObject.ApplyModifiedProperties();
+
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(_target);
+            EditorUtility.SetDirty(_target.pathPoints);
+        }
     }
 
     private void OnSceneGUI()
@@ -111,15 +124,8 @@ public class GravityManagerEditor : Editor
         {
             if (_target.points[i] != null)
             {
-                Vector3 pointInWorldSpace = handleTransform.TransformPoint(_target.points[i].position);
+                Vector3 pointInWorldSpace = _target.points[i].position;// handleTransform.TransformPoint(_target.points[i].position);
                 Quaternion rotation = _target.points[i].rotation;
-
-                // Connect points with line
-                if (i > startDraw)
-                {
-                    Vector3 prevPointInWorldSpace = handleTransform.TransformPoint(_target.points[i - 1].position);
-                    Handles.DrawLine(pointInWorldSpace, prevPointInWorldSpace);
-                }
 
                 Handles.SphereCap(i, pointInWorldSpace, handleRotation, 0.5f);
 
@@ -128,7 +134,7 @@ public class GravityManagerEditor : Editor
                     EditorGUI.BeginChangeCheck();
                     pointInWorldSpace = Handles.DoPositionHandle(pointInWorldSpace, rotation);
                     if (EditorGUI.EndChangeCheck())
-                        ChangePointCoordinates(handleTransform.InverseTransformPoint(pointInWorldSpace));
+                        ChangePointCoordinates(pointInWorldSpace/*handleTransform.InverseTransformPoint(pointInWorldSpace)*/);
 
                     EditorGUI.BeginChangeCheck();
                     rotation = Handles.RotationHandle(rotation, pointInWorldSpace);
@@ -140,13 +146,38 @@ public class GravityManagerEditor : Editor
     }
 
     /// <summary>
-    /// Draw defaule point params and actions buttons
+    /// Generate points based on bezier spline
     /// </summary>
-    private void DrawDefaultParms()
+    private void InspectorSplineGenerationGUI()
+    {
+        GUIStyle s = new GUIStyle(EditorStyles.largeLabel);
+        s.fontStyle = FontStyle.Bold;
+
+        GUILayout.Label("Bezier",  s);
+
+        EditorGUILayout.PropertyField(spline, new GUIContent("Spline"));
+        EditorGUILayout.PropertyField(splinePoinsAmount, new GUIContent("Points on spline"));
+        if (GUILayout.Button("Generate"))
+        {
+            if (EditorUtility.DisplayDialog("Generate new points", "Generation will delete all already exists points.\nAre you shure?", "Yes", "No"))
+            {
+                _target.GeneratePointsOnBezier();
+                SceneView.RepaintAll();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Draw default manager params and action buttons
+    /// </summary>
+    private void InspectorDefaultGUI()
     {
         EditorGUILayout.PropertyField(pathPoints, new GUIContent("Path Points"));
 
-        GUILayout.Label("Default params", EditorStyles.boldLabel);
+        GUIStyle s = new GUIStyle(EditorStyles.largeLabel);
+        s.fontStyle = FontStyle.Bold;
+
+        GUILayout.Label("Default params", s);
 
         EditorGUILayout.Slider(offset, 0, 100, new GUIContent("Offset"));
 
@@ -201,9 +232,16 @@ public class GravityManagerEditor : Editor
         GUILayout.EndHorizontal();
     }
 
-    private void DrawSelectedPoint()
+    private void InspectorSelectedPointGUI()
     {
-        EditorGUILayout.LabelField("Selected Item", EditorStyles.boldLabel);
+        if ((_target == null) || (_target.points == null) || (_target.points.Count == 0))
+            return;
+
+        GUIStyle s = new GUIStyle(EditorStyles.largeLabel);
+        s.fontStyle = FontStyle.Bold;
+
+        EditorGUILayout.LabelField("Selected Item", s);
+
         EditorGUILayout.IntSlider(activeItemIndex, 0, _target.points.Count - 1, GUIContent.none);
 
         // Display selected item
@@ -250,20 +288,14 @@ public class GravityManagerEditor : Editor
             eulerRotation = EditorGUI.Vector3Field(contentPosition, GUIContent.none, eulerRotation);
             activeItemRotation.quaternionValue = Quaternion.Euler(eulerRotation);
 
-            //EditorGUI.PropertyField(contentPosition, activeItemRotation.FindPropertyRelative("x"));
-
-            //contentPosition.x += contentPosition.width;
-            //EditorGUI.PropertyField(contentPosition, activeItemRotation.FindPropertyRelative("y"));
-
-            //contentPosition.x += contentPosition.width;
-            //EditorGUI.PropertyField(contentPosition, activeItemRotation.FindPropertyRelative("z"));
-
             EditorGUI.EndProperty();
 
             EditorGUIUtility.labelWidth = labelWidth;
             EditorGUILayout.Slider(activeItem.FindPropertyRelative("gravity"), -20, 20, new GUIContent("Gravity"));
 
             EditorGUILayout.PropertyField(layerMask, new GUIContent("Layer"));
+
+            EditorGUILayout.PropertyField(activeItem.FindPropertyRelative("raycastDistance"), new GUIContent("RayCast Distance"));
 
             GUILayout.BeginHorizontal();
 
