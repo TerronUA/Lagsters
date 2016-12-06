@@ -56,6 +56,7 @@ namespace UnityStandardAssets.CrossPlatformInput
         private void Update()
         {
             float angle = 0;
+            
             if (Input.acceleration != Vector3.zero)
             {
                 switch (tiltAroundAxis)
