@@ -5,14 +5,20 @@ using System.Collections;
 public class GravityBody : MonoBehaviour
 {
     public GravityManager gm;
+
+    [HideInInspector]
     public Vector3 startPoint;
+    [HideInInspector]
     public Vector3 endPoint;
+    [HideInInspector]
+    public Vector3 gravityPosition;
+
     public float gravity = 10f;
     public GameObject gravityObject;
     public GameObject startObject;
     public GameObject endObject;
     private Rigidbody rbody;
-    private Vector3 gravityPosition;
+
     private Vector3 centerOfMass;
     private bool canPlay = false;
 

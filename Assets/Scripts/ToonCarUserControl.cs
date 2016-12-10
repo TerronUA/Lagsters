@@ -28,10 +28,10 @@ namespace Lagsters.Car
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
             m_Car.Move(h, v, v, handbrake);
-            speedDisplay.text = Math.Truncate(m_Car.CurrentSpeed).ToString();
 #else
             m_Car.Move(h, v, v, 0f);
 #endif
+            speedDisplay.text = Math.Truncate(m_Car.CurrentSpeed).ToString();
         }
     }
 }

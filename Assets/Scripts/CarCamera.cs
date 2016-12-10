@@ -17,10 +17,13 @@ public class CarCamera : MonoBehaviour
 
     private Vector3 lookDir;
     private Vector3 targetPosition;
+    private Transform cameraTransform;
 
     // Use this for initialization
     void Start()
     {
+        cameraTransform = transform;
+
         follow = GameObject.FindWithTag("Player").transform;
     }
 
@@ -42,18 +45,22 @@ public class CarCamera : MonoBehaviour
     {
         targetPosition = follow.position + follow.up * distanceUp - follow.forward * distanceAway;
 
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smooth);
+        cameraTransform.position = Vector3.Lerp(cameraTransform.position, targetPosition, Time.deltaTime * smooth);
+        
+        Vector3 targetDir = follow.position - cameraTransform.position + offset;
+        Vector3 newDir = Vector3.RotateTowards(cameraTransform.forward, targetDir, smoothRotation * Time.deltaTime, 0.0F);
 
-        Vector3 targetDir = follow.position - transform.position + offset;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, smoothRotation * Time.deltaTime, 0.0F);
+        Debug.DrawRay(cameraTransform.position, newDir, Color.red);
 
-        Debug.DrawRay(transform.position, newDir, Color.red);
+        cameraTransform.rotation = Quaternion.LookRotation(newDir);
 
-        transform.rotation = Quaternion.LookRotation(newDir);
+        Debug.DrawRay(cameraTransform.position, cameraTransform.up, Color.yellow);
 
-        transform.up = follow.up;
-        Debug.DrawRay(transform.position, transform.up, Color.yellow);
+        cameraTransform.up = follow.up;
 
-        transform.LookAt(follow.position + offset, transform.up);
+        Quaternion cameraRotation = Quaternion.LookRotation(cameraTransform.forward, cameraTransform.up);
+
+        Vector3 newOffset = cameraRotation * offset;
+        cameraTransform.LookAt(follow.position + newOffset, cameraTransform.up);
     }
 }
