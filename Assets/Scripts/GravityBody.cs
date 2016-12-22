@@ -97,7 +97,7 @@ public class GravityBody : MonoBehaviour
     }
 
     private void OnDrawGizmos()
-    {
+    {/*
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(startPoint, 0.3f);
 
@@ -105,6 +105,6 @@ public class GravityBody : MonoBehaviour
         Gizmos.DrawSphere(endPoint, 0.3f);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(centerOfMass, 0.3f);
+        Gizmos.DrawSphere(centerOfMass, 0.3f);*/
     }
 }
