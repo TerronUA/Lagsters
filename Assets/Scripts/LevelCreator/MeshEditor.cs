@@ -101,6 +101,7 @@ public class MeshEditor : MonoBehaviour
         mesh.Clear();
 
         Array.Resize(ref meshVertices, pointsOnCircle * 2);
+        Vector2[] uv = new Vector2[pointsOnCircle * 2];
 
         for (int j = 0, k = 0; j < 2; j++)
         {
