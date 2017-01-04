@@ -14,302 +14,602 @@ MonoBehaviour:
   layer: 8
   drawPointsCount: 3
   pointsList:
-  - position: {x: 1, y: 0, z: 6}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: 2, y: 0, z: 0}
+    rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 1.0000001, y: 0, z: 8.816769}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 1, y: 0, z: 15.209344}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 0.9999999, y: 0, z: 23.531132}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 1, y: 0, z: 32.13555}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 1, y: 0, z: 39.376}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 1, y: 0, z: 43.60589}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 1.205632, y: 0, z: 45.79136}
-    rotation: {x: 0, y: 0.110892124, z: 0, w: 0.99383247}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 2.044288, y: 0, z: 48.09024}
-    rotation: {x: 0, y: 0.2319103, z: 0, w: 0.9727372}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 3.3928964, y: 0, z: 50.17408}
-    rotation: {x: 0, y: 0.3319187, z: 0, w: 0.943308}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 5.104, y: 0, z: 51.920002}
-    rotation: {x: 0, y: 0.42415544, z: 0, w: 0.90558946}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 7.030144, y: 0, z: 53.20512}
-    rotation: {x: 0, y: 0.5220552, z: 0, w: 0.8529118}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 9.023871, y: 0, z: 53.90656}
-    rotation: {x: 0, y: 0.6390687, z: 0, w: 0.7691497}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 10.3854065, y: 0, z: 54}
+  - position: {x: 6.896, y: 0, z: 0}
     rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 11.881216, y: 0, z: 54}
+  - position: {x: 17.887999, y: 0, z: 0}
     rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 14.016001, y: 0, z: 54}
+  - position: {x: 31.231998, y: 0, z: 0}
     rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 16.396544, y: 0, z: 54}
+  - position: {x: 43.184, y: 0, z: 0}
     rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 18.629633, y: 0, z: 54}
+  - position: {x: 50, y: 0, z: 0}
     rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 20.322048, y: 0, z: 53.999996}
+  - position: {x: 52.960003, y: 0, z: 0.55999964}
+    rotation: {x: 0, y: 0.5695949, z: 0, w: 0.8219256}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 55.68, y: 0, z: 2.08}
+    rotation: {x: 0, y: 0.4438225, z: 0, w: 0.89611477}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 57.92, y: 0, z: 4.3199987}
+    rotation: {x: 0, y: 0.319819, z: 0, w: 0.94747865}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 59.440002, y: 0, z: 7.040001}
+    rotation: {x: 0, y: 0.17842473, z: 0, w: 0.9839536}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 60, y: 0, z: 10}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 59.999996, y: 0, z: 16.640001}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 60, y: 0, z: 28.319992}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 59.999996, y: 0, z: 41.679993}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 60, y: 0, z: 53.359997}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 60, y: 0, z: 60}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 59.44, y: 0, z: 62.959995}
+    rotation: {x: 0, y: -0.17842464, z: -0, w: 0.9839536}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 57.919994, y: 0, z: 65.68}
+    rotation: {x: 0, y: -0.319819, z: -0, w: 0.94747865}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 55.679996, y: 0, z: 67.92}
+    rotation: {x: 0, y: -0.44382256, z: -0, w: 0.8961147}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 52.96, y: 0, z: 69.44}
+    rotation: {x: 0, y: -0.5695948, z: -0, w: 0.82192564}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 50, y: 0, z: 70}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 44.062515, y: 0, z: 70}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 34.18752, y: 0, z: 70}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 23.281288, y: 0, z: 70}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 14.25004, y: 0, z: 70}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 10, y: 0, z: 70}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 7.040003, y: -0.16374707, z: 69.44}
+    rotation: {x: 0.029194994, y: -0.8208452, z: 0.042128373, w: 0.56884634}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 4.3199987, y: -0.6112424, z: 67.92}
+    rotation: {x: -0.03928196, y: 0.8925979, z: -0.07931358, w: -0.44208062}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 2.0800009, y: -1.2768629, z: 65.68}
+    rotation: {x: -0.037221696, y: 0.9410399, z: -0.11027101, w: -0.31764558}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 0.56000155, y: -2.0949883, z: 62.96}
+    rotation: {x: -0.024580188, y: 0.9745719, z: -0.1355514, w: -0.17672382}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 0, y: -3, z: 60}
+    rotation: {x: 0, y: 0.98880357, z: -0.14922328, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 0, y: -3.3969898, z: 58.684826}
+    rotation: {x: 0, y: 0.9893935, z: -0.14526063, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 0, y: -4.0984936, z: 56.34242}
+    rotation: {x: 0, y: 0.989457, z: -0.14482704, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 0, y: -4.9015064, z: 53.657578}
+    rotation: {x: 0, y: 0.989457, z: -0.14482704, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 0, y: -5.6030107, z: 51.31517}
+    rotation: {x: 0, y: 0.9893935, z: -0.14526062, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 0, y: -6, z: 50}
+    rotation: {x: 0, y: 0.98880357, z: -0.14922325, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 0.56000155, y: -6.802242, z: 47.039993}
+    rotation: {x: 0.01972002, y: 0.9779254, z: -0.1087492, w: 0.17733195}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 2.0800009, y: -7.4148264, z: 44.32}
+    rotation: {x: 0.027320167, y: 0.9440154, z: -0.08093727, w: 0.31864995}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 4.3199987, y: -7.9262915, z: 42.079998}
+    rotation: {x: 0.0340476, y: 0.89347404, z: -0.068744965, w: 0.44251454}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 7.0399957, y: -8.425171, z: 40.559998}
+    rotation: {x: 0.04782914, y: 0.81902295, z: -0.06901751, w: 0.56758296}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 10, y: -9, z: 40}
+    rotation: {x: 0.07443347, y: 0.70317835, z: -0.07443347, w: 0.7031783}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 11.32256, y: -9.368305, z: 40}
+    rotation: {x: 0.10111255, y: 0.6998401, z: -0.10111255, w: 0.6998402}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 13.663635, y: -10.074177, z: 40}
+    rotation: {x: 0.10434545, y: 0.69936544, z: -0.10434545, w: 0.69936544}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 16.343441, y: -10.895899, z: 40}
+    rotation: {x: 0.10499726, y: 0.6992679, z: -0.10499726, w: 0.69926786}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 18.68216, y: -11.611746, z: 40}
+    rotation: {x: 0.1037594, y: 0.69945264, z: -0.1037594, w: 0.69945264}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 20, y: -12, z: 40}
+    rotation: {x: 0.08943175, y: 0.70142853, z: -0.08943175, w: 0.70142853}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 22.96, y: -12.809689, z: 40.559998}
+    rotation: {x: 0.10736623, y: 0.5647144, z: -0.07440487, w: 0.8148829}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 25.679995, y: -13.615898, z: 42.079994}
+    rotation: {x: 0.10666609, y: 0.4406673, z: -0.052828986, w: 0.8897437}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 27.919994, y: -14.317265, z: 44.319992}
+    rotation: {x: 0.090717405, y: 0.31834996, z: -0.03062146, w: 0.94312567}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 29.440002, y: -14.812422, z: 47.04}
+    rotation: {x: 0.057014383, y: 0.17812485, z: -0.010338671, w: 0.9823004}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 30, y: -15, z: 50}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 30, y: -15, z: 55.391994}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 30, y: -15, z: 67.45597}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 30, y: -15, z: 81.82396}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 30, y: -15, z: 94.128006}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 30, y: -15, z: 100}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 29.44, y: -15, z: 102.576}
+    rotation: {x: 0, y: -0.18986268, z: -0, w: 0.9818107}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 27.920004, y: -15, z: 105.247986}
+    rotation: {x: 0, y: -0.31340274, z: -0, w: 0.94962037}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 25.680008, y: -15, z: 107.631996}
+    rotation: {x: 0, y: -0.4228851, z: -0, w: 0.9061833}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 22.96001, y: -15, z: 109.343994}
+    rotation: {x: 0, y: -0.548813, z: -0, w: 0.8359452}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 20, y: -15, z: 110}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 14.511963, y: -15.000001, z: 110.00001}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: 2.2560263, y: -15, z: 110}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -12.256027, y: -15, z: 110}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -24.511963, y: -15, z: 110}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -30, y: -15, z: 110}
+    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -32.96001, y: -15.000001, z: 109.44}
+    rotation: {x: 0, y: -0.821926, z: 0, w: 0.5695943}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -35.680008, y: -15, z: 107.91999}
+    rotation: {x: 0, y: 0.8961149, z: 0, w: -0.44382212}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -37.920002, y: -15, z: 105.67999}
+    rotation: {x: 0, y: 0.9474788, z: 0, w: -0.3198187}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -39.440002, y: -15, z: 102.96}
+    rotation: {x: 0, y: 0.9839536, z: 0, w: -0.17842464}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -15, z: 100}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -15, z: 97.632}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -15, z: 92.815994}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -15, z: 87.18399}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -15, z: 82.368}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -15, z: 80}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -14.7, z: 78.328}
+    rotation: {x: 0, y: 0.982715, z: 0.18512496, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -13.800002, z: 76.944}
+    rotation: {x: 0, y: 0.9257628, z: 0.3781049, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -12.300005, z: 75.896}
+    rotation: {x: 0, y: 0.84638405, z: 0.53257304, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -10.199998, z: 75.232}
+    rotation: {x: 0, y: 0.77027935, z: 0.63770664, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -7.5, z: 75}
+    rotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40.000004, y: -4.7999907, z: 74.768}
+    rotation: {x: 0, y: 0.77027965, z: 0.6377063, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -2.7000034, z: 74.104004}
+    rotation: {x: 0, y: 0.84638363, z: 0.5325737, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -1.1999977, z: 73.05599}
+    rotation: {x: 0, y: 0.9257628, z: 0.3781049, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: -0.30000228, z: 71.672005}
+    rotation: {x: 0, y: 0.98271483, z: 0.18512592, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: 0, z: 70}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40.000004, y: 0, z: 63.471954}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: 0, z: 48.73603}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: 0, z: 31.263968}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: 0, z: 16.528046}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -40, y: 0, z: 10}
+    rotation: {x: 0, y: 1, z: 0, w: 0}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -39.44, y: 0, z: 6.6559887}
+    rotation: {x: 0, y: 0.9857478, z: 0, w: 0.16822991}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -37.920002, y: 0, z: 3.8880048}
+    rotation: {x: 0, y: 0.94521266, z: 0, w: 0.3264554}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -35.679993, y: 0, z: 1.7919967}
+    rotation: {x: 0, y: 0.8847395, z: 0, w: 0.46608588}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -32.96001, y: 0, z: 0.46400347}
+    rotation: {x: 0, y: 0.80681247, z: 0, w: 0.5908076}
+    gravity: -10
+    raycastDistance: 5
+    collider: {fileID: 0}
+    colliderReverse: {fileID: 0}
+  - position: {x: -30, y: 0, z: 0}
     rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 21.599678, y: 0, z: 53.97632}
-    rotation: {x: 0, y: 0.7342631, z: 0, w: 0.678865}
+  - position: {x: -24.94402, y: 0, z: 0}
+    rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 23.960003, y: 0, z: 53.44}
-    rotation: {x: 0, y: 0.82192564, z: 0, w: 0.5695948}
+  - position: {x: -22.191978, y: 0, z: 0}
+    rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 26.16672, y: 0, z: 52.289284}
-    rotation: {x: 0, y: 0.88355887, z: 0, w: 0.46832013}
+  - position: {x: -18.76799, y: 0, z: 0}
+    rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
     colliderReverse: {fileID: 0}
-  - position: {x: 28.096962, y: 0, z: 50.64704}
-    rotation: {x: 0, y: 0.92890114, z: 0, w: 0.37032774}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 29.62784, y: 0, z: 48.636158}
-    rotation: {x: 0, y: 0.9638199, z: 0, w: 0.26655442}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 30.636478, y: 0, z: 46.37952}
-    rotation: {x: 0, y: 0.9892578, z: 0, w: 0.1461814}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 31, y: 0, z: 44}
-    rotation: {x: 0, y: 1, z: 0, w: 0}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 30.999998, y: 0, z: 41.058105}
-    rotation: {x: 0, y: 1, z: 0, w: 0}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 30.999998, y: 0, z: 34.38659}
-    rotation: {x: 0, y: 1, z: 0, w: 0}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 31.000002, y: 0, z: 25.776724}
-    rotation: {x: 0, y: 1, z: 0, w: 0}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 31, y: 0, z: 17.01975}
-    rotation: {x: 0, y: 1, z: 0, w: 0}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 31, y: 0, z: 9.906906}
-    rotation: {x: 0, y: 1, z: 0, w: 0}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 31, y: 0, z: 6.229484}
-    rotation: {x: 0, y: 1, z: 0, w: 0}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 30.792639, y: 0, z: 3.7480147}
-    rotation: {x: 0, y: 0.9956594, z: 0, w: -0.093072064}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 29.93376, y: 0, z: 1.1509899}
-    rotation: {x: 0, y: 0.97351235, z: 0, w: -0.22863455}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 28.52192, y: 0, z: -0.90556026}
-    rotation: {x: 0, y: 0.93160796, z: 0, w: -0.3634647}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 26.679998, y: 0, z: -2.4322195}
-    rotation: {x: 0, y: 0.87509465, z: 0, w: -0.48395178}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 24.530876, y: 0, z: -3.4395664}
-    rotation: {x: 0, y: -0.81092685, z: 0, w: 0.58514756}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 22.197437, y: 0, z: -3.9381702}
-    rotation: {x: 0, y: -0.7427455, z: 0, w: 0.6695738}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 20.614592, y: 0, z: -4}
-    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 19.118786, y: 0, z: -4}
-    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 16.984, y: 0, z: -4}
-    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 14.6034565, y: 0, z: -4}
-    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 12.370371, y: 0, z: -4}
-    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 10.677951, y: 0, z: -4}
-    rotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 9.404993, y: 0, z: -3.97632}
-    rotation: {x: 0, y: -0.67841727, z: -0, w: 0.7346769}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 7.1440024, y: 0, z: -3.440001}
-    rotation: {x: 0, y: -0.55999184, z: -0, w: 0.8284981}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 5.128767, y: 0, z: -2.2892787}
-    rotation: {x: 0, y: -0.4447506, z: -0, w: 0.89565444}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 3.4330244, y: 0, z: -0.6470402}
-    rotation: {x: 0, y: -0.33621845, z: -0, w: 0.941784}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 2.1304972, y: 0, z: 1.3638376}
-    rotation: {x: 0, y: -0.2305157, z: -0, w: 0.9730686}
-    gravity: -10
-    raycastDistance: 5
-    collider: {fileID: 0}
-    colliderReverse: {fileID: 0}
-  - position: {x: 1.2949114, y: 0, z: 3.620482}
-    rotation: {x: 0, y: -0.1207632, z: -0, w: 0.9926814}
+  - position: {x: -11.696037, y: 0, z: 0}
+    rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     gravity: -10
     raycastDistance: 5
     collider: {fileID: 0}
