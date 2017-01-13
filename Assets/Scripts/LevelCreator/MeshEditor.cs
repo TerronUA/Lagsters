@@ -52,8 +52,10 @@ public class MeshEditor : MonoBehaviour
 
         Vector3 position = spline.GetPoint(pos);
         Vector3 direction = spline.GetDirection(pos);
+        //Vector3 directionStart = spline.GetDirection(0);
+        //Quaternion FromToRotation = Quaternion.FromToRotation(directionStart, direction);
         Quaternion FromToRotation = Quaternion.LookRotation(direction);
-                
+
         Vector3 pt;
         for (int i = 0; i < pointsOnCircle; i++)
         {
@@ -87,15 +89,7 @@ public class MeshEditor : MonoBehaviour
     }
 
     public void CreateFirstStepMesh()
-    {
-        Vector3 directionStart = spline.GetVelocity(0).normalized;
-        Vector3 position;
-        Vector3 direction;
-        Vector3 pt;
-        Quaternion FromToRotation;
-
-        vertices = CreateCircleEdge();
-
+    {        
         progress = 0f;
 
         mesh.Clear();
@@ -105,19 +99,13 @@ public class MeshEditor : MonoBehaviour
 
         for (int j = 0, k = 0; j < 2; j++)
         {
-            position = spline.GetPoint(progress);
-            direction = spline.GetVelocity(progress);
-            FromToRotation = Quaternion.FromToRotation(directionStart, direction);
+            vertices = GenerateEdgeOnSpline(progress);
             
             for (int i = 0; i < pointsOnCircle; i++, k++)
-            {
-                pt = FromToRotation * transform.rotation * vertices[i];
-                meshVertices[k] = pt + position;
-            }
+                meshVertices[k] = vertices[i];
 
-            progress += 1f / splineSteps;
+            progress = 1f / splineSteps;
         }
-
 
         Array.Resize(ref meshTriangles, pointsOnCircle * 6);
         
@@ -151,10 +139,8 @@ public class MeshEditor : MonoBehaviour
     {
         if (generatedSplineStep == 0)
             CreateFirstStepMesh();
-
-        int nextSplineStep = generatedSplineStep + 1;
-
-        progress = 1f / splineSteps * nextSplineStep;
+        
+        progress = 1f / splineSteps * (generatedSplineStep + 1);
 
         meshVertices = mesh.vertices;
         meshTriangles = mesh.triangles;
@@ -303,9 +289,10 @@ public class MeshEditor : MonoBehaviour
     {
         DrawEdge(edge);
         DrawEdge(prevEdge);
+        DrawEdge(vertices, 0.2f);
     }
 
-    private void DrawEdge(Vector3[] e)
+    private void DrawEdge(Vector3[] e, float diameter = 0.1f)
     {
         if (e == null)
             return;
@@ -336,7 +323,7 @@ public class MeshEditor : MonoBehaviour
                     Gizmos.color = Color.black;
                     break;
             }
-            Gizmos.DrawSphere(e[i], 0.1f);
+            Gizmos.DrawSphere(e[i], diameter);
         }
 
     }

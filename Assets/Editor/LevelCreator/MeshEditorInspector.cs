@@ -67,6 +67,8 @@ public class MeshEditorInspector : Editor
                 _target.currentSplineStep--;
             else
                 _target.currentSplineStep = _target.splineSteps - 1;
+
+            SceneView.RepaintAll();
         }
         if (GUILayout.Button(">>"))
         {
@@ -74,6 +76,8 @@ public class MeshEditorInspector : Editor
                 _target.currentSplineStep++;
             else
                 _target.currentSplineStep = 0;
+
+            SceneView.RepaintAll();
         }
         EditorGUILayout.EndHorizontal();
 
@@ -84,7 +88,18 @@ public class MeshEditorInspector : Editor
         }
         if (GUILayout.Button("Create Next Step"))
         {
-            for (int i = 0; i < _target.splineSteps; i++)
+            _target.CreateNextStepMesh();
+        }
+        EditorGUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Create Closed"))
+        {
+            _target.CreateMeshWithClosedStart();
+        }
+
+        if (GUILayout.Button("Generate Whole Mesh"))
+        {
+            for (int i = 0; i < 239 /*_target.splineSteps*/; i++)
             {
                 if (i == 0)
                     _target.CreateFirstStepMesh();
@@ -93,17 +108,15 @@ public class MeshEditorInspector : Editor
                 else
                     _target.CreateNextStepMesh();
             }
-        }
-        if (GUILayout.Button("Create Closed"))
-        {
-            _target.CreateMeshWithClosedStart();
-        }
-        EditorGUILayout.EndHorizontal();
 
-        GUI.enabled = true;
+            SceneView.RepaintAll();
+        }
+
         if (GUILayout.Button("Generate Edge"))
         {
             _target.CreateNewEdge(_target.currentSplineStep);
+
+            SceneView.RepaintAll();
         }
     }
 
