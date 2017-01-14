@@ -10,14 +10,11 @@ public class PathNodeCollider : MonoBehaviour
     [HideInInspector]
     public bool isTriggered = false;
 
-    private BoxCollider bc;
     private GravityManager gm;
     private bool canPlay = false;
 
 	void Start ()
     {
-        bc = GetComponent<BoxCollider>();
-
         if ((transform.parent != null))
             gm = transform.parent.gameObject.GetComponent<GravityManager>();
 

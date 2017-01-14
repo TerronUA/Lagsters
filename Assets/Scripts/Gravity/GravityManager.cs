@@ -134,13 +134,13 @@ public class GravityManager : MonoBehaviour
 
         if (activePoint == null)
             return;
-
+/*
         Vector3 otherPoint;
         if (activeIndex > 0)
             otherPoint = points[activeIndex - 1].position;
         else
             otherPoint = points[activeIndex + 1].position;
-
+*/
         activePoint.position = CalculateNewPointPosition(activePoint.position, activePoint.raycastDistance);
 /*
         // Calculate new forward direction

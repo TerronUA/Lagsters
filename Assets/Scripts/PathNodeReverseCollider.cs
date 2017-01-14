@@ -9,13 +9,11 @@ public class PathNodeReverseCollider : MonoBehaviour
     public bool isTriggered = false;
     public PathNodeCollider normalCollider;
 
-    private BoxCollider bc;
     private bool canPlay = false;
 
     // Use this for initialization
     void Start ()
     {
-        bc = GetComponent<BoxCollider>();
         canPlay = (normalCollider != null);
     }
 

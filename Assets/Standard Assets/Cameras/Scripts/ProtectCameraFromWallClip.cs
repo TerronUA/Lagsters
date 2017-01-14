@@ -15,7 +15,7 @@ namespace UnityStandardAssets.Cameras
         public string dontClipTag = "Player";           // don't clip against objects with this tag (useful for not clipping against the targeted object)
 
         private Transform m_Cam;                  // the transform of the camera
-        private Transform m_Pivot;                // the point at which the camera pivots around
+        public Transform m_Pivot;                // the point at which the camera pivots around
         private float m_OriginalDist;             // the original distance to the camera before any modification are made
         private float m_MoveVelocity;             // the velocity at which the camera moved
         private float m_CurrentDist;              // the current distance from the camera to the target
@@ -27,8 +27,8 @@ namespace UnityStandardAssets.Cameras
         private void Start()
         {
             // find the camera in the object hierarchy
-            m_Cam = GetComponentInChildren<Camera>().transform;
-            m_Pivot = m_Cam.parent;
+            m_Cam = GetComponent<Camera>().transform;
+            //m_Pivot = m_Cam.parent;
             m_OriginalDist = m_Cam.localPosition.magnitude;
             m_CurrentDist = m_OriginalDist;
 
