@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0289fd9b30d7d724b8cfe885b9f9c836, type: 3}
+  m_Name: 01
+  m_EditorClassIdentifier: 
+  points:
+  - points:
+    - {x: 2.79, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: -6.270117}
+    - {x: 3.3128319, y: 0, z: 0}
+  - points:
+    - {x: 5.7966785, y: 0, z: -0.0009393692}
+    - {x: 4.842579, y: 0, z: -0.0119555}
+    - {x: 9.84375, y: 0, z: 1.1943784}
+    - {x: 4.012735, y: 0, z: -0.5084553}
+    - {x: 8.391998, y: 0, z: -1.901309}
+  - points:
+    - {x: 8, y: 0, z: 3}
+    - {x: 6.0424986, y: 0, z: 3}
+    - {x: 9.656979, y: 0, z: 3}
+  - points:
+    - {x: 8, y: 0, z: -2.999899}
+    - {x: 7, y: 0, z: -3}
+    - {x: 9, y: 0, z: -3}
+  - points:
+    - {x: 12, y: 0, z: -0.47101593}
+    - {x: 11, y: 0, z: -0.47101593}
+    - {x: 13, y: 0, z: -5.25109}
+  - points:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+  edges:
+  - indexFirst: 0
+    indexSecond: 1
+    weight: 1
+  - indexFirst: 1
+    indexSecond: 2
+    weight: 1
+  - indexFirst: 1
+    indexSecond: 3
+    weight: 1
+  - indexFirst: 2
+    indexSecond: 4
+    weight: 1
+  - indexFirst: 3
+    indexSecond: 4
+    weight: 1
+  - indexFirst: 4
+    indexSecond: 0
+    weight: 1
