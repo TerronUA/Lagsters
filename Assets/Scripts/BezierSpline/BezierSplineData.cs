@@ -8,13 +8,10 @@ namespace LevelSpline
     public class BezierSplineData : ScriptableObject
     {
         public BezierPoint[] points;
-        public BezierEdge[] edges;
 
-        // Use this for initialization
-        void Start()
+        public BezierSplineData()
         {
             points = new BezierPoint[0];
-            edges = new BezierEdge[0];
         }
     }
 }

@@ -10,7 +10,14 @@ namespace LevelSpline
         public BezierSplineData splineData;
         
         public int PointsCount
-        { get { return splineData.points.Length; } }
+        {
+            get
+            {
+                if ((splineData != null) && (splineData.points != null))
+                    return splineData.points.Length;
+                return 0;
+            }
+        }
 
         /// <summary>
         /// Returns BezierPoint
@@ -22,7 +29,7 @@ namespace LevelSpline
             if ((0 <= index) && (index < PointsCount))
                 return splineData.points[index];
             else
-                return null;
+                throw new IndexOutOfRangeException();
         }
 
         /// <summary>
@@ -35,8 +42,9 @@ namespace LevelSpline
         {
             if (0 <= index && index < PointsCount)
             {
+                //return splineData.points[index].GetPosition(indexCPoint);
                 if (0 <= indexCPoint && indexCPoint < splineData.points[index].points.Length)
-                    return splineData.points[index].points[indexCPoint];
+                    return splineData.points[index].points[indexCPoint].position;
                 else
                     return splineData.points[index].Point;
             }
@@ -57,8 +65,10 @@ namespace LevelSpline
                 if (0 <= indexCPoint && indexCPoint < splineData.points[index].points.Length)
                     splineData.points[index].SetPosition(indexCPoint, value);
                 else
-                    splineData.points[index].SetPosition(0, value);
+                    splineData.points[index].SetPosition(-1, value);
             }
+            else
+                throw new Exception("Wrong index to set position");
         }        
 
         /// <summary>
@@ -66,18 +76,16 @@ namespace LevelSpline
         /// </summary>
         /// <param name="index">Index of the point in array to return next points list</param>
         /// <returns></returns>
-        public List<BezierPoint> GetNextPoints(int index)
+        public List<int> GetNextPointsIndexes(int index)
         {
-            List<BezierPoint> result = new List<BezierPoint>();
+            BezierPoint pt = GetPoint(index);
 
-            for (int i = 0; i < splineData.edges.Length; i++)
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < pt.points.Length; i++)
             {
-                if (splineData.edges[i].indexFirst == index)
-                {
-                    BezierPoint pt = GetPoint(splineData.edges[i].indexSecond);
-                    if (pt != null)
-                        result.Add(pt);
-                }
+                if (pt.points[i].nextIndex >= 0)
+                    result.Add(pt.points[i].nextIndex);
             }
             return result;
         }
@@ -85,7 +93,7 @@ namespace LevelSpline
         public List<BezierEdge> GetEdgesFrom(int index)
         {
             List<BezierEdge> result = new List<BezierEdge>();
-
+            /*
             for (int i = 0; i < splineData.edges.Length; i++)
             {
                 if (splineData.edges[i].indexFirst == index)
@@ -95,13 +103,14 @@ namespace LevelSpline
                         result.Add(edge);
                 }
             }
+            */
             return result;
         }
 
         public List<BezierEdge> GetEdgesTo(int index)
         {
             List<BezierEdge> result = new List<BezierEdge>();
-
+            /*
             for (int i = 0; i < splineData.edges.Length; i++)
             {
                 if (splineData.edges[i].indexSecond == index)
@@ -111,17 +120,26 @@ namespace LevelSpline
                         result.Add(edge);
                 }
             }
+            */
             return result;
+        }
+
+        public void AddFirstPoint()
+        {
+            if ((splineData != null) && (splineData.points != null))
+            {
+                Array.Resize(ref splineData.points, 1);
+                splineData.points[0] = new BezierPoint();
+            }
         }
 
         public int AddPointAfter(int index)
         {
+            return 0;
+            /*
             // To avoid any potential problems - add new points only if we have one point after current
             List<BezierEdge> edges = GetEdgesFrom(index);
-
-            //if (edges.Count > 1)
-            //    return -1;
-
+            
             Array.Resize(ref splineData.points, splineData.points.Length + 1);
             int newIndex = splineData.points.Length - 1;
             BezierPoint pt = splineData.points[index];
@@ -136,7 +154,7 @@ namespace LevelSpline
             Array.Resize(ref splineData.edges, splineData.edges.Length + 1);
             splineData.edges[splineData.edges.Length - 1] = new BezierEdge(index, newIndex);
 
-            return newIndex;
+            return newIndex;*/
         }
     }
 }

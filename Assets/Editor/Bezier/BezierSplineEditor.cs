@@ -52,6 +52,16 @@ namespace LevelSpline
                 EditorUtility.SetDirty(spline);
                 spline.splineData = newData;
             }
+
+            if (spline.PointsCount == 0)
+            {
+                if (GUILayout.Button("Add First Point"))
+                {
+                    Undo.RecordObject(spline.splineData, "Add Point");
+                    EditorUtility.SetDirty(spline.splineData);
+                    spline.AddFirstPoint();
+                }
+            }
             
             if (0 <= selectedIndex && selectedIndex < spline.PointsCount)
             {
@@ -79,6 +89,7 @@ namespace LevelSpline
                 EditorUtility.SetDirty(spline.splineData);
                 spline.AddPointAfter(selectedIndex);
             }
+            GUI.enabled = true;
         }
 
         private void OnSceneGUI()
@@ -108,17 +119,17 @@ namespace LevelSpline
             BezierPoint pt = spline.GetPoint(index);
 
             Vector3 pointPosition = handleTransform.TransformPoint(pt.Point);
-            for (int i = 0; i < pt.points.Length; i++)
+            for (int i = -1; i < pt.points.Length; i++)
             {
-                Vector3 point = handleTransform.TransformPoint(pt.points[i]);
+                Vector3 point = handleTransform.TransformPoint(pt.GetPosition(i));
 
                 float size = HandleUtility.GetHandleSize(point);
-                if (i == 0)
+                if (i < 0)
                 {
                     size *= 2f;
                     Handles.color = Color.white;
                 }
-                else if (pt.IsLeftPointIndex(i))
+                else if (pt.IsPrevCPointIndex(i))
                     Handles.color = Color.red;
                 else
                     Handles.color = Color.green;
@@ -143,7 +154,7 @@ namespace LevelSpline
                 }
 
                 // Draw lines between point and control points, and dont draw line to itself
-                if (i != 0)
+                if (i >= 0)
                 {
                     Handles.color = Color.gray;
                     Handles.DrawLine(pointPosition, point);
@@ -160,24 +171,23 @@ namespace LevelSpline
         public void DrawEdges(int index)
         {
             BezierPoint pt = spline.GetPoint(index);
-            List<BezierPoint> nextPoints = spline.GetNextPoints(index);
-            int i = 0;
+            BezierPoint nextPoint;
+            List<int> nextPoints = spline.GetNextPointsIndexes(index);
 
             Vector3 startPosition = handleTransform.TransformPoint(pt.Point);
             Vector3 endPosition;
             Vector3 startRightPoint;
             Vector3 endLeftPoint;
 
-            foreach (BezierPoint nextPoint in nextPoints)
+            foreach (int nextPointIndex in nextPoints)
             {
-                endPosition = handleTransform.TransformPoint(nextPoint.Point);
+                nextPoint = spline.GetPoint(nextPointIndex);
+                endPosition = handleTransform.TransformPoint(nextPoint.position);
 
-                startRightPoint = handleTransform.TransformPoint(pt.GetRightPoint(i));
-                endLeftPoint = handleTransform.TransformPoint(nextPoint.GetLeftPoint(0));
+                startRightPoint = handleTransform.TransformPoint(pt.GetNextPointTo(nextPointIndex));
+                endLeftPoint = handleTransform.TransformPoint(nextPoint.GetPrevPointTo(index));
 
                 Handles.DrawBezier(startPosition, endPosition, startRightPoint, endLeftPoint, Color.white, null, 2f);
-
-                i++;
             }
         }
     }
