@@ -119,8 +119,8 @@ namespace LevelSpline
             // To avoid any potential problems - add new points only if we have one point after current
             List<BezierEdge> edges = GetEdgesFrom(index);
 
-            if (edges.Count > 1)
-                return -1;
+            //if (edges.Count > 1)
+            //    return -1;
 
             Array.Resize(ref splineData.points, splineData.points.Length + 1);
             int newIndex = splineData.points.Length - 1;

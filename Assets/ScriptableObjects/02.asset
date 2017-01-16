@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points:
   - points:
-    - {x: 2.7056293, y: 0, z: 0.013576508}
-    - {x: 2.0394747, y: 0, z: -6.270117}
-    - {x: 3.3128319, y: 0, z: 0.013576508}
+    - {x: 2.79, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: -6.270117}
+    - {x: 3.3128319, y: 0, z: 0}
   - points:
     - {x: 5.7966785, y: 0, z: -0.0009393692}
     - {x: 4.842579, y: 0, z: -0.0119555}
@@ -23,21 +23,21 @@ MonoBehaviour:
     - {x: 4.012735, y: 0, z: -0.5084553}
     - {x: 8.391998, y: 0, z: -1.901309}
   - points:
-    - {x: 8.484209, y: 0, z: 3}
-    - {x: 6.5267076, y: 0, z: 3}
-    - {x: 10.141188, y: 0, z: 3}
+    - {x: 8, y: 0, z: 3}
+    - {x: 6.0424986, y: 0, z: 3}
+    - {x: 9.656979, y: 0, z: 3}
   - points:
     - {x: 8, y: 0, z: -2.999899}
     - {x: 7, y: 0, z: -3}
     - {x: 9, y: 0, z: -3}
   - points:
-    - {x: 11.922102, y: 0, z: 3}
-    - {x: 10.542103, y: 0, z: 2.9199982}
-    - {x: 16.328405, y: 0, z: -0.93893623}
+    - {x: 12, y: 0, z: -0.47101593}
+    - {x: 11, y: 0, z: -0.47101593}
+    - {x: 13, y: 0, z: -5.25109}
   - points:
-    - {x: 13.592625, y: 0, z: -1.7936735}
-    - {x: 15.481041, y: 0, z: -0.6389408}
-    - {x: 10.493685, y: 0, z: -2.8757734}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
   edges:
   - indexFirst: 0
     indexSecond: 1
@@ -48,15 +48,12 @@ MonoBehaviour:
   - indexFirst: 1
     indexSecond: 3
     weight: 1
-  - indexFirst: -1
-    indexSecond: -1
-    weight: 1
   - indexFirst: 2
     indexSecond: 4
     weight: 1
-  - indexFirst: 5
-    indexSecond: 0
+  - indexFirst: 3
+    indexSecond: 4
     weight: 1
   - indexFirst: 4
-    indexSecond: 5
+    indexSecond: 0
     weight: 1

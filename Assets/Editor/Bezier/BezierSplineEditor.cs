@@ -72,7 +72,7 @@ namespace LevelSpline
                 spline.SetPosition(selectedIndex, selectedCPointIndex, point);
             }
 
-            GUI.enabled = selectedIndex >= 0 && selectedCPointIndex < 0;
+            GUI.enabled = selectedIndex >= 0 && selectedCPointIndex >= 0;
             if (GUILayout.Button("Add After"))
             {
                 Undo.RecordObject(spline.splineData, "Add Point");
@@ -127,8 +127,6 @@ namespace LevelSpline
                 {
                     selectedIndex = index;
                     selectedCPointIndex = i;
-                    if (selectedCPointIndex == 0)
-                        selectedCPointIndex = -1;
                     Repaint();
                 }
 
@@ -144,6 +142,7 @@ namespace LevelSpline
                     }
                 }
 
+                // Draw lines between point and control points, and dont draw line to itself
                 if (i != 0)
                 {
                     Handles.color = Color.gray;
