@@ -42,7 +42,6 @@ namespace LevelSpline
         {
             if (0 <= index && index < PointsCount)
             {
-                //return splineData.points[index].GetPosition(indexCPoint);
                 if (0 <= indexCPoint && indexCPoint < splineData.points[index].points.Length)
                     return splineData.points[index].points[indexCPoint].position;
                 else

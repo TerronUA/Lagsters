@@ -116,7 +116,6 @@ public class GravityManager : MonoBehaviour
             j++;
         }
 
-        Debug.Log("Destroyed " + j + " child objects");
         activeIndex = -1;
         UpdateActivePoint();
 

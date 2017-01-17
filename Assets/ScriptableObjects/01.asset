@@ -20,7 +20,7 @@ MonoBehaviour:
       weight: 1
   - position: {x: 16.3, y: 0, z: 0}
     points:
-    - position: {x: 15.02, y: 0, z: 0}
+    - position: {x: 15.02, y: 0, z: 1.121808}
       prevIndex: 0
       nextIndex: -1
       weight: 1

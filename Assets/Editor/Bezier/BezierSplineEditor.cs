@@ -42,6 +42,11 @@ namespace LevelSpline
         {
             //if (Event.current.type == EventType.Layout)
             //    return;
+            if (Event.current.commandName == "UndoRedoPerformed")
+            {
+                Repaint();
+                return;
+            }
 
             spline = target as BezierSpline;
             EditorGUI.BeginChangeCheck();
@@ -62,7 +67,7 @@ namespace LevelSpline
                     spline.AddFirstPoint();
                 }
             }
-            
+
             if (0 <= selectedIndex && selectedIndex < spline.PointsCount)
             {
                 DrawSelectedPointInspector();
@@ -72,7 +77,7 @@ namespace LevelSpline
         private void DrawSelectedPointInspector()
         {
             GUILayout.Label("Selected Point");
-                        
+
             EditorGUI.BeginChangeCheck();
             Vector3 point = EditorGUILayout.Vector3Field("Position", spline.GetPosition(selectedIndex, selectedCPointIndex));
             if (EditorGUI.EndChangeCheck())
@@ -82,14 +87,13 @@ namespace LevelSpline
                 spline.SetPosition(selectedIndex, selectedCPointIndex, point);
             }
 
-            GUI.enabled = selectedIndex >= 0 && selectedCPointIndex >= 0;
+            GUI.enabled = selectedIndex >= 0 && selectedCPointIndex == -1;
             if (GUILayout.Button("Add After"))
             {
                 Undo.RecordObject(spline.splineData, "Add Point");
                 EditorUtility.SetDirty(spline.splineData);
                 spline.AddPointAfter(selectedIndex);
             }
-            GUI.enabled = true;
         }
 
         private void OnSceneGUI()
@@ -98,8 +102,6 @@ namespace LevelSpline
             handleTransform = spline.transform;
             handleRotation = Tools.pivotRotation == PivotRotation.Local ? handleTransform.rotation : Quaternion.identity;
 
-            //BezierPoint p0 = spline.GetPoint(0);
-            //Vector3 p0 = ShowPoint(0);
             for (int i = 0; i < spline.PointsCount; i++)
             {
                 ShowPoint(i);
@@ -111,10 +113,9 @@ namespace LevelSpline
         /// <summary>
         /// Draws BezierPoint and it's control points
         /// </summary>
-        /// <param name="pt">Bezier Point</param>
         /// <param name="index">Index of pt in spline</param>
         /// <returns></returns>
-        private Vector3 ShowPoint(int index)
+        private void ShowPoint(int index)
         {
             BezierPoint pt = spline.GetPoint(index);
 
@@ -150,6 +151,7 @@ namespace LevelSpline
                         Undo.RecordObject(spline.splineData, "Move Point");
                         EditorUtility.SetDirty(spline.splineData);
                         pt.SetPosition(i, handleTransform.InverseTransformPoint(point));
+                        Repaint();
                     }
                 }
 
@@ -160,8 +162,6 @@ namespace LevelSpline
                     Handles.DrawLine(pointPosition, point);
                 }
             }
-
-            return pointPosition;
         }
 
         /// <summary>
