@@ -88,38 +88,23 @@ namespace LevelSpline
             }
             return result;
         }
-
-        public List<BezierEdge> GetEdgesFrom(int index)
+        
+        /// <summary>
+        /// Returns list of prev points before point in index
+        /// </summary>
+        /// <param name="index">Index of the point in array to return prev points list</param>
+        /// <returns></returns>
+        public List<int> GetPrevPointsIndexes(int index)
         {
-            List<BezierEdge> result = new List<BezierEdge>();
-            /*
-            for (int i = 0; i < splineData.edges.Length; i++)
-            {
-                if (splineData.edges[i].indexFirst == index)
-                {
-                    BezierEdge edge = splineData.edges[i];
-                    if (edge != null)
-                        result.Add(edge);
-                }
-            }
-            */
-            return result;
-        }
+            BezierPoint pt = GetPoint(index);
 
-        public List<BezierEdge> GetEdgesTo(int index)
-        {
-            List<BezierEdge> result = new List<BezierEdge>();
-            /*
-            for (int i = 0; i < splineData.edges.Length; i++)
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < pt.points.Length; i++)
             {
-                if (splineData.edges[i].indexSecond == index)
-                {
-                    BezierEdge edge = splineData.edges[i];
-                    if (edge != null)
-                        result.Add(edge);
-                }
+                if (pt.points[i].prevIndex >= 0)
+                    result.Add(pt.points[i].prevIndex);
             }
-            */
             return result;
         }
 
@@ -132,28 +117,116 @@ namespace LevelSpline
             }
         }
 
-        public int AddPointAfter(int index)
+        public int AddPointBefore(int index)
         {
-            return 0;
+            List<int> nextPoints = GetNextPointsIndexes(index);
+            List<int> prevPoints = GetPrevPointsIndexes(index);
+
+            BezierPoint pt = GetPoint(index);
+
+            Vector3 newPosition = pt.position - Vector3.forward * 5;
+
+            #region Define position for new point
             /*
-            // To avoid any potential problems - add new points only if we have one point after current
-            List<BezierEdge> edges = GetEdgesFrom(index);
-            
+            // If no next points - use prev points
+            if (nextPoints.Count == 0)
+            {
+                if(prevPoints.Count > 0)
+                {
+                    newPosition = -1 * newPosition + GetPosition(prevPoints[0], -1);
+                }
+                else
+                {
+                    newPosition += 4 * Vector3.forward;
+                }                
+            }
+            else
+            {
+                newPosition = GetPosition(nextPoints[0], -1);
+            }
+            */
+            #endregion
+
+
             Array.Resize(ref splineData.points, splineData.points.Length + 1);
             int newIndex = splineData.points.Length - 1;
-            BezierPoint pt = splineData.points[index];
             BezierPoint ptNew = splineData.points[newIndex] = new BezierPoint();
 
-            this.SetPosition(newIndex, -1, pt.Point + (pt.Point - pt.GetPosition(2)));
+            this.SetPosition(newIndex, -1, newPosition);
 
-            // Start edges from new point;
-            foreach (BezierEdge edge in edges)
-                edge.indexFirst = newIndex;
+            // Update link for first prev point
+            if (prevPoints.Count > 0)
+            {
+                BezierPoint prevPoint = GetPoint(prevPoints[0]);
+                prevPoint.UpdateNextCPoint(index, newIndex);
 
-            Array.Resize(ref splineData.edges, splineData.edges.Length + 1);
-            splineData.edges[splineData.edges.Length - 1] = new BezierEdge(index, newIndex);
+                ptNew.AddCPoint(ptNew.position + Vector3.forward * 2, prevPoints[0]);
+            }
 
-            return newIndex;*/
+            if (prevPoints.Count == 0)
+                pt.AddCPoint(pt.position - Vector3.forward * 2, newIndex);
+            else
+                pt.UpdatePrevCPoint(prevPoints[0], newIndex);
+
+            ptNew.AddCPoint(ptNew.position - Vector3.forward * 2, -1, index);
+
+            return newIndex;
+        }
+
+        public int AddPointAfter(int index)
+        {
+            List<int> nextPoints = GetNextPointsIndexes(index);
+            List<int> prevPoints = GetPrevPointsIndexes(index);
+
+            BezierPoint pt = GetPoint(index);
+
+            Vector3 newPosition = pt.position + Vector3.forward * 5;
+
+            #region Define position for new point
+            /*
+            // If no next points - use prev points
+            if (nextPoints.Count == 0)
+            {
+                if(prevPoints.Count > 0)
+                {
+                    newPosition = -1 * newPosition + GetPosition(prevPoints[0], -1);
+                }
+                else
+                {
+                    newPosition += 4 * Vector3.forward;
+                }                
+            }
+            else
+            {
+                newPosition = GetPosition(nextPoints[0], -1);
+            }
+            */
+            #endregion
+
+
+            Array.Resize(ref splineData.points, splineData.points.Length + 1);
+            int newIndex = splineData.points.Length - 1;
+            BezierPoint ptNew = splineData.points[newIndex] = new BezierPoint();
+
+            this.SetPosition(newIndex, -1, newPosition);
+
+            // Update link for first next point
+            if (nextPoints.Count > 0)
+            {
+                BezierPoint nextPoint = GetPoint(nextPoints[0]);
+                nextPoint.UpdatePrevCPoint(index, newIndex);
+
+                ptNew.AddCPoint(ptNew.position  + Vector3.forward * 2, -1, nextPoints[0]);
+            }
+
+            if (nextPoints.Count == 0)
+                pt.AddCPoint(pt.position + Vector3.forward * 2, -1, newIndex);
+            else
+                pt.UpdateNextCPoint(nextPoints[0], newIndex);
+
+            ptNew.AddCPoint(ptNew.position - Vector3.forward * 2, index, -1);
+
+            return newIndex;
         }
     }
 }

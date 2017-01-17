@@ -88,12 +88,26 @@ namespace LevelSpline
             }
 
             GUI.enabled = selectedIndex >= 0 && selectedCPointIndex == -1;
-            if (GUILayout.Button("Add After"))
+
+            GUILayout.BeginHorizontal();
+            GUIStyle styleBefore = new GUIStyle(GUI.skin.button);
+            styleBefore.normal.textColor = new Color(0.5f, 0f, 0.01f);
+            if (GUILayout.Button("Add Before", styleBefore))
+            {
+                Undo.RecordObject(spline.splineData, "Add Point");
+                EditorUtility.SetDirty(spline.splineData);
+                spline.AddPointBefore(selectedIndex);
+            }
+
+            GUIStyle styleAfter = new GUIStyle(GUI.skin.button);
+            styleAfter.normal.textColor = new Color(0.01f, 0.5f, 0.2f);
+            if (GUILayout.Button("Add After", styleAfter))
             {
                 Undo.RecordObject(spline.splineData, "Add Point");
                 EditorUtility.SetDirty(spline.splineData);
                 spline.AddPointAfter(selectedIndex);
             }
+            GUILayout.EndHorizontal();
         }
 
         private void OnSceneGUI()

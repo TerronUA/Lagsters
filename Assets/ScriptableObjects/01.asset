@@ -12,15 +12,85 @@ MonoBehaviour:
   m_Name: 01
   m_EditorClassIdentifier: 
   points:
-  - position: {x: 8, y: 0, z: 0}
+  - position: {x: 11.562459, y: 0, z: 0.07084417}
     points:
-    - position: {x: 9, y: 0, z: 0}
+    - position: {x: 11.562459, y: 0, z: 2.0708442}
+      prevIndex: -1
+      nextIndex: 4
+      weight: 1
+    - position: {x: 10.226354, y: 0, z: -2.7083054}
+      prevIndex: 5
+      nextIndex: -1
+      weight: 1
+  - position: {x: 21.172146, y: 0, z: 1.627801}
+    points:
+    - position: {x: 17.986042, y: 0, z: 0.6041868}
+      prevIndex: 4
+      nextIndex: -1
+      weight: 1
+    - position: {x: 21.172146, y: 0, z: 3.627801}
+      prevIndex: -1
+      nextIndex: 7
+      weight: 1
+  - position: {x: 39.106804, y: 0, z: 1.3347636}
+    points:
+    - position: {x: 39.106804, y: 0, z: -0.66523635}
+      prevIndex: 8
+      nextIndex: -1
+      weight: 1
+  - position: {x: 25.386023, y: 0, z: 1.4889297}
+    points:
+    - position: {x: 25.386023, y: 0, z: 3.4889307}
+      prevIndex: -1
+      nextIndex: 8
+      weight: 1
+    - position: {x: 25.386023, y: 0, z: -0.51107025}
+      prevIndex: 7
+      nextIndex: -1
+      weight: 1
+  - position: {x: 17.574938, y: 0, z: 4.6444397}
+    points:
+    - position: {x: 17.574938, y: 0, z: 6.6444397}
+      prevIndex: 0
+      nextIndex: -1
+      weight: 1
+    - position: {x: 17.574938, y: 0, z: 2.6444397}
       prevIndex: -1
       nextIndex: 1
       weight: 1
-  - position: {x: 16.3, y: 0, z: 0}
+  - position: {x: 11.202741, y: 0, z: -6.676372}
     points:
-    - position: {x: 15.02, y: 0, z: 1.121808}
-      prevIndex: 0
+    - position: {x: 13.2069, y: 0, z: -3.58889}
+      prevIndex: -1
+      nextIndex: 0
+      weight: 1
+    - position: {x: 15.673557, y: 0, z: -7.3402667}
+      prevIndex: 6
       nextIndex: -1
+      weight: 1
+  - position: {x: 19.784657, y: 0, z: -7.8222194}
+    points:
+    - position: {x: 16.804113, y: 0, z: -8.1861}
+      prevIndex: -1
+      nextIndex: 5
+      weight: 1
+  - position: {x: 22.919367, y: 0, z: -3.3055158}
+    points:
+    - position: {x: 22.919367, y: 0, z: -1.3055158}
+      prevIndex: 1
+      nextIndex: -1
+      weight: 1
+    - position: {x: 25.642965, y: 0, z: -3.7207851}
+      prevIndex: -1
+      nextIndex: 3
+      weight: 1
+  - position: {x: 34.1221, y: 0, z: 0.13752747}
+    points:
+    - position: {x: 31.192947, y: 0, z: 2.9083567}
+      prevIndex: 3
+      nextIndex: -1
+      weight: 1
+    - position: {x: 36.89709, y: 0, z: -1.1430309}
+      prevIndex: -1
+      nextIndex: 2
       weight: 1

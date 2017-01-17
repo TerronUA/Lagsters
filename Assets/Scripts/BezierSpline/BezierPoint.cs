@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +7,6 @@ namespace LevelSpline
 {
     /// <summary>
     /// Class for point on Bezier spline
-    /// points[0]  - point on spline
-    /// points[2 * index + 1 ] - left points, points to calculate Bezier spline with prev point
-    /// points[2 * (index + 1) ] - rignt points, points to calculate Bezier spline with next point
     /// </summary>
     [System.Serializable]
     public class BezierPoint 
@@ -87,32 +85,6 @@ namespace LevelSpline
 
             return result;
         }
-        /*
-        public Vector3 GetLeftPoint(int index)
-        {
-            if ((index < 0) && (index > NextPointsCount - 1))
-                return Vector3.zero;
-            return points[2 * index + 1];
-        }
-
-        public Vector3 GetRightPoint(int index)
-        {
-            if ((index < 0) && (index > NextPointsCount - 1))
-                return Vector3.zero;
-            return points[2 * (index + 1)];
-        }
-        public int NextPointsCount
-        {
-            get
-            {
-                int count = 0;
-                for (int i = 0; i < points.Length; i++)
-                    if (points[i].nextIndex >= 0)
-                        count++;
-                return count;
-            }
-        }
-        */
 
         public bool IsPrevCPointIndex(int index)
         {
@@ -120,6 +92,30 @@ namespace LevelSpline
                 return points[index].prevIndex >= 0;
 
             return false;
+        }
+
+        public void UpdateNextCPoint(int oldIndex, int newIndex)
+        {
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (points[i].nextIndex == oldIndex)
+                    points[i].nextIndex = newIndex;
+            }
+        }
+
+        public void UpdatePrevCPoint(int oldIndex, int newIndex)
+        {
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (points[i].prevIndex == oldIndex)
+                    points[i].prevIndex = newIndex;
+            }
+        }
+
+        public void AddCPoint(Vector3 position, int prevIndex = -1, int nextIndex = -1, int weight = 1)
+        {
+            Array.Resize(ref points, points.Length + 1);
+            points[points.Length - 1] = new BezierCPoint(position, prevIndex, nextIndex, weight);
         }
     }
 }
