@@ -108,6 +108,9 @@ namespace LevelSpline
             return result;
         }
 
+        /// <summary>
+        /// Creates first point in spline
+        /// </summary>
         public void AddFirstPoint()
         {
             if ((splineData != null) && (splineData.points != null))
@@ -117,6 +120,11 @@ namespace LevelSpline
             }
         }
 
+        /// <summary>
+        /// Add new point before selected point
+        /// </summary>
+        /// <param name="index">index of point</param>
+        /// <returns></returns>
         public int AddPointBefore(int index)
         {
             List<int> nextPoints = GetNextPointsIndexes(index);
@@ -125,29 +133,7 @@ namespace LevelSpline
             BezierPoint pt = GetPoint(index);
 
             Vector3 newPosition = pt.position - Vector3.forward * 5;
-
-            #region Define position for new point
-            /*
-            // If no next points - use prev points
-            if (nextPoints.Count == 0)
-            {
-                if(prevPoints.Count > 0)
-                {
-                    newPosition = -1 * newPosition + GetPosition(prevPoints[0], -1);
-                }
-                else
-                {
-                    newPosition += 4 * Vector3.forward;
-                }                
-            }
-            else
-            {
-                newPosition = GetPosition(nextPoints[0], -1);
-            }
-            */
-            #endregion
-
-
+            
             Array.Resize(ref splineData.points, splineData.points.Length + 1);
             int newIndex = splineData.points.Length - 1;
             BezierPoint ptNew = splineData.points[newIndex] = new BezierPoint();
@@ -160,19 +146,24 @@ namespace LevelSpline
                 BezierPoint prevPoint = GetPoint(prevPoints[0]);
                 prevPoint.UpdateNextCPoint(index, newIndex);
 
-                ptNew.AddCPoint(ptNew.position + Vector3.forward * 2, prevPoints[0]);
+                ptNew.AddPrevCPoint(ptNew.position + Vector3.forward * 2, prevPoints[0]);
             }
 
             if (prevPoints.Count == 0)
-                pt.AddCPoint(pt.position - Vector3.forward * 2, newIndex);
+                pt.AddPrevCPoint(pt.position - Vector3.forward * 2, newIndex);
             else
                 pt.UpdatePrevCPoint(prevPoints[0], newIndex);
 
-            ptNew.AddCPoint(ptNew.position - Vector3.forward * 2, -1, index);
+            ptNew.AddNextCPoint(ptNew.position - Vector3.forward * 2, index);
 
             return newIndex;
         }
 
+        /// <summary>
+        /// Add new point after selected point
+        /// </summary>
+        /// <param name="index">index of point</param>
+        /// <returns></returns>
         public int AddPointAfter(int index)
         {
             List<int> nextPoints = GetNextPointsIndexes(index);
@@ -181,29 +172,7 @@ namespace LevelSpline
             BezierPoint pt = GetPoint(index);
 
             Vector3 newPosition = pt.position + Vector3.forward * 5;
-
-            #region Define position for new point
-            /*
-            // If no next points - use prev points
-            if (nextPoints.Count == 0)
-            {
-                if(prevPoints.Count > 0)
-                {
-                    newPosition = -1 * newPosition + GetPosition(prevPoints[0], -1);
-                }
-                else
-                {
-                    newPosition += 4 * Vector3.forward;
-                }                
-            }
-            else
-            {
-                newPosition = GetPosition(nextPoints[0], -1);
-            }
-            */
-            #endregion
-
-
+            
             Array.Resize(ref splineData.points, splineData.points.Length + 1);
             int newIndex = splineData.points.Length - 1;
             BezierPoint ptNew = splineData.points[newIndex] = new BezierPoint();
@@ -216,17 +185,54 @@ namespace LevelSpline
                 BezierPoint nextPoint = GetPoint(nextPoints[0]);
                 nextPoint.UpdatePrevCPoint(index, newIndex);
 
-                ptNew.AddCPoint(ptNew.position  + Vector3.forward * 2, -1, nextPoints[0]);
+                ptNew.AddNextCPoint(ptNew.position  + Vector3.forward * 2, nextPoints[0]);
             }
 
             if (nextPoints.Count == 0)
-                pt.AddCPoint(pt.position + Vector3.forward * 2, -1, newIndex);
+                pt.AddNextCPoint(pt.position + Vector3.forward * 2, newIndex);
             else
                 pt.UpdateNextCPoint(nextPoints[0], newIndex);
 
-            ptNew.AddCPoint(ptNew.position - Vector3.forward * 2, index, -1);
+            ptNew.AddPrevCPoint(ptNew.position - Vector3.forward * 2, index);
 
             return newIndex;
+        }
+
+        /// <summary>
+        /// Create branch for selected point
+        /// </summary>
+        /// <param name="index">index of point</param>
+        public int AddBranchAfter(int index)
+        {
+            List<int> nextPoints = GetNextPointsIndexes(index);
+            if (nextPoints.Count == 0)
+                return AddPointAfter(index);
+
+            List<int> prevPoints = GetPrevPointsIndexes(index);
+
+            BezierPoint pt = GetPoint(index);
+
+            Vector3 newPosition = pt.position + Vector3.forward * 5;
+
+            Array.Resize(ref splineData.points, splineData.points.Length + 1);
+            int newIndex = splineData.points.Length - 1;
+            BezierPoint ptNew = splineData.points[newIndex] = new BezierPoint();
+
+            this.SetPosition(newIndex, -1, newPosition);
+            
+            pt.AddNextCPoint(pt.position + Vector3.forward * 2, newIndex);
+            ptNew.AddPrevCPoint(ptNew.position - Vector3.forward * 2, index);
+
+            return newIndex;
+        }
+
+        public void AddEdgeBetween(int indexStart, int indexEnd)
+        {
+            BezierPoint ptStart = GetPoint(indexStart);
+            BezierPoint ptEnd = GetPoint(indexEnd);
+
+            ptStart.AddNextCPoint(ptStart.position + Vector3.forward * 2, indexEnd);
+            ptEnd.AddPrevCPoint(ptEnd.position - Vector3.forward * 2, indexStart);
         }
     }
 }

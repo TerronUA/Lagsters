@@ -112,7 +112,17 @@ namespace LevelSpline
             }
         }
 
-        public void AddCPoint(Vector3 position, int prevIndex = -1, int nextIndex = -1, int weight = 1)
+        public void AddNextCPoint(Vector3 position, int nextIndex, int weight = 1)
+        {
+            AddCPoint(position, -1, nextIndex, weight);
+        }
+
+        public void AddPrevCPoint(Vector3 position, int prevIndex, int weight = 1)
+        {
+            AddCPoint(position, prevIndex, -1, weight);
+        }
+
+        private void AddCPoint(Vector3 position, int prevIndex = -1, int nextIndex = -1, int weight = 1)
         {
             Array.Resize(ref points, points.Length + 1);
             points[points.Length - 1] = new BezierCPoint(position, prevIndex, nextIndex, weight);

@@ -17,7 +17,12 @@ namespace LevelSpline
         private Transform handleTransform;
         private Quaternion handleRotation;
         private int selectedIndex = -1;
+        private int indexNewEdgeStart = -1;
         private int selectedCPointIndex = -1;
+        private GUIContent btnAddAfter;
+        private GUIContent btnAddBefore;
+        private GUIContent btnAddBranch;
+        private GUIContent btnAddEdge;
 
         /// <summary>
         /// Create new scriptable object for Bezier Level Spline
@@ -37,7 +42,18 @@ namespace LevelSpline
             AssetDatabase.SaveAssets();
         }
 
-        
+        void OnEnable()
+        {
+            if (btnAddAfter == null)
+                btnAddAfter = new GUIContent((Texture)Resources.Load("bttnSplineAddAfter"), "Add point After selected point");
+            if (btnAddBefore == null)
+                btnAddBefore = new GUIContent((Texture)Resources.Load("bttnSplineAddBefore"), "Add point Before selected point");
+            if (btnAddBranch == null)
+                btnAddBranch = new GUIContent((Texture)Resources.Load("bttnSplineAddBranch"), "Add branch in selected point");
+            if (btnAddEdge == null)
+                btnAddEdge = new GUIContent((Texture)Resources.Load("bttnSplineAddEdge"), "Add edge to other point.\nClick on other point to define end");
+        }
+
         public override void OnInspectorGUI()
         {
             //if (Event.current.type == EventType.Layout)
@@ -88,24 +104,32 @@ namespace LevelSpline
             }
 
             GUI.enabled = selectedIndex >= 0 && selectedCPointIndex == -1;
-
+            
             GUILayout.BeginHorizontal();
-            GUIStyle styleBefore = new GUIStyle(GUI.skin.button);
-            styleBefore.normal.textColor = new Color(0.5f, 0f, 0.01f);
-            if (GUILayout.Button("Add Before", styleBefore))
+            if (GUILayout.Button(btnAddBefore))
             {
                 Undo.RecordObject(spline.splineData, "Add Point");
                 EditorUtility.SetDirty(spline.splineData);
-                spline.AddPointBefore(selectedIndex);
+                selectedIndex = spline.AddPointBefore(selectedIndex);
             }
 
-            GUIStyle styleAfter = new GUIStyle(GUI.skin.button);
-            styleAfter.normal.textColor = new Color(0.01f, 0.5f, 0.2f);
-            if (GUILayout.Button("Add After", styleAfter))
+            if (GUILayout.Button(btnAddAfter))
             {
                 Undo.RecordObject(spline.splineData, "Add Point");
                 EditorUtility.SetDirty(spline.splineData);
-                spline.AddPointAfter(selectedIndex);
+                selectedIndex = spline.AddPointAfter(selectedIndex);
+            }
+            
+            if (GUILayout.Button(btnAddBranch))
+            {
+                Undo.RecordObject(spline.splineData, "Add Point");
+                EditorUtility.SetDirty(spline.splineData);
+                selectedIndex = spline.AddBranchAfter(selectedIndex);
+            }
+
+            if (GUILayout.Button(btnAddEdge))
+            {
+                indexNewEdgeStart = selectedIndex;
             }
             GUILayout.EndHorizontal();
         }
@@ -151,8 +175,16 @@ namespace LevelSpline
 
                 if (Handles.Button(point, handleRotation, size * handleSize, size * pickSize, Handles.DotCap))
                 {
-                    selectedIndex = index;
-                    selectedCPointIndex = i;
+                    if (indexNewEdgeStart < 0)
+                    {
+                        selectedIndex = index;
+                        selectedCPointIndex = i;
+                    }
+                    else
+                    {
+                        spline.AddEdgeBetween(selectedIndex, index);
+                        indexNewEdgeStart = -1;
+                    }
                     Repaint();
                 }
 
