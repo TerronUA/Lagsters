@@ -127,7 +127,6 @@ namespace LevelSpline
         /// <returns></returns>
         public int AddPointBefore(int index)
         {
-            List<int> nextPoints = GetNextPointsIndexes(index);
             List<int> prevPoints = GetPrevPointsIndexes(index);
 
             BezierPoint pt = GetPoint(index);
@@ -167,7 +166,6 @@ namespace LevelSpline
         public int AddPointAfter(int index)
         {
             List<int> nextPoints = GetNextPointsIndexes(index);
-            List<int> prevPoints = GetPrevPointsIndexes(index);
 
             BezierPoint pt = GetPoint(index);
 
@@ -207,8 +205,6 @@ namespace LevelSpline
             List<int> nextPoints = GetNextPointsIndexes(index);
             if (nextPoints.Count == 0)
                 return AddPointAfter(index);
-
-            List<int> prevPoints = GetPrevPointsIndexes(index);
 
             BezierPoint pt = GetPoint(index);
 

@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0289fd9b30d7d724b8cfe885b9f9c836, type: 3}
+  m_Name: Level00
+  m_EditorClassIdentifier: 
+  points:
+  - position: {x: 0, y: 0, z: 0}
+    points:
+    - position: {x: 0, y: 0, z: 2}
+      prevIndex: -1
+      nextIndex: 1
+      weight: 1
+    - position: {x: 0, y: 0, z: -25}
+      prevIndex: 7
+      nextIndex: -1
+      weight: 1
+  - position: {x: 0, y: 0, z: 300}
+    points:
+    - position: {x: 0, y: 0, z: 290}
+      prevIndex: 0
+      nextIndex: -1
+      weight: 1
+    - position: {x: 0, y: 0, z: 325}
+      prevIndex: -1
+      nextIndex: 2
+      weight: 1
+  - position: {x: 50, y: 0, z: 350}
+    points:
+    - position: {x: 25, y: 0, z: 350}
+      prevIndex: 1
+      nextIndex: -1
+      weight: 1
+    - position: {x: 55, y: 0, z: 350}
+      prevIndex: -1
+      nextIndex: 3
+      weight: 1
+  - position: {x: 300, y: 0, z: 350}
+    points:
+    - position: {x: 295, y: 0, z: 350}
+      prevIndex: 2
+      nextIndex: -1
+      weight: 1
+    - position: {x: 325, y: 0, z: 350}
+      prevIndex: -1
+      nextIndex: 4
+      weight: 1
+  - position: {x: 350, y: 0, z: 300}
+    points:
+    - position: {x: 350, y: 0, z: 325}
+      prevIndex: 3
+      nextIndex: -1
+      weight: 1
+    - position: {x: 350, y: 0, z: 290}
+      prevIndex: -1
+      nextIndex: 5
+      weight: 1
+  - position: {x: 350, y: 0, z: 0}
+    points:
+    - position: {x: 350, y: 0, z: 10}
+      prevIndex: 4
+      nextIndex: -1
+      weight: 1
+    - position: {x: 350, y: 0, z: -25}
+      prevIndex: -1
+      nextIndex: 6
+      weight: 1
+  - position: {x: 300, y: 0, z: -50}
+    points:
+    - position: {x: 325, y: 0, z: -50}
+      prevIndex: 5
+      nextIndex: -1
+      weight: 1
+    - position: {x: 290, y: 0, z: -50}
+      prevIndex: -1
+      nextIndex: 7
+      weight: 1
+  - position: {x: 50, y: 0, z: -50}
+    points:
+    - position: {x: 60, y: 0, z: -50}
+      prevIndex: 6
+      nextIndex: -1
+      weight: 1
+    - position: {x: 25, y: 0, z: -50}
+      prevIndex: -1
+      nextIndex: 0
+      weight: 1

@@ -14,8 +14,8 @@ namespace LevelSpline
         private const float pickSize = 0.06f;
 
         private BezierSpline spline;
-        private Transform handleTransform;
-        private Quaternion handleRotation;
+        //private Transform handleTransform;
+        //private Quaternion handleRotation;
         private int selectedIndex = -1;
         private int indexNewEdgeStart = -1;
         private int selectedCPointIndex = -1;
@@ -196,8 +196,8 @@ namespace LevelSpline
         private void OnSceneGUI()
         {
             spline = target as BezierSpline;
-            handleTransform = spline.transform;
-            handleRotation = Tools.pivotRotation == PivotRotation.Local ? handleTransform.rotation : Quaternion.identity;
+            //handleTransform = spline.transform;
+            //handleRotation = Tools.pivotRotation == PivotRotation.Local ? handleTransform.rotation : Quaternion.identity;
 
             for (int i = 0; i < spline.PointsCount; i++)
             {
@@ -216,10 +216,10 @@ namespace LevelSpline
         {
             BezierPoint pt = spline.GetPoint(index);
 
-            Vector3 pointPosition = handleTransform.TransformPoint(pt.position);
+            Vector3 pointPosition = pt.position;//handleTransform.TransformPoint(pt.position);
             for (int i = -1; i < pt.points.Length; i++)
             {
-                Vector3 point = handleTransform.TransformPoint(pt.GetPosition(i));
+                Vector3 point = pt.GetPosition(i);// handleTransform.TransformPoint(pt.GetPosition(i));
 
                 float size = HandleUtility.GetHandleSize(point);
                 if (i < 0)
@@ -232,7 +232,7 @@ namespace LevelSpline
                 else
                     Handles.color = Color.green;
 
-                if (Handles.Button(point, handleRotation, size * handleSize, size * pickSize, Handles.DotCap))
+                if (Handles.Button(point, Quaternion.identity, /*handleRotation, */size * handleSize, size * pickSize, Handles.DotCap))
                 {
                     if (indexNewEdgeStart < 0 && (indexTangentStart < 0 || selectedIndex != index))
                     {
@@ -263,12 +263,12 @@ namespace LevelSpline
                 if ((selectedIndex == index) && (selectedCPointIndex == i))
                 {
                     EditorGUI.BeginChangeCheck();
-                    point = Handles.DoPositionHandle(point, handleRotation);
+                    point = Handles.DoPositionHandle(point, Quaternion.identity/*handleRotation*/);
                     if (EditorGUI.EndChangeCheck())
                     {
                         Undo.RecordObject(spline.splineData, "Move Point");
                         EditorUtility.SetDirty(spline.splineData);
-                        pt.SetPosition(i, handleTransform.InverseTransformPoint(point));
+                        pt.SetPosition(i, point/*handleTransform.InverseTransformPoint(point)*/);
                         Repaint();
                     }
                 }
@@ -292,7 +292,7 @@ namespace LevelSpline
             BezierPoint nextPoint;
             List<int> nextPoints = spline.GetNextPointsIndexes(index);
 
-            Vector3 startPosition = handleTransform.TransformPoint(pt.position);
+            Vector3 startPosition = pt.position;// handleTransform.TransformPoint(pt.position);
             Vector3 endPosition;
             Vector3 startRightPoint;
             Vector3 endLeftPoint;
@@ -300,10 +300,10 @@ namespace LevelSpline
             foreach (int nextPointIndex in nextPoints)
             {
                 nextPoint = spline.GetPoint(nextPointIndex);
-                endPosition = handleTransform.TransformPoint(nextPoint.position);
+                endPosition = nextPoint.position;// handleTransform.TransformPoint(nextPoint.position);
 
-                startRightPoint = handleTransform.TransformPoint(pt.GetNextPointPositionTo(nextPointIndex));
-                endLeftPoint = handleTransform.TransformPoint(nextPoint.GetPrevPointPositionTo(index));
+                startRightPoint = pt.GetNextPointPositionTo(nextPointIndex);// handleTransform.TransformPoint(pt.GetNextPointPositionTo(nextPointIndex));
+                endLeftPoint = nextPoint.GetPrevPointPositionTo(index);// handleTransform.TransformPoint(nextPoint.GetPrevPointPositionTo(index));
 
                 Handles.DrawBezier(startPosition, endPosition, startRightPoint, endLeftPoint, Color.white, null, 2f);
             }
