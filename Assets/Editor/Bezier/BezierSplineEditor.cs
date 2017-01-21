@@ -19,10 +19,12 @@ namespace LevelSpline
         private int selectedIndex = -1;
         private int indexNewEdgeStart = -1;
         private int selectedCPointIndex = -1;
+        private int indexTangentStart = -1;
         private GUIContent btnAddAfter;
         private GUIContent btnAddBefore;
         private GUIContent btnAddBranch;
         private GUIContent btnAddEdge;
+        private GUIContent btnDeletePoint;
 
         /// <summary>
         /// Create new scriptable object for Bezier Level Spline
@@ -52,6 +54,8 @@ namespace LevelSpline
                 btnAddBranch = new GUIContent((Texture)Resources.Load("bttnSplineAddBranch"), "Add branch in selected point");
             if (btnAddEdge == null)
                 btnAddEdge = new GUIContent((Texture)Resources.Load("bttnSplineAddEdge"), "Add edge to other point.\nClick on other point to define end");
+            if (btnDeletePoint == null)
+                btnDeletePoint = new GUIContent((Texture)Resources.Load("bttnSplineDeletePoint"), "Delete selected point");
         }
 
         public override void OnInspectorGUI()
@@ -83,6 +87,17 @@ namespace LevelSpline
                     spline.AddFirstPoint();
                 }
             }
+            else
+            {
+                if (GUILayout.Button("Repair spline"))
+                {
+                    Undo.RecordObject(spline.splineData, "Repair spline");
+                    EditorUtility.SetDirty(spline.splineData);
+                    spline.RepairData();
+                    selectedIndex = -1;
+                    selectedCPointIndex = -1;
+                }
+            }
 
             if (0 <= selectedIndex && selectedIndex < spline.PointsCount)
             {
@@ -92,7 +107,7 @@ namespace LevelSpline
 
         private void DrawSelectedPointInspector()
         {
-            GUILayout.Label("Selected Point");
+            GUILayout.Label("Selected Point: " + selectedIndex.ToString());
 
             EditorGUI.BeginChangeCheck();
             Vector3 point = EditorGUILayout.Vector3Field("Position", spline.GetPosition(selectedIndex, selectedCPointIndex));
@@ -122,7 +137,7 @@ namespace LevelSpline
             
             if (GUILayout.Button(btnAddBranch))
             {
-                Undo.RecordObject(spline.splineData, "Add Point");
+                Undo.RecordObject(spline.splineData, "Add point");
                 EditorUtility.SetDirty(spline.splineData);
                 selectedIndex = spline.AddBranchAfter(selectedIndex);
             }
@@ -130,8 +145,52 @@ namespace LevelSpline
             if (GUILayout.Button(btnAddEdge))
             {
                 indexNewEdgeStart = selectedIndex;
+                Repaint();
+            }
+
+            if (GUILayout.Button(btnDeletePoint))
+            {
+                Undo.RecordObject(spline.splineData, "Delete Point");
+                EditorUtility.SetDirty(spline.splineData);
+                spline.DeletePoint(selectedIndex);
+                selectedIndex = -1;
+                selectedCPointIndex = -1;
             }
             GUILayout.EndHorizontal();
+
+            if (indexNewEdgeStart >= 0)
+            {
+                EditorGUILayout.HelpBox("Select final point for the edge", MessageType.Warning);
+            }
+
+            GUI.enabled = selectedIndex >= 0 && selectedCPointIndex >= 0;
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Enforce tangent"))
+            {
+                indexTangentStart = selectedCPointIndex;
+                /*
+                Undo.RecordObject(spline.splineData, "Enforce tangent");
+                EditorUtility.SetDirty(spline.splineData);
+                spline.EnforceTangent(selectedIndex);
+                */
+            }
+            if (GUILayout.Button("Revert edge"))
+            {
+                Undo.RecordObject(spline.splineData, "Revert edge");
+                EditorUtility.SetDirty(spline.splineData);
+                spline.RevertEdge(selectedIndex, selectedCPointIndex);
+            }
+            if (GUILayout.Button("Delete edge"))
+            {
+                Undo.RecordObject(spline.splineData, "Delete edge");
+                EditorUtility.SetDirty(spline.splineData);
+                spline.DeleteEdge(selectedIndex, selectedCPointIndex);
+            }
+            GUILayout.EndHorizontal();
+            if (indexTangentStart >= 0)
+            {
+                EditorGUILayout.HelpBox("Select control point to enforce tangent", MessageType.Warning);
+            }
         }
 
         private void OnSceneGUI()
@@ -157,7 +216,7 @@ namespace LevelSpline
         {
             BezierPoint pt = spline.GetPoint(index);
 
-            Vector3 pointPosition = handleTransform.TransformPoint(pt.Point);
+            Vector3 pointPosition = handleTransform.TransformPoint(pt.position);
             for (int i = -1; i < pt.points.Length; i++)
             {
                 Vector3 point = handleTransform.TransformPoint(pt.GetPosition(i));
@@ -175,16 +234,29 @@ namespace LevelSpline
 
                 if (Handles.Button(point, handleRotation, size * handleSize, size * pickSize, Handles.DotCap))
                 {
-                    if (indexNewEdgeStart < 0)
+                    if (indexNewEdgeStart < 0 && (indexTangentStart < 0 || selectedIndex != index))
                     {
                         selectedIndex = index;
                         selectedCPointIndex = i;
+                        indexTangentStart = -1;
                     }
-                    else
+                    else if (indexNewEdgeStart >= 0)
                     {
+                        Undo.RecordObject(spline.splineData, "Add edge");
+                        EditorUtility.SetDirty(spline.splineData);
                         spline.AddEdgeBetween(selectedIndex, index);
                         indexNewEdgeStart = -1;
+                        indexTangentStart = -1;
                     }
+                    else if (indexTangentStart >= 0 && i >= 0)
+                    {
+                        Undo.RecordObject(spline.splineData, "Enforce tangent");
+                        EditorUtility.SetDirty(spline.splineData);
+                        spline.EnforceTangent(selectedIndex, indexTangentStart, i);
+                        indexNewEdgeStart = -1;
+                        indexTangentStart = -1;
+                    }
+
                     Repaint();
                 }
 
@@ -220,7 +292,7 @@ namespace LevelSpline
             BezierPoint nextPoint;
             List<int> nextPoints = spline.GetNextPointsIndexes(index);
 
-            Vector3 startPosition = handleTransform.TransformPoint(pt.Point);
+            Vector3 startPosition = handleTransform.TransformPoint(pt.position);
             Vector3 endPosition;
             Vector3 startRightPoint;
             Vector3 endLeftPoint;
@@ -230,8 +302,8 @@ namespace LevelSpline
                 nextPoint = spline.GetPoint(nextPointIndex);
                 endPosition = handleTransform.TransformPoint(nextPoint.position);
 
-                startRightPoint = handleTransform.TransformPoint(pt.GetNextPointTo(nextPointIndex));
-                endLeftPoint = handleTransform.TransformPoint(nextPoint.GetPrevPointTo(index));
+                startRightPoint = handleTransform.TransformPoint(pt.GetNextPointPositionTo(nextPointIndex));
+                endLeftPoint = handleTransform.TransformPoint(nextPoint.GetPrevPointPositionTo(index));
 
                 Handles.DrawBezier(startPosition, endPosition, startRightPoint, endLeftPoint, Color.white, null, 2f);
             }

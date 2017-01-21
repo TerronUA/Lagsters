@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0289fd9b30d7d724b8cfe885b9f9c836, type: 3}
+  m_Name: 02
+  m_EditorClassIdentifier: 
+  points:
+  - position: {x: 30.457989, y: 0, z: -18.04195}
+    points:
+    - position: {x: 30.457989, y: 0, z: -16.04195}
+      prevIndex: -1
+      nextIndex: 1
+      weight: 1
+  - position: {x: 30.457989, y: 0, z: -13.04195}
+    points:
+    - position: {x: 30.457989, y: 0, z: -15.04195}
+      prevIndex: 0
+      nextIndex: -1
+      weight: 1
+    - position: {x: 30.457989, y: 0, z: -8.678465}
+      prevIndex: -1
+      nextIndex: 2
+      weight: 1
+    - position: {x: 30.457989, y: 0, z: -12.01552}
+      prevIndex: -1
+      nextIndex: 3
+      weight: 1
+  - position: {x: 25.537973, y: 0, z: 0.032808304}
+    points:
+    - position: {x: 25.537973, y: 0, z: 2.0328083}
+      prevIndex: -1
+      nextIndex: 4
+      weight: 1
+    - position: {x: 25.537973, y: 0, z: -1.9671917}
+      prevIndex: 1
+      nextIndex: -1
+      weight: 1
+  - position: {x: 33.14208, y: 0, z: 0.24403286}
+    points:
+    - position: {x: 33.14208, y: 0, z: 2.8940887}
+      prevIndex: -1
+      nextIndex: 5
+      weight: 1
+    - position: {x: 33.14208, y: 0, z: -1.7559671}
+      prevIndex: 1
+      nextIndex: -1
+      weight: 1
+  - position: {x: 25.537973, y: 0, z: 5.0328083}
+    points:
+    - position: {x: 25.537973, y: 0, z: 3.0328083}
+      prevIndex: 2
+      nextIndex: -1
+      weight: 1
+    - position: {x: 25.537973, y: 0, z: 7.0328083}
+      prevIndex: -1
+      nextIndex: 6
+      weight: 1
+  - position: {x: 33.14208, y: 0, z: 5.244033}
+    points:
+    - position: {x: 36.624454, y: 0, z: 1.0275452}
+      prevIndex: 3
+      nextIndex: -1
+      weight: 1
+    - position: {x: 31.48056, y: 0, z: 7.2558126}
+      prevIndex: -1
+      nextIndex: 6
+      weight: 1
+    - position: {x: 27.531433, y: 0, z: 12.037447}
+      prevIndex: -1
+      nextIndex: 8
+      weight: 1
+  - position: {x: 24.231438, y: 0, z: 10.817703}
+    points:
+    - position: {x: 21.865927, y: 0, z: 6.6392355}
+      prevIndex: 4
+      nextIndex: -1
+      weight: 1
+    - position: {x: 22.476002, y: 0, z: 7.716879}
+      prevIndex: 5
+      nextIndex: -1
+      weight: 1
+    - position: {x: 26.230154, y: 0, z: 14.34826}
+      prevIndex: -1
+      nextIndex: 7
+      weight: 1
+  - position: {x: 27.163937, y: 0, z: 16.11326}
+    points:
+    - position: {x: 26.246176, y: 0, z: 14.336264}
+      prevIndex: 6
+      nextIndex: -1
+      weight: 1
+    - position: {x: 27.65639, y: 0, z: 17.066763}
+      prevIndex: -1
+      nextIndex: 8
+      weight: 1
+  - position: {x: 28.759157, y: 0, z: 20.191227}
+    points:
+    - position: {x: 28.759157, y: 0, z: 16.12621}
+      prevIndex: 7
+      nextIndex: -1
+      weight: 1
+    - position: {x: 28.759157, y: 0, z: 12.874512}
+      prevIndex: 5
+      nextIndex: -1
+      weight: 1
+    - position: {x: 28.759157, y: 0, z: 22.191227}
+      prevIndex: -1
+      nextIndex: 9
+      weight: 1
+  - position: {x: 28.759157, y: 0, z: 25.191227}
+    points:
+    - position: {x: 28.759157, y: 0, z: 23.191227}
+      prevIndex: 8
+      nextIndex: -1
+      weight: 1

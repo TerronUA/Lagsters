@@ -24,15 +24,7 @@ namespace LevelSpline
             position = Vector3.forward * 3;
             points = new BezierCPoint[0];
         }
-
-        public Vector3 Point
-        {
-            get
-            { return GetPosition(-1); }
-            set
-            { SetPosition(-1, value); }
-        }
-
+        
         public Vector3 GetPosition(int index)
         {
             if ((index < 0) || (index > points.Length - 1))
@@ -54,36 +46,56 @@ namespace LevelSpline
                 points[index].position = value;
         }
 
-        public Vector3 GetPrevPointTo(int index)
+        public BezierCPoint GetCPoint(int index)
         {
-            Vector3 result = Vector3.zero;
+            if (0 <= index && index < points.Length)
+                return points[index];
 
+            throw new IndexOutOfRangeException();
+        }
+
+        public BezierCPoint GetPrevPointTo(int index)
+        {
             for (int i = 0; i < points.Length; i++)
             {
                 if (points[i].prevIndex == index)
-                {
-                    result = points[i].position;
-                    break;
-                }
+                    return points[i];
             }
 
-            return result;
+            return null;
         }
 
-        public Vector3 GetNextPointTo(int index)
+        public BezierCPoint GetNextPointTo(int index)
         {
-            Vector3 result = Vector3.zero;
-
             for (int i = 0; i < points.Length; i++)
             {
                 if (points[i].nextIndex == index)
-                {
-                    result = points[i].position;
-                    break;
-                }
+                    return points[i];
             }
 
-            return result;
+            return null;
+        }
+
+        public Vector3 GetPrevPointPositionTo(int index)
+        {
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (points[i].prevIndex == index)
+                    return points[i].position;
+            }
+
+            return Vector3.zero;
+        }
+
+        public Vector3 GetNextPointPositionTo(int index)
+        {
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (points[i].nextIndex == index)
+                    return points[i].position;
+            }
+
+            return Vector3.zero;
         }
 
         public bool IsPrevCPointIndex(int index)
@@ -126,6 +138,67 @@ namespace LevelSpline
         {
             Array.Resize(ref points, points.Length + 1);
             points[points.Length - 1] = new BezierCPoint(position, prevIndex, nextIndex, weight);
+        }
+
+        private void DeleteCPoint(int index)
+        {
+            if (0 <= index && index < points.Length)
+            {
+                if (index < points.Length - 1)
+                    Array.Copy(points, index + 1, points, index, points.Length - index - 1);
+
+                Array.Resize(ref points, points.Length - 1);
+            }
+        }
+
+
+        /// <summary>
+        /// Removes all CPoints to/from point, defined in index
+        /// </summary>
+        /// <param name="index">index pf the point</param>
+        public void DeleteCPointsToPoint(int index)
+        {
+            for (int i = points.Length - 1; i >= 0; i--)
+            {
+                if ((points[i].nextIndex == index) || (points[i].prevIndex == index))
+                {
+                    if (i != points.Length - 1)
+                        Array.Copy(points, i + 1, points, i, points.Length - i - 1);
+
+                    Array.Resize(ref points, points.Length - 1);
+                }
+            }
+        }
+     
+        public void EnforceTangent(int indexCPoint)
+        {
+            BezierCPoint cp = points[indexCPoint];
+            Vector3 cpPosition = cp.position;
+            Vector3 tangent = position - cpPosition;
+
+            bool isPrevPoint = IsPrevCPointIndex(indexCPoint);
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (i != indexCPoint & isPrevPoint && !IsPrevCPointIndex(i))
+                {
+                    tangent = tangent.normalized * Vector3.Distance(position, points[i].position);
+                    SetPosition(i, position + tangent);
+                }
+            }
+        }
+
+        public void EnforceTangent(int indexCPoint, int indexForceTangent)
+        {
+            BezierCPoint cp = points[indexCPoint];
+            Vector3 cpPosition = cp.position;
+            Vector3 tangent = position - cpPosition;
+            tangent = tangent.normalized * Vector3.Distance(position, points[indexForceTangent].position);
+            SetPosition(indexForceTangent, position + tangent);
+        }
+
+        public void DeleteEdge(int index)
+        {
+
         }
     }
 }
