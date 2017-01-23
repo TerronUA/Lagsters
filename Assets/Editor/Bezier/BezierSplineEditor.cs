@@ -76,6 +76,7 @@ namespace LevelSpline
                 Undo.RecordObject(spline, "Spline Data");
                 EditorUtility.SetDirty(spline);
                 spline.splineData = newData;
+                Repaint();
             }
 
             if (spline.PointsCount == 0)

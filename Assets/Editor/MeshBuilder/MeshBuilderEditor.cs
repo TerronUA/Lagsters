@@ -22,13 +22,15 @@ public class MeshBuilderEditor : Editor
 
     private void MeshBuilderGUI()
     {
+        builder = target as MeshBuilder;
+
         EditorGUI.BeginChangeCheck();
-        LevelSpline.BezierSpline spline = (LevelSpline.BezierSpline)EditorGUILayout.ObjectField("Spline", builder.spline, typeof(LevelSpline.BezierSpline), true);
+        BezierSplineData newData = (BezierSplineData)EditorGUILayout.ObjectField("Spline Data", builder.spline, typeof(BezierSplineData), false);
         if (EditorGUI.EndChangeCheck())
         {
-            Undo.RecordObject(builder, "Spline changes");
+            Undo.RecordObject(builder, "Spline Data");
             EditorUtility.SetDirty(builder);
-            builder.spline = spline;
+            builder.spline = newData;
         }
 
         EditorGUI.BeginChangeCheck();
@@ -57,13 +59,17 @@ public class MeshBuilderEditor : Editor
             EditorUtility.SetDirty(builder);
             builder.radius = radius;
         }
-        /*
-    public int currentSplineStep = 0;
-    public int generatedSplineStep = 0;
-         */
-    }
 
+        EditorGUI.BeginChangeCheck();
+        int selectedIndex = EditorGUILayout.IntSlider("Selected point", builder.selectedIndex, 0, builder.PointsOnSpline - 1);
+        if (EditorGUI.EndChangeCheck())
+        {
+            builder.SelectedPoint = selectedIndex;
+            SceneView.RepaintAll();
+        }
+    }
     private void OnSceneGUI()
     {
+        builder = target as MeshBuilder;
     }
 }

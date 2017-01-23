@@ -12,111 +12,101 @@ MonoBehaviour:
   m_Name: 02
   m_EditorClassIdentifier: 
   points:
-  - position: {x: 30.457989, y: 0, z: -18.04195}
+  - position: {x: 22.653175, y: 0, z: 7.304961}
     points:
-    - position: {x: 30.457989, y: 0, z: -16.04195}
+    - position: {x: 22.653175, y: 0, z: 9.304962}
       prevIndex: -1
       nextIndex: 1
       weight: 1
-  - position: {x: 30.457989, y: 0, z: -13.04195}
+  - position: {x: 38.279453, y: 0, z: 10.360957}
     points:
-    - position: {x: 30.457989, y: 0, z: -15.04195}
+    - position: {x: 41.79366, y: 0, z: -3.7860603}
       prevIndex: 0
       nextIndex: -1
       weight: 1
-    - position: {x: 30.457989, y: 0, z: -8.678465}
+    - position: {x: 31.605564, y: 0, z: 20.05141}
       prevIndex: -1
-      nextIndex: 2
+      nextIndex: 8
       weight: 1
-    - position: {x: 30.457989, y: 0, z: -12.01552}
+    - position: {x: 45.816967, y: 0, z: 12.1626005}
       prevIndex: -1
       nextIndex: 3
       weight: 1
-  - position: {x: 25.537973, y: 0, z: 0.032808304}
+  - position: {x: 13.959567, y: 0, z: 33.93608}
     points:
-    - position: {x: 25.537973, y: 0, z: 2.0328083}
-      prevIndex: -1
-      nextIndex: 4
-      weight: 1
-    - position: {x: 25.537973, y: 0, z: -1.9671917}
-      prevIndex: 1
+    - position: {x: 12.063241, y: 0, z: 28.745253}
+      prevIndex: 8
       nextIndex: -1
       weight: 1
-  - position: {x: 33.14208, y: 0, z: 0.24403286}
-    points:
-    - position: {x: 33.14208, y: 0, z: 2.8940887}
-      prevIndex: -1
-      nextIndex: 5
-      weight: 1
-    - position: {x: 33.14208, y: 0, z: -1.7559671}
-      prevIndex: 1
-      nextIndex: -1
-      weight: 1
-  - position: {x: 25.537973, y: 0, z: 5.0328083}
-    points:
-    - position: {x: 25.537973, y: 0, z: 3.0328083}
-      prevIndex: 2
-      nextIndex: -1
-      weight: 1
-    - position: {x: 25.537973, y: 0, z: 7.0328083}
-      prevIndex: -1
-      nextIndex: 6
-      weight: 1
-  - position: {x: 33.14208, y: 0, z: 5.244033}
-    points:
-    - position: {x: 36.624454, y: 0, z: 1.0275452}
-      prevIndex: 3
-      nextIndex: -1
-      weight: 1
-    - position: {x: 31.48056, y: 0, z: 7.2558126}
-      prevIndex: -1
-      nextIndex: 6
-      weight: 1
-    - position: {x: 27.531433, y: 0, z: 12.037447}
-      prevIndex: -1
-      nextIndex: 8
-      weight: 1
-  - position: {x: 24.231438, y: 0, z: 10.817703}
-    points:
-    - position: {x: 21.865927, y: 0, z: 6.6392355}
-      prevIndex: 4
-      nextIndex: -1
-      weight: 1
-    - position: {x: 22.476002, y: 0, z: 7.716879}
-      prevIndex: 5
-      nextIndex: -1
-      weight: 1
-    - position: {x: 26.230154, y: 0, z: 14.34826}
+    - position: {x: 8.008891, y: 0, z: 43.671947}
       prevIndex: -1
       nextIndex: 7
       weight: 1
-  - position: {x: 27.163937, y: 0, z: 16.11326}
+    - position: {x: 28.04281, y: 0, z: 42.48182}
+      prevIndex: -1
+      nextIndex: 6
+      weight: 1
+  - position: {x: 51.535248, y: 0, z: 16.578243}
     points:
-    - position: {x: 26.246176, y: 0, z: 14.336264}
+    - position: {x: 52.725384, y: 0, z: 3.668685}
+      prevIndex: 1
+      nextIndex: -1
+      weight: 1
+    - position: {x: 54.11387, y: 0, z: 27.50425}
+      prevIndex: -1
+      nextIndex: 4
+      weight: 1
+  - position: {x: 53.91553, y: 0, z: 38.281227}
+    points:
+    - position: {x: 62.246464, y: 0, z: 22.59469}
+      prevIndex: 3
+      nextIndex: -1
+      weight: 1
+    - position: {x: 63.634953, y: 0, z: 53.967766}
+      prevIndex: -1
+      nextIndex: 6
+      weight: 1
+  - position: {x: 32.84147, y: 0, z: 84.05251}
+    points:
+    - position: {x: 54.660595, y: 0, z: 67.572556}
       prevIndex: 6
       nextIndex: -1
       weight: 1
-    - position: {x: 27.65639, y: 0, z: 17.066763}
-      prevIndex: -1
-      nextIndex: 8
-      weight: 1
-  - position: {x: 28.759157, y: 0, z: 20.191227}
-    points:
-    - position: {x: 28.759157, y: 0, z: 16.12621}
+    - position: {x: 15.584534, y: 0, z: 68.16762}
       prevIndex: 7
       nextIndex: -1
       weight: 1
-    - position: {x: 28.759157, y: 0, z: 12.874512}
-      prevIndex: 5
-      nextIndex: -1
-      weight: 1
-    - position: {x: 28.759157, y: 0, z: 22.191227}
-      prevIndex: -1
-      nextIndex: 9
-      weight: 1
-  - position: {x: 28.759157, y: 0, z: 25.191227}
+  - position: {x: 59.46949, y: 0, z: 61.133236}
     points:
-    - position: {x: 28.759157, y: 0, z: 23.191227}
-      prevIndex: 8
+    - position: {x: 68.629105, y: 0, z: 73.77917}
+      prevIndex: -1
+      nextIndex: 5
+      weight: 1
+    - position: {x: 52.130325, y: 0, z: 51.000652}
+      prevIndex: 4
       nextIndex: -1
+      weight: 1
+    - position: {x: 47.248085, y: 0, z: 44.26014}
+      prevIndex: 2
+      nextIndex: -1
+      weight: 1
+  - position: {x: 10.984229, y: 0, z: 53.812744}
+    points:
+    - position: {x: 10.984229, y: 0, z: 55.812744}
+      prevIndex: -1
+      nextIndex: 5
+      weight: 1
+    - position: {x: 5.826985, y: 0, z: 48.639053}
+      prevIndex: 2
+      nextIndex: -1
+      weight: 1
+  - position: {x: 20.703663, y: 0, z: 19.613361}
+    points:
+    - position: {x: 31.811583, y: 0, z: 10.505446}
+      prevIndex: 1
+      nextIndex: -1
+      weight: 1
+    - position: {x: 8.405622, y: 0, z: 18.803493}
+      prevIndex: -1
+      nextIndex: 2
       weight: 1

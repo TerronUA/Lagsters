@@ -229,11 +229,7 @@ namespace LevelSpline
         /// <param name="indexEnd">last index of the edge</param>
         public void AddEdgeBetween(int indexStart, int indexEnd)
         {
-            BezierPoint ptStart = GetPoint(indexStart);
-            BezierPoint ptEnd = GetPoint(indexEnd);
-
-            ptStart.AddNextCPoint(ptStart.position + Vector3.forward * 2, indexEnd);
-            ptEnd.AddPrevCPoint(ptEnd.position - Vector3.forward * 2, indexStart);
+            splineData.AddEdgeBetween(indexStart, indexEnd);
         }
 
         /// <summary>
@@ -288,58 +284,7 @@ namespace LevelSpline
                 cPoint.nextIndex = index;
             }
         }
-
-        /// <summary>
-        /// Update next/prev indexes in CPoints after point removal
-        /// </summary>
-        /// <param name="index">index of the point that will be removed</param>
-        private void UpdateIndexesAfterRemove(int index)
-        {
-            for (int i = 0; i < splineData.points.Length; i++)
-            {
-                BezierPoint pt = splineData.points[i];
-                for (int j = 0; j < pt.points.Length; j++)
-                {
-                    if (pt.points[j].nextIndex > index)
-                        pt.points[j].nextIndex--;
-                    if (pt.points[j].prevIndex > index)
-                        pt.points[j].prevIndex--;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Removes point from array and reconnect all points
-        /// </summary>
-        /// <param name="index">index of point in array to delete</param>
-        private void DeletePointFromArray(int index)
-        {
-            Array.Copy(splineData.points, index + 1, splineData.points, index, splineData.points.Length - index - 1);
-            
-            Array.Resize(ref splineData.points, splineData.points.Length - 1);
-
-            UpdateIndexesAfterRemove(index);
-        }
-
-        private void ReconnectPointsTo(List<int> indexes, int indexOld, int indexNew, bool edgeFromNewIndex)
-        {
-            if ((indexes == null) || (indexes.Count == 0))
-                return;
-
-            // start from index 1, because we connect all other points to the first one
-            for (int i = 0; i < indexes.Count; i++)
-            {
-                BezierPoint pt = splineData.points[indexes[i]];
-                pt.DeleteCPointsToPoint(indexOld);
-
-                if (indexes[i] != indexNew)
-                    if (edgeFromNewIndex)
-                        AddEdgeBetween(indexNew, indexes[i]);
-                    else
-                        AddEdgeBetween(indexes[i], indexNew);
-            }
-        }
-
+        
         public void DeletePoint(int index)
         {
             List<int> nextPoints = GetNextPointsIndexes(index);
@@ -350,51 +295,51 @@ namespace LevelSpline
                 if(splineData.points.Length == 1)
                     Array.Resize(ref splineData.points, 0);
                 else
-                    DeletePointFromArray(index);
+                    splineData.DeletePointFromArray(index);
             }
             else if (prevPoints.Count != 0 && nextPoints.Count == 0)
             {
-                ReconnectPointsTo(prevPoints, index, prevPoints[0], false);
+                splineData.ReconnectPointsTo(prevPoints, index, prevPoints[0], false);
 
-                DeletePointFromArray(index);
+                splineData.DeletePointFromArray(index);
             }
             else if (prevPoints.Count == 0 && nextPoints.Count != 0)
             {
-                ReconnectPointsTo(nextPoints, index, nextPoints[0], false);
+                splineData.ReconnectPointsTo(nextPoints, index, nextPoints[0], false);
 
-                DeletePointFromArray(index);    
+                splineData.DeletePointFromArray(index);    
             }
             else if (prevPoints.Count == 1 && nextPoints.Count == 1)
             {
                 splineData.points[prevPoints[0]].UpdateNextCPoint(index, nextPoints[0]);
                 splineData.points[nextPoints[0]].UpdatePrevCPoint(index, prevPoints[0]);
 
-                DeletePointFromArray(index);
+                splineData.DeletePointFromArray(index);
             }
             else if (prevPoints.Count == 1 && nextPoints.Count > 1)
             {
                 splineData.points[prevPoints[0]].DeleteCPointsToPoint(index);
 
-                ReconnectPointsTo(nextPoints, index, prevPoints[0], true);
+                splineData.ReconnectPointsTo(nextPoints, index, prevPoints[0], true);
 
-                DeletePointFromArray(index);
+                splineData.DeletePointFromArray(index);
             }
             else if (prevPoints.Count > 1 && nextPoints.Count == 1)
             {
                 splineData.points[nextPoints[0]].DeleteCPointsToPoint(index);
 
-                ReconnectPointsTo(prevPoints, index, nextPoints[0], false);
+                splineData.ReconnectPointsTo(prevPoints, index, nextPoints[0], false);
 
-                DeletePointFromArray(index);
+                splineData.DeletePointFromArray(index);
             }
             else
             {
                 splineData.points[prevPoints[0]].DeleteCPointsToPoint(index);
 
-                ReconnectPointsTo(prevPoints, index, prevPoints[0], false);
-                ReconnectPointsTo(nextPoints, index, prevPoints[0], true);
+                splineData.ReconnectPointsTo(prevPoints, index, prevPoints[0], false);
+                splineData.ReconnectPointsTo(nextPoints, index, prevPoints[0], true);
 
-                DeletePointFromArray(index);
+                splineData.DeletePointFromArray(index);
             }
         }
 
