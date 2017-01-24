@@ -67,9 +67,37 @@ public class MeshBuilderEditor : Editor
             builder.SelectedPoint = selectedIndex;
             SceneView.RepaintAll();
         }
+
+        EditorGUI.BeginChangeCheck();
+        int selectedEdge = EditorGUILayout.IntSlider("Selected edge", builder.selectedEdge, 0, builder.EdgesFromSelectedPoint - 1);
+        if (EditorGUI.EndChangeCheck())
+        {
+            builder.selectedEdge = selectedEdge;
+            SceneView.RepaintAll();
+        }
     }
     private void OnSceneGUI()
     {
         builder = target as MeshBuilder;
+        DrawSelectedEdge();
+    }
+
+
+    public void DrawSelectedEdge()
+    {
+        Vector3 startPosition;
+        Vector3 endPosition;
+        Vector3 startRightPoint;
+        Vector3 endLeftPoint;
+        Color drawColor;
+
+        if (builder.GetSelectedEdgePoints(out startPosition, out endPosition, out startRightPoint, out endLeftPoint, out drawColor))
+        {
+            Handles.DrawBezier(startPosition, endPosition, startRightPoint, endLeftPoint, drawColor, null, 2f);
+
+            Handles.color = Color.red;
+            Handles.SphereCap(-1, startRightPoint, Quaternion.identity, 3f);
+            Handles.SphereCap(-1, endLeftPoint, Quaternion.identity, 3f);
+        }
     }
 }

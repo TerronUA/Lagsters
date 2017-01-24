@@ -71,44 +71,6 @@ namespace LevelSpline
         }        
 
         /// <summary>
-        /// Returns list of next points after point in index
-        /// </summary>
-        /// <param name="index">Index of the point in array to return next points list</param>
-        /// <returns></returns>
-        public List<int> GetNextPointsIndexes(int index)
-        {
-            BezierPoint pt = GetPoint(index);
-
-            List<int> result = new List<int>();
-
-            for (int i = 0; i < pt.points.Length; i++)
-            {
-                if (pt.points[i].nextIndex >= 0)
-                    result.Add(pt.points[i].nextIndex);
-            }
-            return result;
-        }
-        
-        /// <summary>
-        /// Returns list of prev points before point in index
-        /// </summary>
-        /// <param name="index">Index of the point in array to return prev points list</param>
-        /// <returns></returns>
-        public List<int> GetPrevPointsIndexes(int index)
-        {
-            BezierPoint pt = GetPoint(index);
-
-            List<int> result = new List<int>();
-
-            for (int i = 0; i < pt.points.Length; i++)
-            {
-                if (pt.points[i].prevIndex >= 0)
-                    result.Add(pt.points[i].prevIndex);
-            }
-            return result;
-        }
-
-        /// <summary>
         /// Creates first point in spline
         /// </summary>
         public void AddFirstPoint()
@@ -127,9 +89,9 @@ namespace LevelSpline
         /// <returns></returns>
         public int AddPointBefore(int index)
         {
-            List<int> prevPoints = GetPrevPointsIndexes(index);
-
             BezierPoint pt = GetPoint(index);
+
+            List<int> prevPoints = pt.GetPrevPointsIndexes();
 
             Vector3 newPosition = pt.position - Vector3.forward * 5;
             
@@ -165,9 +127,9 @@ namespace LevelSpline
         /// <returns></returns>
         public int AddPointAfter(int index)
         {
-            List<int> nextPoints = GetNextPointsIndexes(index);
-
             BezierPoint pt = GetPoint(index);
+
+            List<int> nextPoints = pt.GetNextPointsIndexes();
 
             Vector3 newPosition = pt.position + Vector3.forward * 5;
             
@@ -202,11 +164,11 @@ namespace LevelSpline
         /// <param name="index">index of point</param>
         public int AddBranchAfter(int index)
         {
-            List<int> nextPoints = GetNextPointsIndexes(index);
+            BezierPoint pt = GetPoint(index);
+
+            List<int> nextPoints = pt.GetNextPointsIndexes();
             if (nextPoints.Count == 0)
                 return AddPointAfter(index);
-
-            BezierPoint pt = GetPoint(index);
 
             Vector3 newPosition = pt.position + Vector3.forward * 5;
 
@@ -287,8 +249,9 @@ namespace LevelSpline
         
         public void DeletePoint(int index)
         {
-            List<int> nextPoints = GetNextPointsIndexes(index);
-            List<int> prevPoints = GetPrevPointsIndexes(index);
+            BezierPoint pt = GetPoint(index);
+            List<int> nextPoints = pt.GetNextPointsIndexes();
+            List<int> prevPoints = pt.GetPrevPointsIndexes();
 
             if (prevPoints.Count == 0 && nextPoints.Count == 0)
             {

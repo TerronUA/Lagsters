@@ -6,6 +6,11 @@ namespace LevelSpline
 {
     public static class BezierSplineDataHelper
     {
+        public static bool IndexInRange(this BezierSplineData splineData, int index)
+        {
+            return (0 <= index && index < splineData.points.Length);
+        }
+
         /// <summary>
         /// Update next/prev indexes in CPoints after point removal
         /// </summary>
@@ -73,8 +78,6 @@ namespace LevelSpline
                         splineData.AddEdgeBetween(indexes[i], indexNew);
             }
         }
-
-
 
         public static Vector3 GetPoint(this BezierSplineData splineData, int indexStart, int indexEnd, float t)
         {

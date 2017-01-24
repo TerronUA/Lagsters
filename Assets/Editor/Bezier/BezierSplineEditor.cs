@@ -291,7 +291,7 @@ namespace LevelSpline
         {
             BezierPoint pt = spline.GetPoint(index);
             BezierPoint nextPoint;
-            List<int> nextPoints = spline.GetNextPointsIndexes(index);
+            List<int> nextPoints = pt.GetNextPointsIndexes();
 
             Vector3 startPosition = pt.position;// handleTransform.TransformPoint(pt.position);
             Vector3 endPosition;

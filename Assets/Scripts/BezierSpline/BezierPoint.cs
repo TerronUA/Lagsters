@@ -98,6 +98,40 @@ namespace LevelSpline
             return Vector3.zero;
         }
 
+        /// <summary>
+        /// Returns list of next points after point in index
+        /// </summary>
+        /// <param name="index">Index of the point in array to return next points list</param>
+        /// <returns></returns>
+        public List<int> GetNextPointsIndexes()
+        {
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (points[i].nextIndex >= 0)
+                    result.Add(points[i].nextIndex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns list of prev points before point in index
+        /// </summary>
+        /// <param name="index">Index of the point in array to return prev points list</param>
+        /// <returns></returns>
+        public List<int> GetPrevPointsIndexes()
+        {
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (points[i].prevIndex >= 0)
+                    result.Add(points[i].prevIndex);
+            }
+            return result;
+        }
+
         public bool IsPrevCPointIndex(int index)
         {
             if ((0 <= index) && (index < points.Length))
@@ -150,7 +184,6 @@ namespace LevelSpline
                 Array.Resize(ref points, points.Length - 1);
             }
         }
-
 
         /// <summary>
         /// Removes all CPoints to/from point, defined in index

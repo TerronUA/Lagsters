@@ -289,7 +289,8 @@ MonoBehaviour:
   pointsOnCircle: 20
   splineSteps: 50
   radius: 10
-  selectedIndex: -1
+  selectedIndex: 5
+  selectedEdge: 1
   spline: {fileID: 11400000, guid: e442358261c9b4c40abaab32d674a6d5, type: 2}
 --- !u!23 &1939470379
 MeshRenderer:
