@@ -75,6 +75,15 @@ public class MeshBuilderEditor : Editor
             builder.selectedEdge = selectedEdge;
             SceneView.RepaintAll();
         }
+
+        EditorGUI.BeginChangeCheck();
+        float positionOnEdge = EditorGUILayout.Slider("Selected edge", builder.positionOnEdge, 0f, 1f);
+        if (EditorGUI.EndChangeCheck())
+        {
+            builder.PositionOnEdge = positionOnEdge;
+            SceneView.RepaintAll();
+        }
+        
     }
     private void OnSceneGUI()
     {

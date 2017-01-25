@@ -84,7 +84,7 @@ namespace LevelSpline
                     return points[i].position;
             }
 
-            return Vector3.zero;
+            throw new EdgeNotExist();
         }
 
         public Vector3 GetNextPointPositionTo(int index)
@@ -95,7 +95,7 @@ namespace LevelSpline
                     return points[i].position;
             }
 
-            return Vector3.zero;
+            throw new EdgeNotExist();
         }
 
         /// <summary>

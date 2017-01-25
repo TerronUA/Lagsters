@@ -79,19 +79,62 @@ namespace LevelSpline
             }
         }
 
+        private static void GetBezierPoints(this BezierSplineData splineData, int indexStart, int indexEnd, out Vector3 ptStart, out Vector3 ptEnd, out Vector3 ptStartCPoint, out Vector3 ptEndCPoint)
+        {
+            BezierPoint pt = splineData.points[indexStart];
+            BezierCPoint ptC = pt.GetNextPointTo(indexEnd);
+            if (ptC == null)
+            {
+                ptC = pt.GetPrevPointTo(indexEnd);
+                if (ptC == null)
+                    throw new EdgeNotExist();
+            }
+
+            ptStart = pt.position;
+            ptStartCPoint = ptC.position;
+
+            pt = splineData.points[indexEnd];
+            ptC = pt.GetPrevPointTo(indexStart);
+            if (ptC == null)
+            {
+                ptC = pt.GetNextPointTo(indexStart);
+                if (ptC == null)
+                    throw new EdgeNotExist();
+            }
+
+            ptEnd = pt.position;
+            ptEndCPoint = ptC.position;
+        }
+
         public static Vector3 GetPoint(this BezierSplineData splineData, int indexStart, int indexEnd, float t)
         {
-            BezierPoint ptStart = splineData.points[indexStart];
-            BezierCPoint ptCStart = ptStart.GetNextPointTo(indexEnd);
-            if (ptCStart == null)
-                throw new EdgeNotExist();
+            Vector3 ptStart;
+            Vector3 ptEnd;
+            Vector3 ptStartCPoint;
+            Vector3 ptEndCPoint;
 
-            BezierPoint ptEnd = splineData.points[indexStart];
-            BezierCPoint ptCEnd = ptEnd.GetPrevPointTo(indexStart);
-            if (ptCEnd == null)
-                throw new EdgeNotExist();
+            splineData.GetBezierPoints(indexStart, indexEnd,
+                out ptStart, out ptEnd, out ptStartCPoint, out ptEndCPoint);
 
-            return Bezier.GetPoint(ptStart.position, ptCStart.position, ptCEnd.position, ptEnd.position, t);
+            return Bezier.GetPoint(ptStart, ptStartCPoint, ptEndCPoint, ptEnd, t);
+        }
+
+        public static Vector3 GetVelocity(this BezierSplineData splineData, int indexStart, int indexEnd, float t)
+        {
+            Vector3 ptStart;
+            Vector3 ptEnd;
+            Vector3 ptStartCPoint;
+            Vector3 ptEndCPoint;
+
+            splineData.GetBezierPoints(indexStart, indexEnd,
+                out ptStart, out ptEnd, out ptStartCPoint, out ptEndCPoint);
+
+            return Bezier.GetFirstDerivative(ptStart, ptStartCPoint, ptEndCPoint, ptEnd, t);
+        }
+
+        public static Vector3 GetDirection(this BezierSplineData splineData, int indexStart, int indexEnd, float t)
+        {
+            return splineData.GetVelocity(indexStart, indexEnd, t).normalized;
         }
     }
 }

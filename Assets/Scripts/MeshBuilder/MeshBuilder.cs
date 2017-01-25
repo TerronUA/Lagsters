@@ -13,12 +13,28 @@ public class MeshBuilder : MonoBehaviour
     public float radius = 10f;
     public int selectedIndex = -1;
     public int selectedEdge = -1;
+    public float positionOnEdge = 0f;
+
+    [SerializeField]
+    private int selectedIndexEndPoint = -1;
+
 
     public LevelSpline.BezierSplineData spline;
 
     private Mesh mesh;
     private Vector3[] meshVertices;
     private int[] meshTriangles;
+
+    [SerializeField]
+    private Vector3 ptSelectedStart;
+    [SerializeField]
+    private Vector3 ptSelectedEnd;
+    [SerializeField]
+    private Vector3 ptSelectedStartCPoint;
+    [SerializeField]
+    private Vector3 ptSelectedEndCPoint;
+    [SerializeField]
+    private Color colorSelectedEdge = Color.yellow;
 
     private Vector3[] vertices;
 
@@ -59,14 +75,44 @@ public class MeshBuilder : MonoBehaviour
         set
         {
             selectedIndex = value;
-            vertices = CreateCircleEdge();
+            UpdateSelectedPoint();
         }
     }
 
-    public bool GetSelectedEdgePoints(out Vector3 ptStart, out Vector3 ptEnd, out Vector3 startCPoint, out Vector3 endCPoint, out Color drawColor)
+    public int SelectedEdge
     {
-        ptStart = ptEnd = startCPoint = endCPoint = Vector3.zero;
-        drawColor = Color.yellow;
+        get
+        {
+            return selectedEdge;
+        }
+        set
+        {
+            selectedEdge = value;
+            UpdateSelectedPoint();
+        }
+    }
+
+    public float PositionOnEdge
+    {
+        get
+        {
+            return positionOnEdge;
+        }
+        set
+        {
+            positionOnEdge = value;
+            UpdateSelectedPoint();
+        }
+    }
+
+    /// <summary>
+    /// Updates points positions for active edge
+    /// </summary>
+    /// <returns>True if selected point and edge exists</returns>
+    private bool UpdateSelectedPoint()
+    {
+        ptSelectedStart = ptSelectedEnd = ptSelectedStartCPoint = ptSelectedEndCPoint = Vector3.zero;
+        colorSelectedEdge = Color.yellow;
 
         if (!spline.IndexInRange(selectedIndex))
             return false;
@@ -77,36 +123,49 @@ public class MeshBuilder : MonoBehaviour
             return false;
 
         BezierPoint endPoint;
-        int endPointIndex;
 
         if (pt.IsPrevCPointIndex(selectedEdge))
         {
-            endPointIndex = pt.points[selectedEdge].prevIndex;
+            selectedIndexEndPoint = pt.points[selectedEdge].prevIndex;
 
-            endPoint = spline.points[endPointIndex];
+            endPoint = spline.points[selectedIndexEndPoint];
 
-            startCPoint = pt.GetPrevPointPositionTo(endPointIndex);
-            endCPoint = endPoint.GetNextPointPositionTo(selectedIndex);
+            ptSelectedStartCPoint = pt.GetPrevPointPositionTo(selectedIndexEndPoint);
+            ptSelectedEndCPoint = endPoint.GetNextPointPositionTo(selectedIndex);
 
-            drawColor = Color.red;
+            colorSelectedEdge = Color.red;
         }
         else
         {
-            endPointIndex = pt.points[selectedEdge].nextIndex;
+            selectedIndexEndPoint = pt.points[selectedEdge].nextIndex;
 
-            endPoint = spline.points[endPointIndex];
+            endPoint = spline.points[selectedIndexEndPoint];
 
-            startCPoint = pt.GetNextPointPositionTo(endPointIndex);
-            endCPoint = endPoint.GetPrevPointPositionTo(selectedIndex);
+            ptSelectedStartCPoint = pt.GetNextPointPositionTo(selectedIndexEndPoint);
+            ptSelectedEndCPoint = endPoint.GetPrevPointPositionTo(selectedIndex);
 
-            drawColor = Color.green;
+            colorSelectedEdge = Color.green;
         }
 
-        ptStart = pt.position;
-        ptEnd = endPoint.position;
+        ptSelectedStart = pt.position;
+        ptSelectedEnd = endPoint.position;
 
+        vertices = GenerateEdgeOnSpline(positionOnEdge);
 
         return true;
+    }
+
+    public bool GetSelectedEdgePoints(out Vector3 ptStart, out Vector3 ptEnd, out Vector3 startCPoint, out Vector3 endCPoint, out Color drawColor)
+    {
+        bool result = UpdateSelectedPoint();
+
+        ptStart = ptSelectedStart;
+        ptEnd = ptSelectedEnd;
+        startCPoint = ptSelectedStartCPoint;
+        endCPoint = ptSelectedEndCPoint;
+        drawColor = colorSelectedEdge;
+
+        return result;
     }
 
     /// <summary>
@@ -124,13 +183,13 @@ public class MeshBuilder : MonoBehaviour
 
         return v;
     }
-    /*
+    
     public Vector3[] GenerateEdgeOnSpline(float pos)
     {
         Vector3[] v = CreateCircleEdge();
 
-        Vector3 position = spline.GetPoint(pos);
-        Vector3 direction = spline.GetDirection(pos);
+        Vector3 position = spline.GetPoint(selectedIndex, selectedIndexEndPoint, pos);
+        Vector3 direction = spline.GetDirection(selectedIndex, selectedIndexEndPoint, pos);
         //Vector3 directionStart = spline.GetDirection(0);
         //Quaternion FromToRotation = Quaternion.FromToRotation(directionStart, direction);
         Quaternion FromToRotation = Quaternion.LookRotation(direction);
@@ -144,7 +203,7 @@ public class MeshBuilder : MonoBehaviour
 
         return v;
     }
-    */
+    
 
     private void OnDrawGizmos()
     {
@@ -152,8 +211,12 @@ public class MeshBuilder : MonoBehaviour
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(spline.points[selectedIndex].position, 2f);
+
+            Gizmos.color = Color.white;
+            Gizmos.DrawSphere(spline.GetPoint(selectedIndex, selectedIndexEndPoint, positionOnEdge), 2f);
         }
-        DrawVertices(vertices, 0.2f);
+
+        DrawVertices(vertices, 1f);
     }
 
     /// <summary>
