@@ -120,36 +120,40 @@ namespace LevelSpline
             }
 
             GUI.enabled = selectedIndex >= 0 && selectedCPointIndex == -1;
-            
+
+            GUIStyle styleButton = new GUIStyle(GUI.skin.button);
+            styleButton.fixedWidth = 40f;
+            styleButton.fixedHeight = 40f;
+
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnAddBefore))
+            if (GUILayout.Button(btnAddBefore, styleButton))
             {
                 Undo.RecordObject(spline.splineData, "Add Point");
                 EditorUtility.SetDirty(spline.splineData);
                 selectedIndex = spline.AddPointBefore(selectedIndex);
             }
 
-            if (GUILayout.Button(btnAddAfter))
+            if (GUILayout.Button(btnAddAfter, styleButton))
             {
                 Undo.RecordObject(spline.splineData, "Add Point");
                 EditorUtility.SetDirty(spline.splineData);
                 selectedIndex = spline.AddPointAfter(selectedIndex);
             }
             
-            if (GUILayout.Button(btnAddBranch))
+            if (GUILayout.Button(btnAddBranch, styleButton))
             {
                 Undo.RecordObject(spline.splineData, "Add point");
                 EditorUtility.SetDirty(spline.splineData);
                 selectedIndex = spline.AddBranchAfter(selectedIndex);
             }
 
-            if (GUILayout.Button(btnAddEdge))
+            if (GUILayout.Button(btnAddEdge, styleButton))
             {
                 indexNewEdgeStart = selectedIndex;
                 Repaint();
             }
 
-            if (GUILayout.Button(btnDeletePoint))
+            if (GUILayout.Button(btnDeletePoint, styleButton))
             {
                 Undo.RecordObject(spline.splineData, "Delete Point");
                 EditorUtility.SetDirty(spline.splineData);
@@ -169,11 +173,6 @@ namespace LevelSpline
             if (GUILayout.Button("Enforce tangent"))
             {
                 indexTangentStart = selectedCPointIndex;
-                /*
-                Undo.RecordObject(spline.splineData, "Enforce tangent");
-                EditorUtility.SetDirty(spline.splineData);
-                spline.EnforceTangent(selectedIndex);
-                */
             }
             if (GUILayout.Button("Revert edge"))
             {

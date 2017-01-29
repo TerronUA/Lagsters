@@ -2,29 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 using LevelSpline;
+using System;
 
 [RequireComponent(typeof(LevelSpline.BezierSpline), typeof(MeshFilter), typeof(MeshRenderer))]
 public class MeshBuilder : MonoBehaviour
 {
+    #region Main properties
     public int currentSplineStep = 0;
     public int generatedSplineStep = 0;
     public int pointsOnCircle = 20;
     public int splineSteps = 50;
     public float radius = 10f;
+    #endregion
+    #region Selected edge
     public int selectedIndex = -1;
     public int selectedEdge = -1;
     public float positionOnEdge = 0f;
-
     [SerializeField]
     private int selectedIndexEndPoint = -1;
-
+    #endregion
 
     public LevelSpline.BezierSplineData spline;
-
-    private Mesh mesh;
+    
+    public Mesh mesh;
     private Vector3[] meshVertices;
     private int[] meshTriangles;
 
+    #region Mesh generation properties
+    [SerializeField]
+    private List<int> boundaryFirst;
+    [SerializeField]
+    private List<int> boundaryLast;
+    [SerializeField]
+    private int indexFirstEdgeStarts = -1;
+    [SerializeField]
+    private int indexFirstEdgeEnds = -1;
+    [SerializeField]
+    private int indexLastEdgeStarts = -1;
+    [SerializeField]
+    private int indexLastEdgeEnds = -1;
+    #endregion
+    
+    #region Spline selection properties
     [SerializeField]
     private Vector3 ptSelectedStart;
     [SerializeField]
@@ -35,15 +54,18 @@ public class MeshBuilder : MonoBehaviour
     private Vector3 ptSelectedEndCPoint;
     [SerializeField]
     private Color colorSelectedEdge = Color.yellow;
+    #endregion
 
     private Vector3[] vertices;
 
 
     void OnEnable()
     {
-        mesh = GetComponent<MeshFilter>().sharedMesh;
-        meshVertices = mesh.vertices;
-        meshTriangles = mesh.triangles;
+        if (mesh != null)
+        {
+            meshVertices = mesh.vertices;
+            meshTriangles = mesh.triangles;
+        }
     }
 
     public int PointsOnSpline
@@ -190,6 +212,7 @@ public class MeshBuilder : MonoBehaviour
 
         Vector3 position = spline.GetPoint(selectedIndex, selectedIndexEndPoint, pos);
         Vector3 direction = spline.GetDirection(selectedIndex, selectedIndexEndPoint, pos);
+        
         //Vector3 directionStart = spline.GetDirection(0);
         //Quaternion FromToRotation = Quaternion.FromToRotation(directionStart, direction);
         Quaternion FromToRotation = Quaternion.LookRotation(direction);
@@ -204,7 +227,6 @@ public class MeshBuilder : MonoBehaviour
         return v;
     }
     
-
     private void OnDrawGizmos()
     {
         if (spline != null && 0 <= selectedIndex && selectedIndex < spline.points.Length)
@@ -258,5 +280,97 @@ public class MeshBuilder : MonoBehaviour
             Gizmos.DrawSphere(e[i], diameter);
         }
 
+    }
+    
+    public void CreateFirstStepMesh()
+    {
+        positionOnEdge = 0f;
+
+        mesh.Clear();
+
+        Array.Resize(ref meshVertices, pointsOnCircle * 2);
+        Vector2[] uv = new Vector2[pointsOnCircle * 2];
+
+        for (int j = 0, k = 0; j < 2; j++)
+        {
+            vertices = GenerateEdgeOnSpline(positionOnEdge);
+
+            for (int i = 0; i < pointsOnCircle; i++, k++)
+                meshVertices[k] = vertices[i];
+
+            positionOnEdge = 1f / splineSteps;
+        }
+
+        Array.Resize(ref meshTriangles, pointsOnCircle * 6);
+
+        for (int ti = 0, vi = 0, x = 0; x < pointsOnCircle; x++, ti += 6, vi++)
+        {
+            meshTriangles[ti] = vi;
+
+            meshTriangles[ti + 4] = meshTriangles[ti + 1] = vi + pointsOnCircle;
+
+            if (vi < pointsOnCircle - 1)
+            {
+                meshTriangles[ti + 3] = meshTriangles[ti + 2] = vi + 1;
+                meshTriangles[ti + 5] = vi + pointsOnCircle + 1;
+            }
+            else
+            {
+                meshTriangles[ti + 3] = meshTriangles[ti + 2] = 0;
+                meshTriangles[ti + 5] = pointsOnCircle;
+            }
+        }
+
+        mesh.vertices = meshVertices;
+        mesh.triangles = meshTriangles;
+
+        mesh.RecalculateNormals();
+
+        generatedSplineStep = 1;
+    }
+    
+    public void CreateNextStepMesh()
+    {
+        if (generatedSplineStep == 0)
+            CreateFirstStepMesh();
+
+        positionOnEdge = 1f / splineSteps * (generatedSplineStep + 1);
+
+        meshVertices = mesh.vertices;
+        meshTriangles = mesh.triangles;
+
+        Array.Resize(ref meshVertices, meshVertices.Length + pointsOnCircle);
+
+        vertices = GenerateEdgeOnSpline(positionOnEdge);
+        for (int i = 0, k = meshVertices.Length - pointsOnCircle; i < pointsOnCircle; i++, k++)
+            meshVertices[k] = vertices[i];
+
+
+        Array.Resize(ref meshTriangles, meshTriangles.Length + pointsOnCircle * 6);
+
+        for (int ti = meshTriangles.Length - pointsOnCircle * 6, vi = meshVertices.Length - pointsOnCircle * 2, x = 0; x < pointsOnCircle; x++, ti += 6, vi++)
+        {
+            meshTriangles[ti] = vi;
+
+            meshTriangles[ti + 4] = meshTriangles[ti + 1] = vi + pointsOnCircle;
+
+            if (vi < meshVertices.Length - pointsOnCircle - 1)
+            {
+                meshTriangles[ti + 3] = meshTriangles[ti + 2] = vi + 1;
+                meshTriangles[ti + 5] = vi + pointsOnCircle + 1;
+            }
+            else
+            {
+                meshTriangles[ti + 3] = meshTriangles[ti + 2] = meshVertices.Length - pointsOnCircle * 2;
+                meshTriangles[ti + 5] = meshVertices.Length - pointsOnCircle;
+            }
+        }
+
+        mesh.vertices = meshVertices;
+        mesh.triangles = meshTriangles;
+
+        mesh.RecalculateNormals();
+
+        generatedSplineStep += 1;
     }
 }

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-/*using UnityEditor;*/
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using LevelSpline;
 
 public class GravityManager : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class GravityManager : MonoBehaviour
         }
     }
 
-    public BezierSpline spline;
+    public LevelSpline.BezierSplineData spline;
     public int splinePoinsAmount = 50;
 
     public int activeIndex = -1;
@@ -163,58 +163,82 @@ public class GravityManager : MonoBehaviour
         DeleteAllPoints();
 
         float progress = 0;
+        Vector3 position, direction, reversePosition, reverseDirection;
 
-        for (int i = 0; i < splinePoinsAmount; i++)
+        for (int i = 0; i < spline.points.Length; i++)
         {
-            if (i > 0)
-                progress = 1f / splinePoinsAmount * (i);
+            BezierPoint pt = spline.points[i];
+            for (int j = 0; j < pt.points.Length; j++)
+            {
+                if (pt.IsPrevCPointIndex(j))
+                    continue;
 
-            PathPoint newPoint = new PathPoint();
+                BezierCPoint cPoint = pt.points[j];
 
-            newPoint.position = spline.GetPoint(progress);
-            newPoint.rotation = Quaternion.LookRotation(spline.GetDirection(progress));
-            newPoint.gravity = gravity;
+                progress = 0;
+                for (int k = 0; k < splinePoinsAmount; k++)
+                {
+                    if (k > 0)
+                        progress = 1f / splinePoinsAmount * (k);
+                    position = spline.GetPoint(i, cPoint.nextIndex, progress);
+                    direction = spline.GetDirection(i, cPoint.nextIndex, progress);
+                    reversePosition = spline.GetPoint(i, cPoint.nextIndex, progress + 0.001f);
+                    reverseDirection = spline.GetDirection(i, cPoint.nextIndex, progress + 0.001f);
 
-            // Create PathPoing Collider
-            GameObject go = new GameObject("Path collider " + i);
-
-            go.transform.parent = gameObject.transform;
-            go.transform.position = newPoint.position;
-            go.transform.rotation = newPoint.rotation;
-
-            BoxCollider colliderNormal = go.AddComponent<BoxCollider>();
-            colliderNormal.size = new Vector3(10f, 10f, 0.05f);
-            colliderNormal.isTrigger = true;
-
-            PathNodeCollider pn = go.AddComponent<PathNodeCollider>();
-            pn.indexGravityNode = i;
-
-            // Create Reverse collider
-            GameObject goReverse = new GameObject("Reverse Path collider " + i);
-
-            goReverse.transform.parent = gameObject.transform;
-            goReverse.transform.position = spline.GetPoint(progress + 0.001f);
-            goReverse.transform.rotation = newPoint.rotation;
-
-            BoxCollider colliderReverse = goReverse.AddComponent<BoxCollider>();
-            colliderReverse.size = new Vector3(10f, 10f, 0.05f);
-            colliderReverse.isTrigger = true;
-
-            PathNodeReverseCollider pnReverse = goReverse.AddComponent<PathNodeReverseCollider>();
-
-            pn.reverseCollider = pnReverse;
-            pnReverse.normalCollider = pn;
-
-            newPoint.collider = colliderNormal;
-            newPoint.colliderReverse = colliderReverse;
-
-            pathPoints.pointsList.Add(newPoint);
+                    CreateGravityPoint(position, direction, reversePosition, reverseDirection);
+                }
+            }
         }
 
         if (pathPoints.pointsList.Count > 0)
             activeIndex = 0;
 
         UpdateActivePoint();
+    }
+
+    private void CreateGravityPoint(Vector3 position, Vector3 direction, Vector3 reversePosition, Vector3 reverseDirection)
+    {
+        PathPoint newPoint = new PathPoint();
+
+        newPoint.position = position;
+        newPoint.rotation = Quaternion.LookRotation(direction);
+        newPoint.gravity = gravity;
+
+        int index = pathPoints.pointsList.Count;
+        // Create PathPoing Collider
+        GameObject go = new GameObject("Path collider " + index);
+
+        go.transform.parent = gameObject.transform;
+        go.transform.position = newPoint.position;
+        go.transform.rotation = newPoint.rotation;
+
+        BoxCollider colliderNormal = go.AddComponent<BoxCollider>();
+        colliderNormal.size = new Vector3(20f, 20f, 0.05f);
+        colliderNormal.isTrigger = true;
+
+        PathNodeCollider pn = go.AddComponent<PathNodeCollider>();
+        pn.indexGravityNode = pathPoints.pointsList.Count;
+
+        // Create Reverse collider
+        GameObject goReverse = new GameObject("Reverse Path collider " + index);
+
+        goReverse.transform.parent = gameObject.transform;
+        goReverse.transform.position = reversePosition;
+        goReverse.transform.rotation = Quaternion.LookRotation(reverseDirection);
+
+        BoxCollider colliderReverse = goReverse.AddComponent<BoxCollider>();
+        colliderReverse.size = new Vector3(20f, 20f, 0.05f);
+        colliderReverse.isTrigger = true;
+
+        PathNodeReverseCollider pnReverse = goReverse.AddComponent<PathNodeReverseCollider>();
+
+        pn.reverseCollider = pnReverse;
+        pnReverse.normalCollider = pn;
+
+        newPoint.collider = colliderNormal;
+        newPoint.colliderReverse = colliderReverse;
+
+        pathPoints.pointsList.Add(newPoint);
     }
 
 

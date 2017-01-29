@@ -8,9 +8,15 @@ using LevelSpline;
 public class MeshBuilderEditor : Editor
 {
     private MeshBuilder builder;
+    private GUIContent btnCreateFirstEdge;
+    private GUIContent btnAppendToMesh;
 
     void OnEnable()
     {
+        if (btnCreateFirstEdge == null)
+            btnCreateFirstEdge = new GUIContent((Texture)Resources.Load("btnCreateFirstEdge"), "Create first edge for mesh");
+        if (btnAppendToMesh == null)
+            btnAppendToMesh = new GUIContent((Texture)Resources.Load("btnAppendToMesh"), "Append edge to Mesh");
     }
 
     public override void OnInspectorGUI()
@@ -18,11 +24,20 @@ public class MeshBuilderEditor : Editor
         builder = target as MeshBuilder;
 
         MeshBuilderGUI();
+        SplineSelectionGUI();
+        MeshGenerationGUI();
     }
 
     private void MeshBuilderGUI()
     {
-        builder = target as MeshBuilder;
+        EditorGUI.BeginChangeCheck();
+        Mesh newMesh = (Mesh)EditorGUILayout.ObjectField("Mesh", builder.mesh, typeof(Mesh), false);
+        if (EditorGUI.EndChangeCheck())
+        {
+            Undo.RecordObject(builder, "Mesh Data");
+            EditorUtility.SetDirty(builder);
+            builder.mesh = newMesh;
+        }
 
         EditorGUI.BeginChangeCheck();
         BezierSplineData newData = (BezierSplineData)EditorGUILayout.ObjectField("Spline Data", builder.spline, typeof(BezierSplineData), false);
@@ -59,6 +74,18 @@ public class MeshBuilderEditor : Editor
             EditorUtility.SetDirty(builder);
             builder.radius = radius;
         }
+    }
+
+    private void SplineSelectionGUI()
+    {
+        GUIStyle styleLabel = new GUIStyle(GUI.skin.label);
+        styleLabel.fontSize = GUI.skin.font.fontSize + 2;
+        styleLabel.fontStyle = FontStyle.Bold;
+        styleLabel.clipping = TextClipping.Overflow;
+
+        EditorGUILayout.Space();
+
+        EditorGUILayout.LabelField("Spline selection", styleLabel);
 
         EditorGUI.BeginChangeCheck();
         int selectedIndex = EditorGUILayout.IntSlider("Selected point", builder.selectedIndex, 0, builder.PointsOnSpline - 1);
@@ -77,20 +104,52 @@ public class MeshBuilderEditor : Editor
         }
 
         EditorGUI.BeginChangeCheck();
-        float positionOnEdge = EditorGUILayout.Slider("Selected edge", builder.positionOnEdge, 0f, 1f);
+        float positionOnEdge = EditorGUILayout.Slider("Position", builder.positionOnEdge, 0f, 1f);
         if (EditorGUI.EndChangeCheck())
         {
             builder.PositionOnEdge = positionOnEdge;
             SceneView.RepaintAll();
         }
-        
     }
+
+    private void MeshGenerationGUI()
+    {
+        GUIStyle styleLabel = new GUIStyle(GUI.skin.label);
+        styleLabel.fontSize = GUI.skin.font.fontSize + 2;
+        styleLabel.fontStyle = FontStyle.Bold;
+        styleLabel.clipping = TextClipping.Overflow;
+
+        EditorGUILayout.Space();
+
+        EditorGUILayout.LabelField("Mesh generation", styleLabel);
+
+        GUIStyle styleButton = new GUIStyle(GUI.skin.button);
+        styleButton.fixedWidth = 40f;
+        styleButton.fixedHeight = 40f;
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button(btnCreateFirstEdge, styleButton))
+        {
+            Undo.RecordObject(builder.mesh, "Generate first step mesh");
+            EditorUtility.SetDirty(builder.mesh);
+            builder.CreateFirstStepMesh();
+            SceneView.RepaintAll();
+        }
+        if (GUILayout.Button(btnAppendToMesh, styleButton))
+        {
+            Undo.RecordObject(builder.mesh, "Generate next step mesh");
+            EditorUtility.SetDirty(builder.mesh);
+            builder.CreateNextStepMesh();
+            SceneView.RepaintAll();
+        }
+        EditorGUILayout.EndHorizontal();
+    }
+
     private void OnSceneGUI()
     {
         builder = target as MeshBuilder;
         DrawSelectedEdge();
     }
-
 
     public void DrawSelectedEdge()
     {
