@@ -67,7 +67,6 @@ public class EditorObjExporter : ScriptableObject
         {
             sb.Append(string.Format("vt {0} {1}\n", v.x, v.y));
         }
-
         for (int material = 0; material < m.subMeshCount; material++)
         {
             sb.Append("\n");
@@ -102,7 +101,6 @@ public class EditorObjExporter : ScriptableObject
                     triangles[i] + 1 + vertexOffset, triangles[i + 1] + 1 + normalOffset, triangles[i + 2] + 1 + uvOffset));
             }
         }
-
         vertexOffset += m.vertices.Length;
         normalOffset += m.normals.Length;
         uvOffset += m.uv.Length;
@@ -179,7 +177,7 @@ public class EditorObjExporter : ScriptableObject
     {
         Dictionary<string, ObjMaterial> materialList = PrepareFileWrite();
 
-        using (StreamWriter sw = new StreamWriter(folder + Path.PathSeparator + filename + ".obj"))
+        using (StreamWriter sw = new StreamWriter(folder + Path.DirectorySeparatorChar + filename + ".obj"))
         {
             sw.Write("mtllib ./" + filename + ".mtl\n");
 
@@ -193,7 +191,7 @@ public class EditorObjExporter : ScriptableObject
     {
         Dictionary<string, ObjMaterial> materialList = PrepareFileWrite();
 
-        using (StreamWriter sw = new StreamWriter(folder + Path.PathSeparator + filename + ".obj"))
+        using (StreamWriter sw = new StreamWriter(folder + Path.DirectorySeparatorChar + filename + ".obj"))
         {
             sw.Write("mtllib ./" + filename + ".mtl\n");
 

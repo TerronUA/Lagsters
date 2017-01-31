@@ -11,4 +11,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0289fd9b30d7d724b8cfe885b9f9c836, type: 3}
   m_Name: 01
   m_EditorClassIdentifier: 
-  points: []
+  points:
+  - position: {x: 14.620317, y: 0, z: 21.208767}
+    points:
+    - position: {x: -30.582632, y: 0, z: 15.672732}
+      prevIndex: -1
+      nextIndex: 1
+      weight: 1
+    - position: {x: 33.0878, y: 0, z: 23.470491}
+      prevIndex: 5
+      nextIndex: -1
+      weight: 1
+  - position: {x: 14.620317, y: 0, z: 69.04502}
+    points:
+    - position: {x: 13.402656, y: 0, z: 49.38201}
+      prevIndex: 0
+      nextIndex: -1
+      weight: 1
+    - position: {x: 16.26166, y: 0, z: 95.5497}
+      prevIndex: -1
+      nextIndex: 2
+      weight: 1
+    - position: {x: 15.688905, y: 0, z: 86.30075}
+      prevIndex: -1
+      nextIndex: 3
+      weight: 1
+  - position: {x: -23.730537, y: 0, z: 115.055374}
+    points:
+    - position: {x: -17.904245, y: 0, z: 110.2888}
+      prevIndex: 1
+      nextIndex: -1
+      weight: 1
+  - position: {x: 40.867165, y: 0, z: 101.54534}
+    points:
+    - position: {x: 28.917957, y: 0, z: 99.68112}
+      prevIndex: 1
+      nextIndex: -1
+      weight: 1
+    - position: {x: 59.472763, y: 0, z: 104.44804}
+      prevIndex: -1
+      nextIndex: 4
+      weight: 1
+  - position: {x: 68.16313, y: 0, z: 72.52345}
+    points:
+    - position: {x: 60.78859, y: 0, z: 85.56909}
+      prevIndex: 3
+      nextIndex: -1
+      weight: 1
+    - position: {x: 72.74882, y: 0, z: 64.41132}
+      prevIndex: -1
+      nextIndex: 5
+      weight: 1
+  - position: {x: 61.92139, y: 0, z: 28.787167}
+    points:
+    - position: {x: 72.25745, y: 0, z: 34.925724}
+      prevIndex: 4
+      nextIndex: -1
+      weight: 1
+    - position: {x: 45.819656, y: 0, z: 19.224386}
+      prevIndex: -1
+      nextIndex: 0
+      weight: 1
