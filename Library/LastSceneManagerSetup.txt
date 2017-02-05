@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/TestGravityGenerator.unity
+- path: Assets/_Scenes/MeshTest.unity
   isLoaded: 1
   isActive: 1

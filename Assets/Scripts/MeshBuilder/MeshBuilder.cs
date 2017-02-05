@@ -334,7 +334,12 @@ public class MeshBuilder : MonoBehaviour
         if (generatedSplineStep == 0)
             CreateFirstStepMesh();
 
+        if (positionOnEdge >= 1f)
+            return;
+
         positionOnEdge = 1f / splineSteps * (generatedSplineStep + 1);
+        if (positionOnEdge > 1f)
+            positionOnEdge = 1f;
 
         meshVertices = mesh.vertices;
         meshTriangles = mesh.triangles;

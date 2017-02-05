@@ -142,6 +142,17 @@ public class MeshBuilderEditor : Editor
             builder.CreateNextStepMesh();
             SceneView.RepaintAll();
         }
+        if (GUILayout.Button(btnAppendToMesh, styleButton))
+        {
+            Undo.RecordObject(builder.mesh, "Generate till end");
+            EditorUtility.SetDirty(builder.mesh);
+            builder.CreateFirstStepMesh();
+            for (int i = 1; i < builder.splineSteps; i++)
+            {
+                builder.CreateNextStepMesh();
+            }
+            SceneView.RepaintAll();
+        }
         EditorGUILayout.EndHorizontal();
     }
 
