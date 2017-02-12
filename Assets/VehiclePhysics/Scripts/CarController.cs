@@ -30,18 +30,14 @@ public class CarController : MonoBehaviour
     //bunch of variables we do not adjust, script handles these internally 
     private float slideSpeed;
     private Vector3 carRight;
-    private Vector3 carFwd;
-    private Vector3 tempVEC;
     private Vector3 rotationAmount;
     private Vector3 accel;
     private float throttle;
     private Vector3 myRight;
-    private Vector3 velo;
     private Vector3 flatVelo;
     private Vector3 relativeVelocity;
     private Vector3 dir;
     private Vector3 flatDir;
-    private Vector3 carUp;
     private Transform carTransform;
     private Rigidbody carRigidbody;
     private Vector3 engineForce;
@@ -67,12 +63,8 @@ public class CarController : MonoBehaviour
         carRigidbody = GetComponent<Rigidbody>();
         // cache a reference to the AudioSource
         myAudioSource = GetComponent<AudioSource>();
-        // cache our vector up direction
-        carUp = carTransform.up;
         // cache the mass of our vehicle 
         carMass = carRigidbody.mass;
-        // cache the Forward World Vector for our car
-        carFwd = Vector3.forward;
         // cache the World Right Vector for our car
         carRight = Vector3.right;
         // call to set up our wheels array
@@ -117,6 +109,9 @@ public class CarController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method rotates wheel meshes
+    /// </summary>
     void RotateVisualWheels()
     {
         Vector3 tmpEulerAngles = LFWheelTransform.localEulerAngles;
@@ -177,27 +172,18 @@ public class CarController : MonoBehaviour
         //grab all the physics info we need to calc everything
         myRight = carTransform.right;
 
-        Debug.DrawRay(carTransform.position, myRight * 3, Color.red);
-
-        // find our velocity
-        velo = carRigidbody.velocity;
-
-        tempVEC = new Vector3(velo.x, 0f, velo.z);
-
         // figure out our velocity without y movement - our flat velocity
-        flatVelo = tempVEC;
+        flatVelo = carRigidbody.velocity;
 
         // find out which direction we are moving in
-        dir = transform.TransformDirection(carFwd);
+        dir = carTransform.forward;
         
-        Debug.DrawRay(carTransform.position, carFwd * 5, Color.yellow);
+        //Debug.DrawRay(carTransform.position, carTransform.forward * 10, Color.yellow);
 
-        Debug.DrawRay(carTransform.position, dir * 3, Color.green);
-
-        tempVEC = new Vector3(dir.x, 0, dir.z);
+        //Debug.DrawRay(carTransform.position, dir * 10, Color.green);
 
         // calculate our direction, removing y movement - our flat direction
-        flatDir = Vector3.Normalize(tempVEC);
+        flatDir = Vector3.Normalize(dir);
 
         // calculate relative velocity
         relativeVelocity = carTransform.InverseTransformDirection(flatVelo);
@@ -224,7 +210,7 @@ public class CarController : MonoBehaviour
         }
 
         // calculate torque for applying to our rigidbody
-        turnVec = (((carUp * turnSpeed) * actualTurn) * carMass) * 800f;
+        turnVec = (((carTransform.up * turnSpeed) * actualTurn) * carMass) * 800f;
 
         // calculate impulses to simulate grip by taking our right vector, reversing the slidespeed and
         // multiplying that by our mass, to give us a completely 'corrected' force that would completely
@@ -266,19 +252,19 @@ public class CarController : MonoBehaviour
         if (mySpeed < maxSpeed)
         {
             // apply the engine force to the rigidbody
-            carRigidbody.AddForce(engineForce * Time.deltaTime);
+            carRigidbody.AddForce(engineForce);
         }
         //if we're going to slow to allow car to rotate around 
         if (mySpeed > maxSpeedToTurn)
         {
             // apply torque to our rigidbody
-            carRigidbody.AddTorque(turnVec * Time.deltaTime);
+            carRigidbody.AddTorque(turnVec);
         }
         else if (mySpeed < maxSpeedToTurn)
         {
             return;
         }
         // apply forces to our rigidbody for grip
-        carRigidbody.AddForce(imp * Time.deltaTime);
+        carRigidbody.AddForce(imp);
     }
 }

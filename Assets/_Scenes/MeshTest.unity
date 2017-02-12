@@ -5915,7 +5915,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 6517718, guid: 621a81f201932804a82301231db81c7c, type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6517718, guid: 621a81f201932804a82301231db81c7c, type: 2}
       propertyPath: m_Size.y
@@ -5936,6 +5936,14 @@ Prefab:
     - target: {fileID: 5421924, guid: 621a81f201932804a82301231db81c7c, type: 2}
       propertyPath: m_AngularDrag
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 11460594, guid: 621a81f201932804a82301231db81c7c, type: 2}
+      propertyPath: power
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 11460594, guid: 621a81f201932804a82301231db81c7c, type: 2}
+      propertyPath: turnSpeed
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 621a81f201932804a82301231db81c7c, type: 2}
@@ -9366,7 +9374,7 @@ SphereCollider:
   m_GameObject: {fileID: 1592636689}
   m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.06
   m_Center: {x: 0.35, y: -0.33, z: -0.32}
@@ -9378,7 +9386,7 @@ SphereCollider:
   m_GameObject: {fileID: 1592636689}
   m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.06
   m_Center: {x: 0.35, y: -0.33, z: 0.29}
@@ -9390,7 +9398,7 @@ SphereCollider:
   m_GameObject: {fileID: 1592636689}
   m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.06
   m_Center: {x: -0.35, y: -0.33, z: -0.32}
@@ -9402,7 +9410,7 @@ SphereCollider:
   m_GameObject: {fileID: 1592636689}
   m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.06
   m_Center: {x: -0.35, y: -0.33, z: 0.29}
