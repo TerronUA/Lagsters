@@ -13,7 +13,7 @@ public class GravityBody : MonoBehaviour
     [HideInInspector]
     public Vector3 gravityPosition;
 
-    public float gravity = 10f;
+    public float gravity = -10f;
     public GameObject gravityObject;
     public GameObject startObject;
     public GameObject endObject;
@@ -58,18 +58,8 @@ public class GravityBody : MonoBehaviour
             gravityPosition = startPoint + vVector3;
         }
 
-
-        if (gravityObject != null)
-            gravityObject.transform.position = gravityPosition;
-
-        if (startObject != null)
-            startObject.transform.position = startPoint;
-
-        if (endObject != null)
-            endObject.transform.position = endPoint;
-
-
-        rbody.AddForce(gravity * rbody.mass * (gravityPosition - centerOfMass).normalized);
+        rbody.AddForceAtPosition(gravity * rbody.mass * (gravityPosition - centerOfMass).normalized, centerOfMass);
+        Debug.DrawRay(centerOfMass, gravity * rbody.mass * (gravityPosition - centerOfMass).normalized, Color.yellow);
     }
 
     void FindClosesPointOnSpline()
@@ -97,7 +87,7 @@ public class GravityBody : MonoBehaviour
     }
 
     private void OnDrawGizmos()
-    {
+    {/*
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(startPoint, 0.3f);
 
@@ -106,5 +96,6 @@ public class GravityBody : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(centerOfMass, 0.3f);
+        */
     }
 }

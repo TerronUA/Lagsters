@@ -26,7 +26,7 @@ public class PathNodeCollider : MonoBehaviour
         if (!canPlay)
             return;
 
-        Debug.Log("Triggered " + gameObject.name);
+        //Debug.Log("Triggered " + gameObject.name);
 
         GravityBody gBody = other.gameObject.GetComponentInParent<GravityBody>();
         if (gBody == null)

@@ -27,6 +27,6 @@ public class PathNodeReverseCollider : MonoBehaviour
         else
             isTriggered = true;
 
-        Debug.Log("Rev.Collider " + gameObject.name);
+        //Debug.Log("Rev.Collider " + gameObject.name);
     }
 }

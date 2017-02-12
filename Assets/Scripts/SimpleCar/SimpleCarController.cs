@@ -30,7 +30,9 @@ public class SimpleCarController : MonoBehaviour
     {
         rBody = transform.GetComponent<Rigidbody>();
 		rBody.centerOfMass = centerOfGravity.localPosition;
-	}
+
+        wheelFL.ConfigureVehicleSubsteps(2, 10, 15);
+    }
 
 	public float Speed()
     {
@@ -44,8 +46,8 @@ public class SimpleCarController : MonoBehaviour
 
 	void FixedUpdate ()
     {
-		if(speedText!=null)
-			speedText.text = /*"Speed: " + */Speed().ToString("f0") + " km/h";
+        if (speedText != null)
+            speedText.text = /*"Speed: " + */Speed().ToString("f0");// + " km/h";
 
 		//Debug.Log ("Speed: " + (wheelRR.radius * Mathf.PI * wheelRR.rpm * 60f / 1000f) + "km/h    RPM: " + wheelRL.rpm);
 
@@ -67,7 +69,7 @@ public class SimpleCarController : MonoBehaviour
 		wheelRR.motorTorque = driveMode==DriveMode.Front ? 0 : scaledTorque;
 		wheelRL.motorTorque = driveMode==DriveMode.Front ? 0 : scaledTorque;
 
-		if(Input.GetButton("Fire1"))
+		if(Input.GetButton("Jump"))
         {
 			wheelFR.brakeTorque = brakeTorque;
 			wheelFL.brakeTorque = brakeTorque;

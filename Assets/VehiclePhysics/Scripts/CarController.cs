@@ -43,7 +43,7 @@ public class CarController : MonoBehaviour
     private Vector3 flatDir;
     private Vector3 carUp;
     private Transform carTransform;
-    private Rigidbody thisRigidbody;
+    private Rigidbody carRigidbody;
     private Vector3 engineForce;
     private float actualGrip;
     private Vector3 turnVec;
@@ -64,13 +64,13 @@ public class CarController : MonoBehaviour
         // Cache a reference to our car's transform
         carTransform = GetComponent<Transform>();
         // cache the rigidbody for our car
-        thisRigidbody = GetComponent<Rigidbody>();
+        carRigidbody = GetComponent<Rigidbody>();
         // cache a reference to the AudioSource
         myAudioSource = GetComponent<AudioSource>();
         // cache our vector up direction
         carUp = carTransform.up;
         // cache the mass of our vehicle 
-        carMass = thisRigidbody.mass;
+        carMass = carRigidbody.mass;
         // cache the Forward World Vector for our car
         carFwd = Vector3.forward;
         // cache the World Right Vector for our car
@@ -79,7 +79,7 @@ public class CarController : MonoBehaviour
         SetUpWheels();
         // we set a COG here and lower the center of mass to a
         //negative value in Y axis to prevent car from flipping over
-        thisRigidbody.centerOfMass = new Vector3(0f, -0.75f, .35f);
+        carRigidbody.centerOfMass = new Vector3(0f, -0.75f, .35f);
     }
 
     void Update()
@@ -180,7 +180,7 @@ public class CarController : MonoBehaviour
         Debug.DrawRay(carTransform.position, myRight * 3, Color.red);
 
         // find our velocity
-        velo = thisRigidbody.velocity;
+        velo = carRigidbody.velocity;
 
         tempVEC = new Vector3(velo.x, 0f, velo.z);
 
@@ -266,19 +266,19 @@ public class CarController : MonoBehaviour
         if (mySpeed < maxSpeed)
         {
             // apply the engine force to the rigidbody
-            thisRigidbody.AddForce(engineForce * Time.deltaTime);
+            carRigidbody.AddForce(engineForce * Time.deltaTime);
         }
         //if we're going to slow to allow car to rotate around 
         if (mySpeed > maxSpeedToTurn)
         {
             // apply torque to our rigidbody
-            thisRigidbody.AddTorque(turnVec * Time.deltaTime);
+            carRigidbody.AddTorque(turnVec * Time.deltaTime);
         }
         else if (mySpeed < maxSpeedToTurn)
         {
             return;
         }
         // apply forces to our rigidbody for grip
-        thisRigidbody.AddForce(imp * Time.deltaTime);
+        carRigidbody.AddForce(imp * Time.deltaTime);
     }
 }
