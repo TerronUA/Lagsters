@@ -30,7 +30,7 @@ namespace CubeCar
             float handbrake = Input.GetAxis("Jump");
             m_Car.Move(inputHorizontal, inputVertical, inputVertical, handbrake);
 #else
-            m_Car.Move(h, v, v, 0f);
+            m_Car.Move(inputHorizontal, inputVertical, inputVertical, 0f);
 #endif
             speedDisplay.text = Math.Truncate(m_Car.CurrentSpeed).ToString();
         }
