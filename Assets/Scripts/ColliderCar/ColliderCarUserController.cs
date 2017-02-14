@@ -123,7 +123,7 @@ namespace ColliderCar
         {
             strategyController.GetInput(out steering, out acceleration, out footbrake, out handbrake);
 
-            car.Move(steering, acceleration, footbrake, handbrake);
+            car.CarPhysicsUpdate(steering, acceleration, footbrake, handbrake);
         }
     }
 }
