@@ -15,6 +15,12 @@ namespace ColliderCar
 
         public float maxSteeringAngle = 30f;
 
+        // car physics adjustments
+        public float enginePower = 1200f;
+        public float brakePower = 200f;
+
+        public float maxSpeed = 50f;
+
         // Cashed references to components
         private Transform carTransform;
         private Rigidbody carRigidbody;
@@ -41,6 +47,8 @@ namespace ColliderCar
         private float carSlideSpeed;
         private float carSteering;
         private bool inReverseMode;
+        private Vector3 engineForce;
+        private Vector3 brakeForce;
 
         // Cashed transforms for our wheels
         private Transform[] wheelTransform;
@@ -117,7 +125,7 @@ namespace ColliderCar
             //grab all the physics info we need to calc everything
             carCurrentRight = carTransform.right;
 
-            // figure out our velocity without y movement - our flat velocity
+            // figure out our velocity
             carCurrentVelocity = carRigidbody.velocity;
 
             // find out which direction we are moving in
@@ -139,8 +147,12 @@ namespace ColliderCar
             // check to see if we are moving in reverse
             inReverseMode = Mathf.Sign(Vector3.Dot(carCurrentVelocity, carCurrentDirection)) < 0.1f;
 
-            // calculate engine force with our flat direction vector and acceleration
-            engineForce = (carCurrentDirection * (power * throttle) * carMass);
+            // calculate engine force with our direction vector and acceleration
+            // TODO: use inputBrake to calculate force. Add brakePover property?
+            engineForce = (carCurrentDirection * (enginePower * inputAcceleration) * carMass);
+            brakeForce = -1 * (carCurrentDirection * (brakePower * inputBrake) * carMass);
+
+            Debug.Log(inputBrake);
 
             // do turning
             carSteering = inputSteering;
@@ -152,7 +164,7 @@ namespace ColliderCar
             }
 
             // calculate torque for applying to our rigidbody
-            turnVec = (((carTransform.up * turnSpeed) * carSteering) * carMass) * 800f;
+            //turnVec = (((carTransform.up * turnSpeed) * carSteering) * carMass) * 800f;
 
             // calculate impulses to simulate grip by taking our right vector, reversing the slidespeed and
             // multiplying that by our mass, to give us a completely 'corrected' force that would completely
@@ -160,8 +172,8 @@ namespace ColliderCar
             // reduces the corrected force so that it only helps to reduce sliding rather than completely
             // stop it 
 
-            actualGrip = Mathf.Lerp(100f, carGrip, mySpeed * 0.02f);
-            imp = myRight * (-carSlideSpeed * carMass * actualGrip);
+            //actualGrip = Mathf.Lerp(100f, carGrip, mySpeed * 0.02f);
+            //imp = myRight * (-carSlideSpeed * carMass * actualGrip);
         }
 
         /// <summary>
@@ -214,5 +226,34 @@ namespace ColliderCar
                 carAudioSource.pitch = 2.0f;
             }
 */        }
+
+        private void FixedUpdate()
+        {
+            if (carCurrentSpeed < maxSpeed)
+            {
+                // apply the engine force to the rigidbody
+                carRigidbody.AddForce(engineForce);
+            }
+
+            if (inputBrake > 0)
+            {
+                // apply the brake force to the rigidbody
+                carRigidbody.AddForce(brakeForce);
+            }
+
+            //if we're going to slow to allow car to rotate around 
+            /*            if (mySpeed > maxSpeedToTurn)
+                        {
+                            // apply torque to our rigidbody
+                            carRigidbody.AddTorque(turnVec);
+                        }
+                        else if (mySpeed < maxSpeedToTurn)
+                        {
+                            return;
+                        }
+                        // apply forces to our rigidbody for grip
+                        carRigidbody.AddForce(imp);
+            */
+        } 
     }
 }

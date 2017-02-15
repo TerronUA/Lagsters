@@ -934,7 +934,7 @@ MonoBehaviour:
   positionOnEdge: 0.381
   selectedIndexEndPoint: 1
   spline: {fileID: 11400000, guid: e442358261c9b4c40abaab32d674a6d5, type: 2}
-  mesh: {fileID: 4300000, guid: 92e00046ad36a704cade85cf42fdc075, type: 2}
+  mesh: {fileID: 4300000, guid: 4d231202aa4666c41b513117da330cc1, type: 2}
   boundaryFirst: 
   boundaryLast: 
   indexFirstEdgeStarts: -1

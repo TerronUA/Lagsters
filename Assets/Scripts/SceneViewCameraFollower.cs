@@ -60,7 +60,10 @@ public class SceneViewCameraFollower : MonoBehaviour
                 if ((Application.isPlaying && onlyInPlayMode) || !onlyInPlayMode)
                 {
                     sceneView.orthographic = svf.orthographic;
-                    sceneView.LookAtDirect(svf.targetTransform.position + svf.positionOffset, (svf.enableFixedRotation) ? Quaternion.Euler(svf.fixedRotation) : svf.targetTransform.rotation, svf.size);
+                    Vector3 pos = svf.targetTransform.position + svf.targetTransform.TransformDirection(svf.positionOffset);
+                    Quaternion rot = (svf.enableFixedRotation) ? Quaternion.Euler(svf.targetTransform.TransformDirection(svf.fixedRotation)) : svf.targetTransform.rotation;
+
+                    sceneView.LookAtDirect(pos, rot, svf.size);
                 }
             }
         }
