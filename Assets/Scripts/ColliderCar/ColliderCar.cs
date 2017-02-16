@@ -14,12 +14,15 @@ namespace ColliderCar
         public Transform[] steeringWheels;
 
         public float maxSteeringAngle = 30f;
+        public float minSpeedToTurn = 0.25f;
 
-        // car physics adjustments
+        // car physics
         public float enginePower = 1200f;
         public float brakePower = 200f;
 
         public float maxSpeed = 50f;
+        public float maxReverseSpeed = 20f;
+        public float turnSpeed = 2.5f;
 
         // Cashed references to components
         private Transform carTransform;
@@ -47,8 +50,9 @@ namespace ColliderCar
         private float carSlideSpeed;
         private float carSteering;
         private bool inReverseMode;
-        private Vector3 engineForce;
-        private Vector3 brakeForce;
+        private Vector3 forceEngine;
+        private Vector3 forceBrake;
+        private Vector3 forceTurn;
 
         // Cashed transforms for our wheels
         private Transform[] wheelTransform;
@@ -149,11 +153,9 @@ namespace ColliderCar
 
             // calculate engine force with our direction vector and acceleration
             // TODO: use inputBrake to calculate force. Add brakePover property?
-            engineForce = (carCurrentDirection * (enginePower * inputAcceleration) * carMass);
-            brakeForce = -1 * (carCurrentDirection * (brakePower * inputBrake) * carMass);
-
-            Debug.Log(inputBrake);
-
+            forceEngine = (carCurrentDirection * (enginePower * inputAcceleration) * carMass);
+            forceBrake = -1 * (carCurrentDirection * (brakePower * inputBrake) * carMass);
+            
             // do turning
             carSteering = inputSteering;
 
@@ -161,10 +163,11 @@ namespace ColliderCar
             if (inReverseMode)
             {
                 carSteering = -carSteering;
+                carCurrentSpeed = -carCurrentSpeed;
             }
 
             // calculate torque for applying to our rigidbody
-            //turnVec = (((carTransform.up * turnSpeed) * carSteering) * carMass) * 800f;
+            forceTurn = (((carTransform.up * turnSpeed) * carSteering) * carMass) * 80f;
 
             // calculate impulses to simulate grip by taking our right vector, reversing the slidespeed and
             // multiplying that by our mass, to give us a completely 'corrected' force that would completely
@@ -193,14 +196,12 @@ namespace ColliderCar
                     tmpEulerAngles.y = inputSteering * maxSteeringAngle / rotatingAxes;
                     steeringWheels[i].localEulerAngles = tmpEulerAngles;
                 }
-                //LFWheelTransform.localEulerAngles = tmpEulerAngles;
-                //RFWheelTransform.localEulerAngles = tmpEulerAngles;
             }
 
             carRotationAmount = carRight * (relativeVelocity.z * 1.6f * Time.deltaTime * Mathf.Rad2Deg); ;
 
-            for (int i = 0; i < steeringWheels.Length; i++)
-                wheelTransform[i].Rotate(carRotationAmount);
+            for (int i = 0; i < wheels.Length; i++)
+                wheels[i].Rotate(carRotationAmount);
         }
 
         //this controls the sound of the engine audio by adjusting the pitch of our sound file
@@ -228,32 +229,35 @@ namespace ColliderCar
 */        }
 
         private void FixedUpdate()
-        {
-            if (carCurrentSpeed < maxSpeed)
-            {
-                // apply the engine force to the rigidbody
-                carRigidbody.AddForce(engineForce);
-            }
+        {   
+            // apply the engine force to the rigidbody
+            if (carCurrentSpeed < maxSpeed) 
+                carRigidbody.AddForce(forceEngine);
+            
+            // apply the brake force to the rigidbody
+            if (carCurrentSpeed > -1 * maxReverseSpeed)
+                carRigidbody.AddForce(forceBrake);
 
-            if (inputBrake > 0)
-            {
-                // apply the brake force to the rigidbody
-                carRigidbody.AddForce(brakeForce);
-            }
+            carRigidbody.drag = (inputHandBrake > 0) ? 20 : 0;
 
             //if we're going to slow to allow car to rotate around 
-            /*            if (mySpeed > maxSpeedToTurn)
-                        {
-                            // apply torque to our rigidbody
-                            carRigidbody.AddTorque(turnVec);
-                        }
-                        else if (mySpeed < maxSpeedToTurn)
-                        {
-                            return;
-                        }
-                        // apply forces to our rigidbody for grip
-                        carRigidbody.AddForce(imp);
-            */
-        } 
+            if (Mathf.Abs(carCurrentSpeed) > minSpeedToTurn)
+            {
+                // apply torque to our rigidbody
+                carRigidbody.AddTorque(forceTurn);
+            }
+            else if (Mathf.Abs(carCurrentSpeed) < minSpeedToTurn)
+            {
+                return;
+            }
+            /*            // apply forces to our rigidbody for grip
+                       carRigidbody.AddForce(imp);
+           */
+        }
+
+        public void OnDrawGizmos()
+        {
+           // Gizmos.DrawLine()
+        }
     }
 }

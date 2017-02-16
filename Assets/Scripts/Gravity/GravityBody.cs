@@ -59,7 +59,6 @@ public class GravityBody : MonoBehaviour
         }
 
         rbody.AddForceAtPosition(gravity * rbody.mass * (gravityPosition - centerOfMass).normalized, centerOfMass);
-        Debug.DrawRay(centerOfMass, gravity * rbody.mass * (gravityPosition - centerOfMass).normalized, Color.yellow);
     }
 
     void FindClosesPointOnSpline()
