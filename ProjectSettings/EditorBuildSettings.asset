@@ -9,3 +9,9 @@ EditorBuildSettings:
     path: Assets/_Scenes/EmptyScene.unity
   - enabled: 1
     path: Assets/_Scenes/MeshTest.unity
+  - enabled: 1
+    path: Assets/Unity-Logs-Viewer/Reporter/Test/ReporterScene.unity
+  - enabled: 1
+    path: Assets/Unity-Logs-Viewer/Reporter/Test/test1.unity
+  - enabled: 1
+    path: Assets/Unity-Logs-Viewer/Reporter/Test/test2.unity

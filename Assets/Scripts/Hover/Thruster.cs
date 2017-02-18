@@ -35,7 +35,7 @@ namespace HoverCar
             for (int i = 0; i < thrusters.Length; i++)
             {
                 thruster = thrusters[i];
-                gravityNormal = (thruster.position - gBody.gravityPosition).normalized;
+                gravityNormal = (thruster.position - gBody.ptGravity).normalized;
 
                 if (Physics.Raycast(thruster.position, /*gravityNormal /**/thruster.up, out hit, distance, layerMask))
                 {

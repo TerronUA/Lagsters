@@ -21,11 +21,8 @@ GameObject:
   - component: {fileID: 4861153661293352}
   - component: {fileID: 114779269697598550}
   - component: {fileID: 54314028548186686}
-  - component: {fileID: 82182847826188194}
-  - component: {fileID: 114207290624302698}
   - component: {fileID: 114021920625903628}
   - component: {fileID: 114903316771071992}
-  - component: {fileID: 114318335546949332}
   - component: {fileID: 114963257146102588}
   m_Layer: 0
   m_Name: Car
@@ -115,10 +112,6 @@ GameObject:
   - component: {fileID: 135696759385710278}
   - component: {fileID: 135961011162920732}
   - component: {fileID: 135287627199230834}
-  - component: {fileID: 135846452655367414}
-  - component: {fileID: 135301599987777586}
-  - component: {fileID: 135329003038088888}
-  - component: {fileID: 135131500445114230}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -149,9 +142,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4365268319054020}
+  - component: {fileID: 65453062989892344}
+  - component: {fileID: 114611273379702354}
   m_Layer: 0
   m_Name: CenterOfMass
-  m_TagString: Untagged
+  m_TagString: COM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -304,7 +299,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1043497563826384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3899803, y: -4.6037292, z: 4.409159}
+  m_LocalPosition: {x: 1.3899803, y: -4.6037292, z: 26.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4190295475667208}
@@ -532,6 +527,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &65453062989892344
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1689721697048438}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01, y: 0.01, z: 2}
+  m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!65 &65864731289819864
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -540,90 +547,10 @@ BoxCollider:
   m_GameObject: {fileID: 1362192584442768}
   m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!82 &82182847826188194
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1043497563826384}
-  m_Enabled: 0
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!114 &114021920625903628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -645,48 +572,32 @@ MonoBehaviour:
   - {fileID: 4013851597067992}
   - {fileID: 4575746775672856}
   maxSteeringAngle: 30
+  minSpeedToTurn: 0.25
   enginePower: 30
   brakePower: 20
   maxSpeed: 50
   maxReverseSpeed: 20
---- !u!114 &114207290624302698
+  carGrip: 70
+  turnSpeed: 2.5
+--- !u!114 &114611273379702354
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1043497563826384}
+  m_GameObject: {fileID: 1689721697048438}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2a9b3d446dd95e4f9693baba7e797b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
-  startPoint: {x: 0, y: 0, z: 0}
-  endPoint: {x: 0, y: 0, z: 0}
-  gravityPosition: {x: 0, y: 0, z: 0}
+  ptStart: {x: 0, y: 0, z: 0}
+  ptEnd: {x: 0, y: 0, z: 0}
+  ptGravity: {x: 0, y: 0, z: 0}
   gravity: -10
-  gravityObject: {fileID: 0}
-  startObject: {fileID: 0}
-  endObject: {fileID: 0}
---- !u!114 &114318335546949332
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1043497563826384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a9b3d446dd95e4f9693baba7e797b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gm: {fileID: 0}
-  startPoint: {x: 0, y: 0, z: 0}
-  endPoint: {x: 0, y: 0, z: 0}
-  gravityPosition: {x: 0, y: 0, z: 0}
-  gravity: -10
-  gravityObject: {fileID: 0}
-  startObject: {fileID: 0}
-  endObject: {fileID: 0}
+  objGravity: {fileID: 0}
+  objStart: {fileID: 0}
+  objEnd: {fileID: 0}
 --- !u!114 &114779269697598550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -748,18 +659,6 @@ MonoBehaviour:
     size: 1
     orthographic: 0
     sceneViewIndex: 0
---- !u!135 &135131500445114230
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1362192584442768}
-  m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.06
-  m_Center: {x: -0.35, y: -0.33, z: 0.29}
 --- !u!135 &135287627199230834
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -772,30 +671,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.06
   m_Center: {x: -0.35, y: -0.33, z: 0.29}
---- !u!135 &135301599987777586
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1362192584442768}
-  m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.06
-  m_Center: {x: 0.35, y: -0.33, z: 0.29}
---- !u!135 &135329003038088888
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1362192584442768}
-  m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.06
-  m_Center: {x: -0.35, y: -0.33, z: -0.32}
 --- !u!135 &135696759385710278
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -809,18 +684,6 @@ SphereCollider:
   m_Radius: 0.06
   m_Center: {x: 0.35, y: -0.33, z: 0.29}
 --- !u!135 &135708670028199910
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1362192584442768}
-  m_Material: {fileID: 13400000, guid: 509747ece19287c49ade458eaabdbbc0, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.06
-  m_Center: {x: 0.35, y: -0.33, z: -0.32}
---- !u!135 &135846452655367414
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

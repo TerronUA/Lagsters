@@ -7,17 +7,18 @@ public class GravityBody : MonoBehaviour
     public GravityManager gm;
 
     [HideInInspector]
-    public Vector3 startPoint;
+    public Vector3 ptStart;
     [HideInInspector]
-    public Vector3 endPoint;
+    public Vector3 ptEnd;
     [HideInInspector]
-    public Vector3 gravityPosition;
+    public Vector3 ptGravity;
 
     public float gravity = -10f;
-    public GameObject gravityObject;
-    public GameObject startObject;
-    public GameObject endObject;
+    public GameObject objGravity;
+    public GameObject objStart;
+    public GameObject objEnd;
     private Rigidbody rbody;
+    private Transform gTransform;
 
     private Vector3 centerOfMass;
     private bool canPlay = false;
@@ -25,13 +26,14 @@ public class GravityBody : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rbody = GetComponent<Rigidbody>();
+        rbody = GetComponentInParent<Rigidbody>();
         rbody.useGravity = false;
+
+        gTransform = rbody.transform;
 
         gm = FindObjectOfType<GravityManager>();
 
-        if (gm != null)
-            FindClosesPointOnSpline();
+        DefineGravityPosition();
     }
 
     // Update is called once per frame
@@ -40,61 +42,45 @@ public class GravityBody : MonoBehaviour
         if (!canPlay)
             return;
 
-        centerOfMass = rbody.transform.TransformPoint(rbody.centerOfMass);
-        Vector3 vVector1 = centerOfMass - startPoint;
-        Vector3 vVector2 = (endPoint - startPoint).normalized;
-
-        float d = Vector3.Distance(startPoint, endPoint);
-        float t = Vector3.Dot(vVector2, vVector1);
-
-        if (t <= 0)
-            gravityPosition = startPoint;
-        else if (t >= d)
-            gravityPosition = endPoint;
-        else
-        {
-            Vector3 vVector3 = vVector2 * t;
-
-            gravityPosition = startPoint + vVector3;
-        }
-
-        rbody.AddForceAtPosition(gravity * rbody.mass * (gravityPosition - centerOfMass).normalized, centerOfMass);
+        centerOfMass = gTransform.position;
+        ptGravity = MathUtils.ClosesPointOnLine(centerOfMass, ptStart, ptEnd);
+        
+        rbody.AddForce(gravity * rbody.mass * (ptGravity - centerOfMass).normalized); //AddForceAtPosition(gravity * rbody.mass * (gravityPosition - centerOfMass).normalized, centerOfMass);
     }
 
-    void FindClosesPointOnSpline()
+    void DefineGravityPosition()
     {
+        canPlay = false;
+
         if ((gm == null) || (gm.points.Count <= 0))
             return;
+        
+        canPlay = gm.FindClosestEdgeToPosition(gTransform.position, ref ptStart, ref ptEnd);
+    }
 
-        Vector3 currentPosition = transform.position;
+    public IEnumerator CheckEdgeCoroutine(int index)
+    {
+        if (!canPlay)
+            yield break;
 
-        startPoint = gm.points[0].position;
+        gm.FindStartEndPoints(index, gTransform.position, ref ptStart, ref ptEnd);
 
-        for (int i = 0; i < gm.points.Count; i++)
-        {
-            if (Vector3.Distance(currentPosition, startPoint) > Vector3.Distance(currentPosition, gm.points[i].position))
-            {
-                startPoint = gm.points[i].position;
-                if(i < gm.points.Count - 1)
-                    endPoint = gm.points[i + 1].position;
-                else
-                    endPoint = gm.points[0].position;
-            }
-        }
+        yield return new WaitForSeconds(0.1f);
 
-        canPlay = true;
+        gm.FindStartEndPoints(index, gTransform.position, ref ptStart, ref ptEnd);
+
+        //Debug.Log("CheckEdgeCoroutine(" + index + ")");
     }
 
     private void OnDrawGizmos()
-    {/*
+    {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(startPoint, 0.3f);
+        Gizmos.DrawSphere(ptStart, 0.5f);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(endPoint, 0.3f);
+        Gizmos.DrawSphere(ptEnd, 0.5f);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(centerOfMass, 0.3f);
-        */
+        Gizmos.DrawSphere(ptGravity, 0.7f);
     }
 }

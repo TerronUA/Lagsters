@@ -218,25 +218,8 @@ public class GravityManager : MonoBehaviour
 
         PathNodeCollider pn = go.AddComponent<PathNodeCollider>();
         pn.indexGravityNode = pathPoints.pointsList.Count;
-
-        // Create Reverse collider
-        GameObject goReverse = new GameObject("Reverse Path collider " + index);
-
-        goReverse.transform.parent = gameObject.transform;
-        goReverse.transform.position = reversePosition;
-        goReverse.transform.rotation = Quaternion.LookRotation(reverseDirection);
-
-        BoxCollider colliderReverse = goReverse.AddComponent<BoxCollider>();
-        colliderReverse.size = new Vector3(20f, 20f, 0.05f);
-        colliderReverse.isTrigger = true;
-
-        PathNodeReverseCollider pnReverse = goReverse.AddComponent<PathNodeReverseCollider>();
-
-        pn.reverseCollider = pnReverse;
-        pnReverse.normalCollider = pn;
-
+                
         newPoint.collider = colliderNormal;
-        newPoint.colliderReverse = colliderReverse;
 
         pathPoints.pointsList.Add(newPoint);
     }
@@ -305,7 +288,68 @@ public class GravityManager : MonoBehaviour
 
         return pts;
     }
-    
+
+    /// <summary>
+    /// Finds closest point to position defined in parameter
+    /// </summary>
+    /// <param name="position">Find closest point to this position</param>
+    /// <returns>index of closest point</returns>
+    public int FindClosestPointOnSpline(Vector3 pos, ref Vector3 pt)
+    {
+        if (points.Count <= 0)
+            return -1;
+
+        pt = points[0].position;
+        int index = 0;
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            if (Vector3.Distance(pos, pt) > Vector3.Distance(pos, points[i].position))
+            {
+                pt = points[i].position;
+                index = i;
+            }
+        }
+
+        return index;
+    }
+
+    public bool FindClosestEdgeToPosition(Vector3 pos, ref Vector3 ptStart, ref Vector3 ptEnd)
+    {
+        int index = FindClosestPointOnSpline(pos, ref ptStart);
+
+        return FindStartEndPoints(index, pos, ref ptStart, ref ptEnd);
+    }
+
+    public bool FindStartEndPoints(int index, Vector3 pos, ref Vector3 ptStart, ref Vector3 ptEnd)
+    {
+        if ((index < 0) || (index >= points.Count))
+            return false;
+
+        ptStart = points[index].position;
+
+        int indexNext = index + 1;
+        if (indexNext >= points.Count)
+            indexNext = 0;
+
+        int indexPrev = index - 1;
+        if (indexPrev < 0)
+            indexPrev = points.Count - 1;
+
+        Vector3 ptNext = MathUtils.ClosesPointOnLine(pos, ptStart, points[indexNext].position);
+        Vector3 ptPrev = MathUtils.ClosesPointOnLine(pos, ptStart, points[indexPrev].position);
+
+        if (Vector3.Distance(pos, ptNext) < Vector3.Distance(pos, ptPrev))
+            ptEnd = points[indexNext].position;
+        else
+        {
+            ptEnd = ptStart;
+            ptStart = points[indexPrev].position;
+        }
+
+        return true;
+    }
+
     private void OnDrawGizmos()
     {
         if (points.Count <= 0)

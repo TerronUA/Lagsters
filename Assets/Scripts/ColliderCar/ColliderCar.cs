@@ -22,6 +22,7 @@ namespace ColliderCar
 
         public float maxSpeed = 50f;
         public float maxReverseSpeed = 20f;
+        public float carGrip = 70f;
         public float turnSpeed = 2.5f;
 
         // Cashed references to components
@@ -49,10 +50,12 @@ namespace ColliderCar
         private float carCurrentSpeed;
         private float carSlideSpeed;
         private float carSteering;
+        private float actualGrip;
         private bool inReverseMode;
         private Vector3 forceEngine;
         private Vector3 forceBrake;
         private Vector3 forceTurn;
+        private Vector3 forceGrip;
 
         // Cashed transforms for our wheels
         private Transform[] wheelTransform;
@@ -162,12 +165,12 @@ namespace ColliderCar
             // if we're in reverse, we reverse the turning direction too
             if (inReverseMode)
             {
-                carSteering = -carSteering;
+                //carSteering = -carSteering;
                 carCurrentSpeed = -carCurrentSpeed;
             }
 
             // calculate torque for applying to our rigidbody
-            forceTurn = (((carTransform.up * turnSpeed) * carSteering) * carMass) * 80f;
+            forceTurn = (((carTransform.up * turnSpeed) * carSteering) * carMass) * 10f;
 
             // calculate impulses to simulate grip by taking our right vector, reversing the slidespeed and
             // multiplying that by our mass, to give us a completely 'corrected' force that would completely
@@ -175,8 +178,8 @@ namespace ColliderCar
             // reduces the corrected force so that it only helps to reduce sliding rather than completely
             // stop it 
 
-            //actualGrip = Mathf.Lerp(100f, carGrip, mySpeed * 0.02f);
-            //imp = myRight * (-carSlideSpeed * carMass * actualGrip);
+            actualGrip = Mathf.Lerp(100f, carGrip, carCurrentSpeed * 0.02f);
+            forceGrip = carCurrentRight * (-carSlideSpeed * carMass * actualGrip);
         }
 
         /// <summary>
@@ -250,9 +253,8 @@ namespace ColliderCar
             {
                 return;
             }
-            /*            // apply forces to our rigidbody for grip
-                       carRigidbody.AddForce(imp);
-           */
+            // apply forces to our rigidbody for grip
+            carRigidbody.AddForce(forceGrip);
         }
 
         public void OnDrawGizmos()

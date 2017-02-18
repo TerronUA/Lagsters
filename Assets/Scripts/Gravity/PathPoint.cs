@@ -9,5 +9,4 @@ public class PathPoint
     public float gravity = 10f;
     public float raycastDistance = 5f;
     public BoxCollider collider;
-    public BoxCollider colliderReverse;
 }
