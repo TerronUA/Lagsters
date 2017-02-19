@@ -25,6 +25,13 @@ namespace ColliderCar
         public float carGrip = 70f;
         public float turnSpeed = 2.5f;
 
+        public float Velocity
+        { get
+            {
+                return carCurrentSpeed;
+            }
+        }
+
         // Cashed references to components
         private Transform carTransform;
         private Rigidbody carRigidbody;
@@ -138,10 +145,6 @@ namespace ColliderCar
             // find out which direction we are moving in
             carCurrentDirection = Vector3.Normalize(carTransform.forward);
 
-            //Debug.DrawRay(carTransform.position, carTransform.forward * 10, Color.yellow);
-
-            //Debug.DrawRay(carTransform.position, dir * 10, Color.green);
-            
             // calculate relative velocity
             relativeVelocity = carTransform.InverseTransformDirection(carCurrentVelocity);
 
@@ -152,10 +155,9 @@ namespace ColliderCar
             carCurrentSpeed = carCurrentVelocity.magnitude;
 
             // check to see if we are moving in reverse
-            inReverseMode = Mathf.Sign(Vector3.Dot(carCurrentVelocity, carCurrentDirection)) < 0.1f;
+            inReverseMode = Mathf.Sign(Vector3.Dot(relativeVelocity, carCurrentDirection)) < 0.1f;
 
             // calculate engine force with our direction vector and acceleration
-            // TODO: use inputBrake to calculate force. Add brakePover property?
             forceEngine = (carCurrentDirection * (enginePower * inputAcceleration) * carMass);
             forceBrake = -1 * (carCurrentDirection * (brakePower * inputBrake) * carMass);
             
@@ -165,8 +167,7 @@ namespace ColliderCar
             // if we're in reverse, we reverse the turning direction too
             if (inReverseMode)
             {
-                //carSteering = -carSteering;
-                carCurrentSpeed = -carCurrentSpeed;
+                carSteering = -carSteering;
             }
 
             // calculate torque for applying to our rigidbody
@@ -232,11 +233,13 @@ namespace ColliderCar
 */        }
 
         private void FixedUpdate()
-        {   
+        {
             // apply the engine force to the rigidbody
-            if (carCurrentSpeed < maxSpeed) 
+            if (carCurrentSpeed < maxSpeed)
+            {
                 carRigidbody.AddForce(forceEngine);
-            
+                //Debug.DrawRay();
+            }
             // apply the brake force to the rigidbody
             if (carCurrentSpeed > -1 * maxReverseSpeed)
                 carRigidbody.AddForce(forceBrake);

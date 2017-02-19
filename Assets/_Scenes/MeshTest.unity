@@ -8007,6 +8007,11 @@ Prefab:
       propertyPath: gm
       value: 
       objectReference: {fileID: 925931708}
+    - target: {fileID: 114903316771071992, guid: cf62e19eadde8b841b0ec4cbcb54a45e,
+        type: 2}
+      propertyPath: speedText
+      value: 
+      objectReference: {fileID: 1779649023}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf62e19eadde8b841b0ec4cbcb54a45e, type: 2}
   m_IsPrefabParent: 0

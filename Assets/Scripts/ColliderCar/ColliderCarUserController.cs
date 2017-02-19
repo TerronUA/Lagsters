@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ColliderCar
 {
@@ -81,6 +83,7 @@ namespace ColliderCar
     {
         public float deviceAccelerometerSensitivity = 2f; //how sensitive our mobile accelerometer will be
         public float deadZone = 0.001f; //controls mobile device tilting dead zone 
+        public Text speedText;
 
         IControllerStrategy strategyController;
         ColliderCar car;
@@ -124,6 +127,12 @@ namespace ColliderCar
             strategyController.GetInput(out steering, out acceleration, out footbrake, out handbrake);
 
             car.CarPhysicsUpdate(steering, acceleration, footbrake, handbrake);
+        }
+
+        private void FixedUpdate()
+        {
+            if (speedText)
+                speedText.text = Math.Truncate(car.Velocity).ToString();
         }
     }
 }
