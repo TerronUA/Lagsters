@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,6 +74,11 @@ namespace ColliderCar
             InitializeCar();
         }
 
+        void Enabled()
+        {
+            InitializeCar();
+        }
+
         void InitializeCar()
         {
             // Cache a reference to our car's transform
@@ -114,7 +120,6 @@ namespace ColliderCar
         // Update is called once per frame
         void Update()
         {
-
         }
         
         void LateUpdate()
@@ -179,7 +184,9 @@ namespace ColliderCar
             // reduces the corrected force so that it only helps to reduce sliding rather than completely
             // stop it 
 
-            actualGrip = Mathf.Lerp(100f, carGrip, carCurrentSpeed * 0.02f);
+            actualGrip = Mathf.Lerp(5f, carGrip, carCurrentSpeed * 0.02f);
+            if (Math.Abs(carSlideSpeed) > 0.01)
+                Debug.Log(carSlideSpeed);
             forceGrip = carCurrentRight * (-carSlideSpeed * carMass * actualGrip);
         }
 
@@ -232,17 +239,22 @@ namespace ColliderCar
             }
 */        }
 
+      
         private void FixedUpdate()
         {
+            Vector3 drawPosition = carTransform.position + carTransform.up * 2;
             // apply the engine force to the rigidbody
             if (carCurrentSpeed < maxSpeed)
             {
                 carRigidbody.AddForce(forceEngine);
-                //Debug.DrawRay();
+                Debug.DrawRay(drawPosition, forceEngine.normalized * 5, Color.red);
             }
             // apply the brake force to the rigidbody
             if (carCurrentSpeed > -1 * maxReverseSpeed)
+            {
                 carRigidbody.AddForce(forceBrake);
+                Debug.DrawRay(drawPosition, forceBrake.normalized * 5, Color.red);
+            }
 
             carRigidbody.drag = (inputHandBrake > 0) ? 20 : 0;
 
@@ -251,6 +263,7 @@ namespace ColliderCar
             {
                 // apply torque to our rigidbody
                 carRigidbody.AddTorque(forceTurn);
+                Debug.DrawRay(drawPosition, forceTurn.normalized * 5, Color.blue);
             }
             else if (Mathf.Abs(carCurrentSpeed) < minSpeedToTurn)
             {
@@ -258,11 +271,13 @@ namespace ColliderCar
             }
             // apply forces to our rigidbody for grip
             carRigidbody.AddForce(forceGrip);
+            Debug.DrawRay(drawPosition, forceGrip, Color.white);
+            //Debug.Log(forceGrip.normalized);
         }
 
         public void OnDrawGizmos()
         {
-           // Gizmos.DrawLine()
+            // Gizmos.DrawLine()
         }
     }
 }
