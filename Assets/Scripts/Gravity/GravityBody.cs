@@ -44,8 +44,16 @@ public class GravityBody : MonoBehaviour
 
         centerOfMass = gTransform.position;
         ptGravity = MathUtils.ClosesPointOnLine(centerOfMass, ptStart, ptEnd);
-        
-        rbody.AddForce(gravity * rbody.mass * (ptGravity - centerOfMass).normalized); //AddForceAtPosition(gravity * rbody.mass * (gravityPosition - centerOfMass).normalized, centerOfMass);
+
+
+        if (objGravity)
+            objGravity.transform.position = ptGravity;
+        if (objStart)
+            objStart.transform.position = ptStart;
+        if (objEnd)
+            objEnd.transform.position = ptEnd;
+
+    rbody.AddForce(gravity * rbody.mass * (ptGravity - centerOfMass).normalized); //AddForceAtPosition(gravity * rbody.mass * (gravityPosition - centerOfMass).normalized, centerOfMass);
     }
 
     void DefineGravityPosition()

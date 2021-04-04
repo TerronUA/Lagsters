@@ -23,7 +23,7 @@ namespace ColliderCar
 
         public float maxSpeed = 50f;
         public float maxReverseSpeed = 20f;
-        public float carGrip = 70f;
+        public float carGrip = 2f;
         public float turnSpeed = 2.5f;
 
         public float Velocity
@@ -184,9 +184,9 @@ namespace ColliderCar
             // reduces the corrected force so that it only helps to reduce sliding rather than completely
             // stop it 
 
-            actualGrip = Mathf.Lerp(5f, carGrip, carCurrentSpeed * 0.02f);
-            if (Math.Abs(carSlideSpeed) > 0.01)
-                Debug.Log(carSlideSpeed);
+            actualGrip = Mathf.Lerp(100f, carGrip, carCurrentSpeed * 0.02f);
+//            if (Math.Abs(carSlideSpeed) > 0.01)
+                Debug.Log(actualGrip);
             forceGrip = carCurrentRight * (-carSlideSpeed * carMass * actualGrip);
         }
 

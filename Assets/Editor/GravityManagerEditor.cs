@@ -127,7 +127,8 @@ public class GravityManagerEditor : Editor
                 Vector3 pointInWorldSpace = _target.points[i].position;// handleTransform.TransformPoint(_target.points[i].position);
                 Quaternion rotation = _target.points[i].rotation;
 
-                Handles.SphereCap(i, pointInWorldSpace, handleRotation, 0.5f);
+                //SphereHandleCap
+                Handles.SphereHandleCap(i, pointInWorldSpace, handleRotation, 0.5f, EventType.Repaint);
 
                 if (i == _target.activeIndex)
                 {

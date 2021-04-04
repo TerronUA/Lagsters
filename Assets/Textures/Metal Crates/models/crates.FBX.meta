@@ -1,8 +1,38 @@
 fileFormatVersion: 2
 guid: 85013bee5db47354ab1e8f0defb09f93
 ModelImporter:
-  serializedVersion: 18
+  serializedVersion: 19
   fileIDToRecycleName:
+    100000: Crate1
+    100002: Crate2
+    100004: Crate3
+    100006: Crate4
+    100008: Crate5
+    100010: Crate6
+    100012: Crate7
+    100014: //RootNode
+    400000: Crate1
+    400002: Crate2
+    400004: Crate3
+    400006: Crate4
+    400008: Crate5
+    400010: Crate6
+    400012: Crate7
+    400014: //RootNode
+    2300000: Crate1
+    2300002: Crate2
+    2300004: Crate3
+    2300006: Crate4
+    2300008: Crate5
+    2300010: Crate6
+    2300012: Crate7
+    3300000: Crate1
+    3300002: Crate2
+    3300004: Crate3
+    3300006: Crate4
+    3300008: Crate5
+    3300010: Crate6
+    3300012: Crate7
     4300000: Box001
     4300002: Box002
     4300004: Box003
@@ -17,6 +47,7 @@ ModelImporter:
     4300022: Crate5
     4300024: Crate6
     4300026: Crate7
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -24,19 +55,26 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 0.01
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -53,24 +91,29 @@ ModelImporter:
     useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 1
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
